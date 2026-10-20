@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.travel.planner.service.ProductRevisionTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-10-20T15:27:44.143Z" hostname="DESKTOP-L0O1S4Q" time="0.041">
+  <properties/>
+  <testcase name="distanceFallbackIsNotPaddedTwice()" classname="com.travel.planner.service.ProductRevisionTest" time="0.0"/>
+  <testcase name="walkingOrRailMarginIsAppliedOnceAndStepsSumToTotal()" classname="com.travel.planner.service.ProductRevisionTest" time="0.0"/>
+  <testcase name="airportBoardingPointMustBeOnTheCalculatedRoute()" classname="com.travel.planner.service.ProductRevisionTest" time="0.002"/>
+  <testcase name="generatedScheduleIsRepairedBeforePersistence()" classname="com.travel.planner.service.ProductRevisionTest" time="0.001"/>
+  <testcase name="legacyReadCannotArriveBeforeDeparturePlusTravel()" classname="com.travel.planner.service.ProductRevisionTest" time="0.0"/>
+  <testcase name="areaRecommendationsExplainVendorsAndSpecialties()" classname="com.travel.planner.service.ProductRevisionTest" time="0.0"/>
+  <testcase name="knownExpensiveHotelsAreNeverSaidToFitTheBudget()" classname="com.travel.planner.service.ProductRevisionTest" time="0.037"/>
+  <testcase name="hotelArrivalIsRecomputedInsteadOfRetainingAnImpossibleOldTime()" classname="com.travel.planner.service.ProductRevisionTest" time="0.0"/>
+  <testcase name="totalBudgetIsOnlyTheRoomCostAndDividesByNights()" classname="com.travel.planner.service.ProductRevisionTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

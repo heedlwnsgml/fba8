@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
@@ -145,16 +146,8 @@ class CityRouteOverview extends StatelessWidget {
                     borderRadius: BorderRadius.circular(16),
                     child: points.isEmpty
                         ? const Center(child: Text('아래에서 방문 도시를 확인해 주세요.'))
-                        : FlutterMap(
-                            options: MapOptions(
-                              initialCenter: points.first,
-                              initialZoom: 8,
-                              initialCameraFit: CameraFit.coordinates(
-                                coordinates: points,
-                                padding: const EdgeInsets.all(44),
-                                maxZoom: 9,
-                              ),
-                            ),
+                        : _CityRouteMap(
+                            points: points,
                             children: [
                               if (loadTiles)
                                 TileLayer(
@@ -293,4 +286,61 @@ class CityRouteOverview extends StatelessWidget {
       ),
     );
   }
+}
+
+// Fit after attachment, then nudge the zoom once after the dialog animation so
+// Android requests tiles for the final viewport. Never override a user's gesture.
+class _CityRouteMap extends StatefulWidget {
+  const _CityRouteMap({required this.points, required this.children});
+  final List<LatLng> points;
+  final List<Widget> children;
+  @override
+  State<_CityRouteMap> createState() => _CityRouteMapState();
+}
+
+class _CityRouteMapState extends State<_CityRouteMap> {
+  final controller = MapController();
+  Timer? refresh;
+  bool interacted = false;
+  void ready() {
+    refresh = Timer(const Duration(milliseconds: 350), () {
+      if (!mounted || interacted) return;
+      final camera = controller.camera;
+      final center = camera.center;
+      final zoom = camera.zoom;
+      controller.move(center, zoom + 1);
+      refresh = Timer(const Duration(milliseconds: 80), () {
+        if (mounted && !interacted) controller.move(center, zoom);
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    refresh?.cancel();
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => FlutterMap(
+    mapController: controller,
+    options: MapOptions(
+      initialCenter: widget.points.first,
+      initialZoom: 8,
+      initialCameraFit: CameraFit.coordinates(
+        coordinates: widget.points,
+        padding: const EdgeInsets.all(44),
+        maxZoom: 9,
+      ),
+      onMapReady: ready,
+      onPositionChanged: (_, gesture) {
+        if (gesture) {
+          interacted = true;
+          refresh?.cancel();
+        }
+      },
+    ),
+    children: widget.children,
+  );
 }

@@ -24,6 +24,17 @@ class MainActivity : FlutterActivity() {
     ) {
         super.configureFlutterEngine(flutterEngine)
 
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger,"ai_travel_planner/generation").setMethodCallHandler { call, result ->
+            try {
+                when (call.method) {
+                    "watch" -> { GenerationNotificationService.watch(this, org.json.JSONObject(call.arguments as Map<*,*>)); result.success(null) }
+                    "finish" -> { GenerationNotificationService.finish(this, org.json.JSONObject(call.arguments as Map<*,*>)); result.success(null) }
+                    "clear" -> { GenerationNotificationService.clear(this); result.success(null) }
+                    "takeTappedPlan" -> { val plan=intent.getLongExtra("generationPlanId",-1);intent.removeExtra("generationPlanId");result.success(if(plan>0)plan else null) }
+                    else -> result.notImplemented()
+                }
+            } catch(e:Exception) { result.error("GENERATION_NOTIFICATION", "일정 알림을 설정하지 못했습니다.", null) }
+        }
         weatherChannel=MethodChannel(flutterEngine.dartExecutor.binaryMessenger,"ai_travel_planner/weather")
         weatherChannel!!.setMethodCallHandler { call, result ->
             try {

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'app_dialog_actions.dart';
+import '../services/generation_background.dart';
 import 'package:flutter/material.dart';
 import '../network/planner_api.dart';
 import '../router/app_router.dart';
@@ -25,6 +26,7 @@ class _GenerationNotificationsState extends State<GenerationNotifications>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     api.addListener(_changed);
+    _openSystemNotification();
   }
 
   @override
@@ -40,7 +42,30 @@ class _GenerationNotificationsState extends State<GenerationNotifications>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     _resumed = state == AppLifecycleState.resumed;
-    if (_resumed) _changed();
+    if (_resumed) {
+      _openSystemNotification();
+      _changed();
+    }
+  }
+
+  Future<void> _openSystemNotification() async {
+    if (!GenerationBackground.enabled) return;
+    try {
+      final plan = await GenerationBackground.channel.invokeMethod<int>(
+        'takeTappedPlan',
+      );
+      if (plan == null || !api.isLoggedIn) return;
+      final revision = api.sessionRevision;
+      final data = await api.getPlan(plan);
+      if (!mounted || revision != api.sessionRevision) return;
+      for (final task in api.generationTasks) {
+        if ((task.result?['response'] as Map?)?['planId'] == plan)
+          _notified.add(task.id);
+      }
+      appRouter.go(AppRoutes.generated, extra: data);
+    } catch (_) {
+      /* The saved itinerary remains available after reconnecting. */
+    }
   }
 
   void _changed() {

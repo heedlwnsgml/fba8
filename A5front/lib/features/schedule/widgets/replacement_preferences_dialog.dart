@@ -86,11 +86,22 @@ class _ReplacementPreferencesDialogState
             child: const Text('취소'),
           ),
           FilledButton(
+            style: FilledButton.styleFrom(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+            ),
             onPressed: () => Navigator.pop(context, <String, String>{
               if (theme != themes.first) 'theme': theme,
               'companion': companion,
             }),
-            child: const Text('추천 장소 찾기'),
+            child: const FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                '추천 장소 찾기',
+                maxLines: 1,
+                softWrap: false,
+                style: TextStyle(fontSize: 13),
+              ),
+            ),
           ),
         ],
       ),

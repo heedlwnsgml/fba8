@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.travel.planner.service.UserProfileServiceTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-10-20T15:27:51.778Z" hostname="DESKTOP-L0O1S4Q" time="0.012">
+  <properties/>
+  <testcase name="invalidNamesAndMissingUsersAreRejected()" classname="com.travel.planner.service.UserProfileServiceTest" time="0.002"/>
+  <testcase name="savesOwnNameAndReadsItAgainWithoutTouchingMainUserData()" classname="com.travel.planner.service.UserProfileServiceTest" time="0.004"/>
+  <system-out><![CDATA[2026-10-21T00:27:51.779+09:00  INFO 26736 --- [planner] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.travel.planner.service.UserProfileServiceTest]: UserProfileServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-21T00:27:51.780+09:00  INFO 26736 --- [planner] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.travel.planner.PlannerApplication for test class com.travel.planner.service.UserProfileServiceTest
+2026-10-21T00:27:51.782+09:00  INFO 26736 --- [planner] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.travel.planner.service.UserProfileServiceTest]: UserProfileServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-21T00:27:51.782+09:00  INFO 26736 --- [planner] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.travel.planner.PlannerApplication for test class com.travel.planner.service.UserProfileServiceTest
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

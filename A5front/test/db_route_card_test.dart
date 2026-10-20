@@ -171,7 +171,8 @@ void main() {
       lessThan(tester.getTopLeft(info).dy),
     );
     expect(find.text('이 장소까지 오는 방법'), findsOneWidget);
-    await tester.ensureVisible(find.text('이동 상세 보기'));
+    await Scrollable.ensureVisible(tester.element(find.text('이동 상세 보기')), alignment: 1);
+    await tester.pumpAndSettle();
     await tester.tap(find.text('이동 상세 보기'));
     await tester.pumpAndSettle();
     expect(find.textContaining('市営バス'), findsOneWidget);

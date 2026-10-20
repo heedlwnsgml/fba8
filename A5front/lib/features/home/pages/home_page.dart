@@ -284,7 +284,7 @@ class _CreateTripCard extends StatelessWidget {
                       ),
                       SizedBox(height: 8),
                       Text(
-                        '여행 기간과 도시, 테마를 선택하면\n이동 경로와 교통비를 포함한 일정을 만들어 드려요.',
+                        '여행 기간과 도시, 테마를 선택하면 이동 경로와 교통비를 포함한 일정을 만들어 드려요.',
                         style: TextStyle(
                           color: Colors.white70,
                           fontSize: 14,

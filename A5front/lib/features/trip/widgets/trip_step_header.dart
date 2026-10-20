@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -78,6 +79,20 @@ class _DefaultsPin extends StatefulWidget {
 
 class _DefaultsPinState extends State<_DefaultsPin> {
   bool busy = false;
+  Timer? noticeTimer;
+  ScaffoldMessengerState? noticeMessenger;
+  @override
+  void dispose() {
+    noticeTimer?.cancel();
+    final messenger = noticeMessenger;
+    if (messenger != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (messenger.mounted) messenger.hideCurrentMaterialBanner();
+      });
+    }
+    super.dispose();
+  }
+
   Future<void> update(bool clear) async {
     if (busy) return;
     setState(() => busy = true);
@@ -86,10 +101,19 @@ class _DefaultsPinState extends State<_DefaultsPin> {
         await TripDraft.instance.clearDefaults(widget.step);
       else
         await TripDraft.instance.saveDefaults(widget.step);
-      if (mounted)
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            duration: const Duration(seconds: 3),
+      if (mounted) {
+        final messenger = ScaffoldMessenger.of(context);
+        noticeMessenger = messenger;
+        noticeTimer?.cancel();
+        messenger.hideCurrentMaterialBanner();
+        messenger.showMaterialBanner(
+          MaterialBanner(
+            actions: [
+              TextButton(
+                onPressed: () => messenger.hideCurrentMaterialBanner(),
+                child: const Text('닫기'),
+              ),
+            ],
             content: Text(
               clear
                   ? '이 화면의 기본값을 해제했습니다.'
@@ -97,6 +121,10 @@ class _DefaultsPinState extends State<_DefaultsPin> {
             ),
           ),
         );
+        noticeTimer = Timer(const Duration(seconds: 3), () {
+          if (mounted) messenger.hideCurrentMaterialBanner();
+        });
+      }
     } finally {
       if (mounted) setState(() => busy = false);
     }

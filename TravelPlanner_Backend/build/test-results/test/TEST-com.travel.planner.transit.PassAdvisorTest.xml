@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.travel.planner.transit.PassAdvisorTest" tests="16" skipped="0" failures="0" errors="0" timestamp="2026-10-20T15:27:51.965Z" hostname="DESKTOP-L0O1S4Q" time="0.061">
+  <properties/>
+  <testcase name="passesAreChosenGreedilyOnWhatRemains()" classname="com.travel.planner.transit.PassAdvisorTest" time="0.0"/>
+  <testcase name="categoryLineStationAndAreaLimits()" classname="com.travel.planner.transit.PassAdvisorTest" time="0.0"/>
+  <testcase name="smallSavingIsNotWorthRecommending()" classname="com.travel.planner.transit.PassAdvisorTest" time="0.0"/>
+  <testcase name="estimatedFaresAreFlagged()" classname="com.travel.planner.transit.PassAdvisorTest" time="0.0"/>
+  <testcase name="randomTripsKeepTheSuggestionsConsistent()" classname="com.travel.planner.transit.PassAdvisorTest" time="0.058"/>
+  <testcase name="emptyInputsGiveNoSuggestion()" classname="com.travel.planner.transit.PassAdvisorTest" time="0.0"/>
+  <testcase name="holidayPassExtrasAndUnknownDates()" classname="com.travel.planner.transit.PassAdvisorTest" time="0.0"/>
+  <testcase name="hourPassRunsFromTheFirstRideAcrossMidnight()" classname="com.travel.planner.transit.PassAdvisorTest" time="0.0"/>
+  <testcase name="longerHourPassWinsWhenItSavesMore()" classname="com.travel.planner.transit.PassAdvisorTest" time="0.0"/>
+  <testcase name="theBestDayIsChosenAndOtherDaysArePaidNormally()" classname="com.travel.planner.transit.PassAdvisorTest" time="0.0"/>
+  <testcase name="multiDayPassCoversConsecutiveDays()" classname="com.travel.planner.transit.PassAdvisorTest" time="0.001"/>
+  <testcase name="theSamePassCanBeBoughtAgainOnAnotherDay()" classname="com.travel.planner.transit.PassAdvisorTest" time="0.0"/>
+  <testcase name="busOperatorsMatchByPartOfTheAgencyNameButRailNamesMustBeExact()" classname="com.travel.planner.transit.PassAdvisorTest" time="0.0"/>
+  <testcase name="weekdayAndHolidayPassesFollowTheCalendar()" classname="com.travel.planner.transit.PassAdvisorTest" time="0.0"/>
+  <testcase name="passIsRecommendedOnlyWhenTheDaysRidesAddUpToMoreThanItsPrice()" classname="com.travel.planner.transit.PassAdvisorTest" time="0.0"/>
+  <testcase name="rideIsCoveredOnlyWhenEveryLegOfTheFareBlockIsCovered()" classname="com.travel.planner.transit.PassAdvisorTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

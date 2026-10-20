@@ -12,3 +12,12 @@
 2026-10-12 01:49:15 USB backend bridge restored on port 8080.
 2026-10-12 01:49:17 USB backend bridge ready on port 8080.
 2026-10-12 01:56:43 USB device unavailable; waiting for reconnect.
+2026-10-20 22:54:48 USB backend bridge ready on port 8080.
+2026-10-20 23:01:22 USB device unavailable; waiting for reconnect.
+2026-10-20 23:04:18 USB backend bridge restored on port 8080.
+2026-10-20 23:04:20 USB backend bridge ready on port 8080.
+2026-10-20 23:39:08 USB port restore failed; will retry.
+2026-10-20 23:39:10 USB device unavailable; waiting for reconnect.
+2026-10-20 23:40:38 USB backend bridge restored on port 8080.
+2026-10-20 23:40:40 USB backend bridge ready on port 8080.
+2026-10-21 00:07:35 USB device unavailable; waiting for reconnect.

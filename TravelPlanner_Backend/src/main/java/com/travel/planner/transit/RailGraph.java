@@ -249,6 +249,9 @@ public final class RailGraph {
     private final int[] component;
     private final Map<Long, List<Integer>> stopGrid = new HashMap<>();
     private final int nodeCount;
+    private record AccessPoint(double latitude, double longitude) {}
+    // A graph's topology is immutable. Reuse nearby boarding stops across all days.
+    private final java.util.concurrent.ConcurrentHashMap<AccessPoint,Map<Integer,Double>> accessCache = new java.util.concurrent.ConcurrentHashMap<>();
 
     /** 탐색용 배열 묶음을 돌려 쓴다. 동시에 도는 탐색 수만큼만 만들어지고, 그 이상은 늘지 않는다 */
     private final java.util.concurrent.ConcurrentLinkedQueue<Scratch> scratchPool = new java.util.concurrent.ConcurrentLinkedQueue<>();
@@ -675,6 +678,7 @@ public final class RailGraph {
         int firstStop = stations.length;
         int firstPosition = stations.length + stops.length;
         while (!queue.isEmpty()) {
+            if (Thread.currentThread().isInterrupted()) throw new java.util.concurrent.CancellationException("일정 생성이 취소되었습니다.");
             double[] top = queue.poll();
             int u = (int) top[1];
             double cost = top[0];
@@ -804,6 +808,17 @@ public final class RailGraph {
 
     /** 걸어갈 수 있는 역·정류장(노드 번호) → 직선거리(km) */
     private Map<Integer, Double> accessNodes(double lat, double lng) {
+        var point = new AccessPoint(lat,lng);
+        var cached = accessCache.get(point);
+        if (cached == null) {
+            cached = Map.copyOf(calculateAccessNodes(lat,lng));
+            if (accessCache.size() < 8192) accessCache.putIfAbsent(point,cached);
+        }
+        // route() filters by its walking budget; never let that mutate the shared entry.
+        return new HashMap<>(cached);
+    }
+
+    private Map<Integer, Double> calculateAccessNodes(double lat, double lng) {
         Map<Integer, Double> result = new HashMap<>();
 
         // 역: 가까운 순으로, 같은 노선에서는 가장 가까운 두 역까지만 (양쪽 방향)

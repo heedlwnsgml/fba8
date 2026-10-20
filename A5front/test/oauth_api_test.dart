@@ -38,6 +38,7 @@ class OAuthAdapter implements HttpClientAdapter {
 }
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
   late OAuthAdapter a;
   late PlannerApi api;
   setUp(() {

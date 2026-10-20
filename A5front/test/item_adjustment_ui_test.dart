@@ -117,7 +117,8 @@ void main() {
     await t.pumpAndSettle();
     expect(find.byTooltip('일정 메뉴'), findsOneWidget);
     Future<void> choose() async {
-      await t.ensureVisible(find.byTooltip('일정 메뉴'));
+      await Scrollable.ensureVisible(t.element(find.byTooltip('일정 메뉴')), alignment: 1);
+      await t.pumpAndSettle();
       await t.tap(find.byTooltip('일정 메뉴'));
       await t.pumpAndSettle();
       await t.tap(find.text('대체 장소 추천'));

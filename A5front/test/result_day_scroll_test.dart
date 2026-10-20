@@ -147,11 +147,12 @@ void main() {
       final longExtent = position().maxScrollExtent;
       expect(find.byType(PageView), findsNothing);
       expect(find.textContaining('출발역 → 도착역'), findsNothing);
-      await tester.ensureVisible(find.text('이동 상세 보기').first);
+      await Scrollable.ensureVisible(tester.element(find.text('이동 상세 보기').first), alignment: 1);
+      await tester.pumpAndSettle();
       await tester.tap(find.text('이동 상세 보기').first);
       await tester.pumpAndSettle();
       expect(find.textContaining('출발역 → 도착역'), findsOneWidget);
-      await tester.ensureVisible(find.text('다음 일차').first);
+      await Scrollable.ensureVisible(tester.element(find.text('다음 일차').first), alignment: 1);
       await tester.pumpAndSettle();
       final previous = tester.getRect(find.text('이전 일차').first);
       final next = tester.getRect(find.text('다음 일차').first);

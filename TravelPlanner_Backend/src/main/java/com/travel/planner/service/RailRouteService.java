@@ -233,6 +233,7 @@ public class RailRouteService {
             var leg=TransitLegPlanner.plan(network, busStops.index(), nameLookup, fromLat, fromLng, fromName, toLat, toLng, toName,
                     transportation == null ? "대중교통" : transportation, scheduleMinutes, date, departMinute, fromHike, toHike);
             return padded(leg);
+        } catch (java.util.concurrent.CancellationException e) { throw e;
         } catch (Exception e) {
             System.out.println("[교통] 구간 계산 실패(" + fromName + " → " + toName + "): " + e.getMessage());
             return null;

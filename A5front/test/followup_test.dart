@@ -53,7 +53,7 @@ void main() {
     await tester.tap(find.text('맛집'));
     await tester.pumpAndSettle();
     expect(TripDraft.instance.themes, ['맛집']);
-    await tester.tap(find.text('피하고 싶은 테마'));
+    await tester.tap(find.text('금지 테마'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('맛집'));
     await tester.pumpAndSettle();

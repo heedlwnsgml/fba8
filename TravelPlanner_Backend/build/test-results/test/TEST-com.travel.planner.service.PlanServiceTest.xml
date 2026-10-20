@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.travel.planner.service.PlanServiceTest" tests="32" skipped="0" failures="0" errors="0" timestamp="2026-10-20T15:27:43.994Z" hostname="DESKTOP-L0O1S4Q" time="0.124">
+  <properties/>
+  <testcase name="dayTripRespectsBothArrivalAndDeparture()" classname="com.travel.planner.service.PlanServiceTest" time="0.003"/>
+  <testcase name="mealCountThreeAddsBreakfast()" classname="com.travel.planner.service.PlanServiceTest" time="0.006"/>
+  <testcase name="defaultMealCountIsLunchAndDinner()" classname="com.travel.planner.service.PlanServiceTest" time="0.01"/>
+  <testcase name="worksWhenDbThemesAreStillEmpty()" classname="com.travel.planner.service.PlanServiceTest" time="0.007"/>
+  <testcase name="sameCuisineIsNotRepeatedInOneDayWhenAlternativesExist()" classname="com.travel.planner.service.PlanServiceTest" time="0.004"/>
+  <testcase name="everyRequestedThemeIsRepresented()" classname="com.travel.planner.service.PlanServiceTest" time="0.004"/>
+  <testcase name="dinnerIsNotLeftInTheMiddleOfNowhere()" classname="com.travel.planner.service.PlanServiceTest" time="0.002"/>
+  <testcase name="fixedScheduleIsPlacedAndNeverOverlapped()" classname="com.travel.planner.service.PlanServiceTest" time="0.004"/>
+  <testcase name="shizuoka_smallParksDoNotTakeTwoHours()" classname="com.travel.planner.service.PlanServiceTest" time="0.001"/>
+  <testcase name="lateEveningVisitsStayNearTheLodging()" classname="com.travel.planner.service.PlanServiceTest" time="0.004"/>
+  <testcase name="explicitFlightTimesAreUsed()" classname="com.travel.planner.service.PlanServiceTest" time="0.003"/>
+  <testcase name="shizuoka_outdoorNatureSpotsAreVisitedInDaylight()" classname="com.travel.planner.service.PlanServiceTest" time="0.006"/>
+  <testcase name="mealCountOneGivesASingleDinner()" classname="com.travel.planner.service.PlanServiceTest" time="0.004"/>
+  <testcase name="mealCountAboveLimitIsClampedWithoutFoodTheme()" classname="com.travel.planner.service.PlanServiceTest" time="0.001"/>
+  <testcase name="cityWithFewSightsGetsFewerDays()" classname="com.travel.planner.service.PlanServiceTest" time="0.001"/>
+  <testcase name="afternoonDeparture_arrivesAtAirportBeforeDeadline()" classname="com.travel.planner.service.PlanServiceTest" time="0.005"/>
+  <testcase name="fullDaysDoNotEndEarly()" classname="com.travel.planner.service.PlanServiceTest" time="0.005"/>
+  <testcase name="mealCountFiveForFoodLovers()" classname="com.travel.planner.service.PlanServiceTest" time="0.005"/>
+  <testcase name="parkTaggedAsNightViewIsVisitedInDaylightUnlessNightViewWasRequested()" classname="com.travel.planner.service.PlanServiceTest" time="0.003"/>
+  <testcase name="morningDeparture_goesStraightToAirport()" classname="com.travel.planner.service.PlanServiceTest" time="0.003"/>
+  <testcase name="onsenIsOncePerDayAndPreferablyInTheAfternoon()" classname="com.travel.planner.service.PlanServiceTest" time="0.005"/>
+  <testcase name="dayCityAssignmentKeepsCitiesContiguous()" classname="com.travel.planner.service.PlanServiceTest" time="0.0"/>
+  <testcase name="multiCityVisitsEveryCity()" classname="com.travel.planner.service.PlanServiceTest" time="0.005"/>
+  <testcase name="shizuoka_hotelsStationsAndFarPlacesAreNotVisited()" classname="com.travel.planner.service.PlanServiceTest" time="0.006"/>
+  <testcase name="themeParkTakesMostOfTheDay()" classname="com.travel.planner.service.PlanServiceTest" time="0.003"/>
+  <testcase name="worksWithoutHotelOrAirport()" classname="com.travel.planner.service.PlanServiceTest" time="0.003"/>
+  <testcase name="fixedOrderSimulationReportsTheBrokenPlace()" classname="com.travel.planner.service.PlanServiceTest" time="0.0"/>
+  <testcase name="scarcePoolProducesWarningsNotExceptions()" classname="com.travel.planner.service.PlanServiceTest" time="0.001"/>
+  <testcase name="excludeCafeRemovesCafesUnlessCafeThemeIsChosen()" classname="com.travel.planner.service.PlanServiceTest" time="0.006"/>
+  <testcase name="fixedOrderSimulationProtectsDepartureDeadline()" classname="com.travel.planner.service.PlanServiceTest" time="0.0"/>
+  <testcase name="doesNotLeaveTheDayCityForAMealOrNightView()" classname="com.travel.planner.service.PlanServiceTest" time="0.007"/>
+  <testcase name="sameChainIsNotRepeatedAndNoAnchorsAsVisits()" classname="com.travel.planner.service.PlanServiceTest" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

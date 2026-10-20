@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.travel.planner.lodging.RakutenTravelClientTest" tests="4" skipped="1" failures="0" errors="0" timestamp="2026-10-20T15:27:30.504Z" hostname="DESKTOP-L0O1S4Q" time="0.096">
+  <properties/>
+  <testcase name="originAndRefererFollowUpstreamNormalization()" classname="com.travel.planner.lodging.RakutenTravelClientTest" time="0.004"/>
+  <testcase name="parsesGatewayErrorInsteadOfSilentlyDroppingTheReason()" classname="com.travel.planner.lodging.RakutenTravelClientTest" time="0.004"/>
+  <testcase name="realRakutenReturnsNightlyMinimumWithUpstreamJavaHttpClient()" classname="com.travel.planner.lodging.RakutenTravelClientTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="actualJavaTransportSendsBothHeadersAndReuses24HourCache()" classname="com.travel.planner.lodging.RakutenTravelClientTest" time="0.084"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

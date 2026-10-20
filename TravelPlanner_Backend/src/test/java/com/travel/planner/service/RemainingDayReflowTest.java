@@ -30,4 +30,23 @@ class RemainingDayReflowTest {
         var rows=List.of(item(a,1100,1200),item(b,1210,1310),item(c,1310,1370));
         assertThrows(IllegalArgumentException.class,()->reflow.reflow(new PlanRequest(),ctx(),rows,1));
     }
+
+    @Test void flexibleReflowShortensReplacementBeforeChangingRemainingDurations(){
+        var a=place("before",35.6);var b=place("replacement",35.61);var c=place("keep",35.62);
+        var rows=List.of(item(a,540,600),item(b,610,730),item(c,740,800));
+        var context=ctx();context.endMin=800;
+        assertThrows(IllegalArgumentException.class,()->reflow.reflow(new PlanRequest(),context,rows,1));
+        var out=reflow.reflowFlexible(new PlanRequest(),context,rows,1);
+        int replacement=out.get(1).getEndMin()-out.get(1).getStartMin();
+        assertTrue(replacement<120 && replacement>=15);
+        assertEquals(60,out.get(2).getEndMin()-out.get(2).getStartMin());
+        assertEquals(120,rows.get(1).endMin-rows.get(1).startMin,"preview does not mutate original input");
+        assertTrue(out.getLast().getEndMin()<=800);
+    }
+    @Test void flexibleReflowRespectsMinimumStaysAndRejectsImpossibleTravel(){
+        var a=place("before",35.6);var b=place("distant",40.0);
+        var rows=List.of(item(a,540,600),item(b,610,730));
+        var context=ctx();context.endMin=650;
+        assertThrows(IllegalArgumentException.class,()->reflow.reflowFlexible(new PlanRequest(),context,rows,1));
+    }
 }

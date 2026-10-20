@@ -99,6 +99,7 @@ class _Adapter implements HttpClientAdapter {
 }
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
   late _Adapter adapter;
   late PlannerApi api;
   final plan = <String, dynamic>{

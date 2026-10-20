@@ -36,6 +36,7 @@ android {
         applicationId = "com.aiplanner.ai_travel_planner"
 
         minSdk = 24
+        testInstrumentationRunner = "com.aiplanner.ai_travel_planner.GenerationNotificationInstrumentation"
         targetSdk = flutter.targetSdkVersion
 
         versionCode = flutter.versionCode

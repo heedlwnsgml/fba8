@@ -100,14 +100,14 @@ void main() {
         find.byKey(const ValueKey('itinerary-bottom-actions')),
         findsOneWidget,
       );
-      await tester.drag(scroll, const Offset(0, -450));
+      await tester.dragFrom(tester.getBottomLeft(scroll) + const Offset(150, -30), const Offset(0, -450));
       await tester.pumpAndSettle();
       expect(tester.getTopLeft(map), top);
       expect(
         find.byKey(const ValueKey('itinerary-bottom-actions')),
         findsNothing,
       );
-      await tester.drag(scroll, const Offset(0, 120));
+      await tester.dragFrom(tester.getBottomLeft(scroll) + const Offset(150, -30), const Offset(0, 120));
       await tester.pumpAndSettle();
       expect(
         find.byKey(const ValueKey('itinerary-bottom-actions')),

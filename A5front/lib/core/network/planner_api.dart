@@ -6,6 +6,7 @@ import 'dart:math';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import '../state/trip_draft.dart';
+import '../services/generation_background.dart';
 import '../state/money_display.dart';
 
 String plannerUserMessage(String message) =>
@@ -279,6 +280,7 @@ class PlannerApi extends ChangeNotifier {
   }
 
   void logout() {
+    unawaited(GenerationBackground.clear());
     _token = null;
     _viewAsUser = false;
     money.reset();
@@ -483,7 +485,17 @@ class PlannerApi extends ChangeNotifier {
   }
 
   Future<void> _runGeneration(GenerationTask task) async {
+    final token = _token!;
     try {
+      unawaited(
+        GenerationBackground.watch(
+          id: task.id,
+          title: task.title,
+          baseUrl: baseUrl,
+          token: token,
+        ),
+      );
+      if (task.revision != _sessionRevision) return;
       final response = await createPlan(
         task.request,
         requestId: task.id,
@@ -512,7 +524,18 @@ class PlannerApi extends ChangeNotifier {
       }
     } finally {
       if (!task.submitted.isCompleted) task.submitted.complete();
-      if (task.revision == _sessionRevision) notifyListeners();
+      if (task.revision == _sessionRevision) {
+        unawaited(
+          GenerationBackground.finish(
+            id: task.id,
+            title: task.title,
+            token: token,
+            status: task.status,
+            planId: (task.result?['response'] as Map?)?['planId'],
+          ),
+        );
+        notifyListeners();
+      }
     }
   }
 
@@ -560,10 +583,9 @@ class PlannerApi extends ChangeNotifier {
     }
     final id = requestId ?? _generationId!;
     final revision = _sessionRevision;
-    final deadline = DateTime.now().add(const Duration(minutes: 20));
     Map<String, dynamic>? job;
     bool submitted = false;
-    while (DateTime.now().isBefore(deadline)) {
+    while (true) {
       if (_tasks[id]?.status == 'CANCELLED')
         throw const PlannerApiException('생성을 취소했습니다.');
       if (revision != _sessionRevision)
@@ -625,9 +647,6 @@ class PlannerApi extends ChangeNotifier {
       }
       await Future<void>.delayed(generationPollInterval);
     }
-    throw const PlannerApiException(
-      '일정 생성 결과를 아직 확인하지 못했습니다. 연결을 확인한 뒤 다시 시도하면 같은 요청의 결과를 조회합니다.',
-    );
   }
 
   Future<Map<String, dynamic>> regeneratePlan(

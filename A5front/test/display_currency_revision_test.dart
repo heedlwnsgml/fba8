@@ -121,14 +121,16 @@ void main() {
     expect(find.textContaining('미확인'), findsNothing);
     expect(find.textContaining('자료 없음'), findsNothing);
     expect(find.textContaining('정보 없음'), findsNothing);
-    await tester.ensureVisible(find.text('방문 정보'));
+    await Scrollable.ensureVisible(tester.element(find.text('방문 정보')), alignment: 1);
+    await tester.pumpAndSettle();
     await tester.tap(find.text('방문 정보'));
     await tester.pumpAndSettle();
     expect(find.textContaining('확인된 주소'), findsOneWidget);
     await tester.pumpWidget(const SizedBox());
     await tester.pumpWidget(result(true));
     await tester.pumpAndSettle();
-    await tester.ensureVisible(find.text('방문 정보'));
+    await Scrollable.ensureVisible(tester.element(find.text('방문 정보')), alignment: 1);
+    await tester.pumpAndSettle();
     await tester.tap(find.text('방문 정보'));
     await tester.pumpAndSettle();
     expect(find.text('전화번호'), findsOneWidget);

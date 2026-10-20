@@ -34,7 +34,7 @@
     },
     {
       "path": "A5front/build/5e839a17c96adb261c68470fc0d75bde.cache.dill.track.dill",
-      "reason": "configured-credential"
+      "reason": "credential-pattern"
     },
     {
       "path": "A5front/.dart_tool/chrome-device/Default/shared_proto_db/000003.log",
@@ -70,7 +70,7 @@
     },
     {
       "path": "A5front/.dart_tool/flutter_build/e8cbbe80e47e2c0a91c8e7195d3c027e/app.dill",
-      "reason": "configured-credential"
+      "reason": "credential-pattern"
     },
     {
       "path": "A5front/.dart_tool/flutter_build/f0a9e5fa94911252508c58bd2586bc18/app.dill",
@@ -86,15 +86,15 @@
     },
     {
       "path": "A5front/build/app/intermediates/assets/debug/mergeDebugAssets/flutter_assets/kernel_blob.bin",
-      "reason": "configured-credential"
+      "reason": "credential-pattern"
     },
     {
       "path": "A5front/build/app/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/flutter_assets/kernel_blob.bin.jar",
-      "reason": "archive-configured-credential"
+      "reason": "archive-credential-pattern"
     },
     {
       "path": "A5front/build/app/intermediates/flutter/debug/flutter_assets/kernel_blob.bin",
-      "reason": "configured-credential"
+      "reason": "credential-pattern"
     },
     {
       "path": "A5front/build/app/intermediates/linked_resources_binary_format/debug/processDebugResources/linked-resources-binary-format-debug.ap_",
@@ -122,14 +122,6 @@
     },
     {
       "path": "A5front/build/app/intermediates/merged_native_libs/debug/mergeDebugNativeLibs/out/lib/arm64-v8a/libVkLayer_khronos_validation.so",
-      "reason": "credential-pattern"
-    },
-    {
-      "path": "A5front/build/app/intermediates/merged_native_libs/debug/mergeDebugNativeLibs/out/lib/armeabi-v7a/libflutter.so",
-      "reason": "credential-pattern"
-    },
-    {
-      "path": "A5front/build/app/intermediates/merged_native_libs/debug/mergeDebugNativeLibs/out/lib/x86_64/libflutter.so",
       "reason": "credential-pattern"
     },
     {
@@ -171,6 +163,22 @@
     {
       "path": "TravelPlanner_Backend/config/database-local.properties",
       "reason": "secret-configuration"
+    },
+    {
+      "path": "TravelPlanner_Backend/.gradle/buildOutputCleanup/buildOutputCleanup.lock",
+      "reason": "cannot-verify"
+    },
+    {
+      "path": "TravelPlanner_Backend/.gradle/9.7.1/checksums/checksums.lock",
+      "reason": "cannot-verify"
+    },
+    {
+      "path": "TravelPlanner_Backend/.gradle/9.7.1/executionHistory/executionHistory.lock",
+      "reason": "cannot-verify"
+    },
+    {
+      "path": "TravelPlanner_Backend/.gradle/9.7.1/fileHashes/fileHashes.lock",
+      "reason": "cannot-verify"
     },
     {
       "path": "TravelPlanner_Backend/build/libs/planner-0.0.1-SNAPSHOT.jar",

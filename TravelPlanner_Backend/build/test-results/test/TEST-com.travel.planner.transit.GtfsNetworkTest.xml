@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.travel.planner.transit.GtfsNetworkTest" tests="14" skipped="0" failures="0" errors="0" timestamp="2026-10-20T15:27:51.828Z" hostname="DESKTOP-L0O1S4Q" time="0.136">
+  <properties/>
+  <testcase name="walkingIsSuggestedWhereBusDataExistsButNothingBeatsWalking()" classname="com.travel.planner.transit.GtfsNetworkTest" time="0.01"/>
+  <testcase name="japaneseHolidaysDecideWhichTimetableApplies()" classname="com.travel.planner.transit.GtfsNetworkTest" time="0.0"/>
+  <testcase name="legPlannerDescribesTheBusRideAndWarnsAboutSparseService()" classname="com.travel.planner.transit.GtfsNetworkTest" time="0.009"/>
+  <testcase name="routeWithTooMuchWalkingGivesWayToTheBusThatStopsNearby()" classname="com.travel.planner.transit.GtfsNetworkTest" time="0.009"/>
+  <testcase name="railNetworkLineCoveredByAFeedIsReplacedByTheFeed()" classname="com.travel.planner.transit.GtfsNetworkTest" time="0.017"/>
+  <testcase name="seasonalRouteRunsOnlyInItsSeasonAndDropOffRestrictionIsRespected()" classname="com.travel.planner.transit.GtfsNetworkTest" time="0.009"/>
+  <testcase name="busRouteUsesTheOfficialFareAndTheTripCountOfThatDay()" classname="com.travel.planner.transit.GtfsNetworkTest" time="0.008"/>
+  <testcase name="kanaReadingIsWrittenInHangulByTheOfficialRules()" classname="com.travel.planner.transit.GtfsNetworkTest" time="0.0"/>
+  <testcase name="timeAndDateFormatsAreParsedLeniently()" classname="com.travel.planner.transit.GtfsNetworkTest" time="0.0"/>
+  <testcase name="feedIsReducedToPatternsWithTimesTripCountsAndFares()" classname="com.travel.planner.transit.GtfsNetworkTest" time="0.008"/>
+  <testcase name="patternSurvivesTheRoundTripThroughDatabaseRows()" classname="com.travel.planner.transit.GtfsNetworkTest" time="0.008"/>
+  <testcase name="expiredFeedIsStillReadButFlaggedAndOldFormatIsAccepted()" classname="com.travel.planner.transit.GtfsNetworkTest" time="0.025"/>
+  <testcase name="railAndBusAreCombinedWithAWalkingTransfer()" classname="com.travel.planner.transit.GtfsNetworkTest" time="0.008"/>
+  <testcase name="railRoutesInAFeedAreSkippedUnlessRequested()" classname="com.travel.planner.transit.GtfsNetworkTest" time="0.023"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

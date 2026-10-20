@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.travel.planner.service.CityRegionValidationTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-20T15:27:35.243Z" hostname="DESKTOP-L0O1S4Q" time="0.052">
+  <properties/>
+  <testcase name="distantRegionsStillProduceTheTripLengthWarning()" classname="com.travel.planner.service.CityRegionValidationTest" time="0.045"/>
+  <testcase name="billingDisabledStillAllowsTokyoAndSelectedAirports()" classname="com.travel.planner.service.CityRegionValidationTest" time="0.003"/>
+  <testcase name="customJapaneseCitiesStillUseLookupAndInvalidCitiesAreNotAccepted()" classname="com.travel.planner.service.CityRegionValidationTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

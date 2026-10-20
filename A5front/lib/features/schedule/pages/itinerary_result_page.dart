@@ -68,6 +68,8 @@ class _ItineraryResultPageState extends State<ItineraryResultPage> {
   int _selectionRevision = 0;
   bool _showActions = true;
   bool _showPinNavigation = false;
+  bool _isMapPinned = true;
+  final Map<int, GlobalKey> _dayMapKeys = {};
   final Map<String, GlobalKey> _itemKeys = {};
   final GlobalKey _scrollViewportKey = GlobalKey();
   GlobalKey _itemKey(int index) =>
@@ -89,10 +91,12 @@ class _ItineraryResultPageState extends State<ItineraryResultPage> {
           final delta =
               box.localToGlobal(Offset.zero).dy -
               viewport.localToGlobal(Offset.zero).dy;
-          final offset = (_contentController.offset + delta - 12).clamp(
-            0.0,
-            _contentController.position.maxScrollExtent,
-          );
+          final offset =
+              (_contentController.offset +
+                      delta -
+                      (_isMapPinned ? _mapSectionHeight : 0) -
+                      12)
+                  .clamp(0.0, _contentController.position.maxScrollExtent);
           _contentController.animateTo(
             offset,
             duration: const Duration(milliseconds: 320),
@@ -321,6 +325,14 @@ class _ItineraryResultPageState extends State<ItineraryResultPage> {
       if (index >= 0) _handleDayChanged(index);
     }
   }
+
+  double get _mapSectionHeight =>
+      (MediaQuery.sizeOf(context).height * .42).clamp(225.0, 375.0) +
+      44 +
+      (_showPinNavigation &&
+              currentDay.items.any((item) => item.mapNumber != null)
+          ? 54
+          : 0);
 
   Widget _pinNavigation() {
     final located = currentDay.items.indexed
@@ -786,7 +798,7 @@ class _ItineraryResultPageState extends State<ItineraryResultPage> {
     }
     if (!mounted) return;
     if (choices.isEmpty) {
-      _notice('이 도시에서 영업시간과 이동시간이 맞는 대체 장소가 없습니다.');
+      _notice('체류시간을 줄여도 선택한 조건과 남은 일정에 맞는 다른 장소를 찾지 못했습니다. 다른 테마를 선택해 주세요.');
       return;
     }
     final selected = await showModalBottomSheet<Map<String, dynamic>>(
@@ -806,7 +818,13 @@ class _ItineraryResultPageState extends State<ItineraryResultPage> {
             ...choices.map(
               (choice) => ListTile(
                 title: Text(choice['placeName']?.toString() ?? ''),
-                subtitle: Text(choice['address']?.toString() ?? ''),
+                subtitle: Text(
+                  [
+                    choice['address']?.toString() ?? '',
+                    if (choice['stayMinutes'] is num)
+                      '예상 체류시간: ${choice['stayMinutes']}분',
+                  ].where((s) => s.isNotEmpty).join('\n'),
+                ),
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () => Navigator.pop(sheetContext, choice),
               ),
@@ -820,7 +838,7 @@ class _ItineraryResultPageState extends State<ItineraryResultPage> {
       context: context,
       title: '선택한 장소로 재설정할까요?',
       message:
-          '해당 일차를 변경하면 남은 일정의 시간이 조정될 수 있습니다. 이후 관광지·식사 장소·숙소는 유지됩니다.${RegExp(r"숙소|숙박|호텔|료칸").hasMatch(item.category) ? " 숙소 변경 시 다음 날 출발 숙소와 이동 시간도 다시 계산합니다." : ""}',
+          '해당 일차를 변경하면 체류시간과 남은 일정의 시간이 조정될 수 있습니다. 이후 관광지·식사 장소·숙소는 유지됩니다.${RegExp(r"숙소|숙박|호텔|료칸").hasMatch(item.category) ? " 숙소 변경 시 다음 날 출발 숙소와 이동 시간도 다시 계산합니다." : ""}',
       confirmText: '재설정',
     );
     if (!confirmed || !mounted) return;
@@ -1413,300 +1431,386 @@ class _ItineraryResultPageState extends State<ItineraryResultPage> {
                 ),
               ),
 
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Center(
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 840),
-                    child: _ItineraryMapCard(
-                      key: ValueKey('day-map-${currentDay.dayNumber}'),
-                      loadTiles: widget.loadMapTiles,
-                      pinsVisible: _showPinNavigation,
-                      onTogglePins: () => setState(
-                        () => _showPinNavigation = !_showPinNavigation,
-                      ),
-                      height: (MediaQuery.sizeOf(context).height * .42).clamp(
-                        225.0,
-                        375.0,
-                      ),
-                      selectionRevision: _selectionRevision,
-                      selectedItemIndex: _selectedItemIndex,
-                      onItemSelected: (index) =>
-                          _selectItem(index, scroll: true),
-                      airportDirections: {
-                        for (var i = 0; i < currentDay.items.length; i++)
-                          i: currentDay.items[i].airportAccessUrl,
-                      },
-                      directions: {
-                        for (final item in currentDay.items)
-                          if (item.mapNumber != null)
-                            currentDay.items.indexOf(item): item.directionsUrl,
-                      },
-                      paths: currentDay.items
-                          .where((i) => i.geometry.length >= 2)
-                          .map(
-                            (i) => RouteMapPath(
-                              coordinates: i.geometry,
-                              source: i.geometrySource,
-                            ),
-                          )
-                          .toList(),
-                      initialTarget: _initialMapTarget,
-                      markers: _currentMarkers,
-                      onMapCreated: (controller) {
-                        _mapController = controller;
-
-                        _updateMapCamera();
-                      },
-                    ),
-                  ),
-                ),
-              ),
-              AnimatedSize(
-                duration: const Duration(milliseconds: 200),
-                child: _showPinNavigation
-                    ? _pinNavigation()
-                    : const SizedBox.shrink(),
-              ),
               Expanded(
                 child: NotificationListener<UserScrollNotification>(
                   key: _scrollViewportKey,
                   onNotification: _handleUserScroll,
-                  child: SingleChildScrollView(
+                  child: CustomScrollView(
                     controller: _contentController,
-                    key: const ValueKey("itinerary-day-scroll"),
-                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-                    child: Center(
-                      child: ConstrainedBox(
-                        constraints: const BoxConstraints(maxWidth: 840),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // =================================================
-                            // 기존 파란 여행 정보 박스 대신 지도
-                            // =================================================
-
-                            const SizedBox(height: 16),
-
-                            // =================================================
-                            // 현재 날짜 + 추천 패스
-                            // =================================================
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                    key: const ValueKey('itinerary-day-scroll'),
+                    slivers: [
+                      SliverPersistentHeader(
+                        pinned: _isMapPinned,
+                        delegate: _ItineraryMapHeader(
+                          extent: _mapSectionHeight,
+                          child: ColoredBox(
+                            color: Theme.of(context).scaffoldBackgroundColor,
+                            child: Column(
                               children: [
-                                Expanded(
-                                  child: Column(
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 16,
+                                  ),
+                                  child: Center(
+                                    child: ConstrainedBox(
+                                      constraints: const BoxConstraints(
+                                        maxWidth: 840,
+                                      ),
+                                      child: _ItineraryMapCard(
+                                        key: _dayMapKeys.putIfAbsent(
+                                          currentDay.dayNumber,
+                                          () => GlobalKey(),
+                                        ),
+                                        loadTiles: widget.loadMapTiles,
+                                        pinsVisible: _showPinNavigation,
+                                        onTogglePins: () => setState(
+                                          () => _showPinNavigation =
+                                              !_showPinNavigation,
+                                        ),
+                                        height:
+                                            (MediaQuery.sizeOf(context).height *
+                                                    .42)
+                                                .clamp(225.0, 375.0),
+                                        selectionRevision: _selectionRevision,
+                                        selectedItemIndex: _selectedItemIndex,
+                                        onItemSelected: (index) =>
+                                            _selectItem(index, scroll: true),
+                                        airportDirections: {
+                                          for (
+                                            var i = 0;
+                                            i < currentDay.items.length;
+                                            i++
+                                          )
+                                            i: currentDay
+                                                .items[i]
+                                                .airportAccessUrl,
+                                        },
+                                        directions: {
+                                          for (final item in currentDay.items)
+                                            if (item.mapNumber != null)
+                                              currentDay.items.indexOf(item):
+                                                  item.directionsUrl,
+                                        },
+                                        paths: currentDay.items
+                                            .where(
+                                              (i) => i.geometry.length >= 2,
+                                            )
+                                            .map(
+                                              (i) => RouteMapPath(
+                                                coordinates: i.geometry,
+                                                source: i.geometrySource,
+                                              ),
+                                            )
+                                            .toList(),
+                                        initialTarget: _initialMapTarget,
+                                        markers: _currentMarkers,
+                                        onMapCreated: (controller) {
+                                          _mapController = controller;
+
+                                          _updateMapCamera();
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 44,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 16,
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        TextButton.icon(
+                                          key: const ValueKey(
+                                            'toggle-fixed-map',
+                                          ),
+                                          onPressed: () => setState(
+                                            () => _isMapPinned = !_isMapPinned,
+                                          ),
+                                          icon: Icon(
+                                            _isMapPinned
+                                                ? Icons.lock_open_rounded
+                                                : Icons.lock_outline_rounded,
+                                            size: 18,
+                                          ),
+                                          label: Text(
+                                            _isMapPinned ? '지도 고정 해제' : '지도 고정',
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                if (_showPinNavigation) _pinNavigation(),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      SliverPadding(
+                        padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+                        sliver: SliverToBoxAdapter(
+                          child: Center(
+                            child: ConstrainedBox(
+                              constraints: const BoxConstraints(maxWidth: 840),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  // =================================================
+                                  // 기존 파란 여행 정보 박스 대신 지도
+                                  // =================================================
+
+                                  const SizedBox(height: 16),
+
+                                  // =================================================
+                                  // 현재 날짜 + 추천 패스
+                                  // =================================================
+                                  Row(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                        CrossAxisAlignment.center,
                                     children: [
-                                      Text(
-                                        '${currentDay.dayNumber}일차 일정',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleLarge
-                                            ?.copyWith(
-                                              fontWeight: FontWeight.w900,
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              '${currentDay.dayNumber}일차 일정',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleLarge
+                                                  ?.copyWith(
+                                                    fontWeight: FontWeight.w900,
+                                                  ),
                                             ),
+
+                                            const SizedBox(height: 4),
+
+                                            if (currentDay.dateLabel.isNotEmpty)
+                                              Text(
+                                                currentDay.dateLabel,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium
+                                                    ?.copyWith(
+                                                      color: AppColors
+                                                          .textSecondary,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                    ),
+                                              ),
+                                          ],
+                                        ),
                                       ),
 
-                                      const SizedBox(height: 4),
+                                      OutlinedButton.icon(
+                                        onPressed: _showRecommendedPass,
+                                        icon: const Icon(
+                                          Icons.confirmation_number_outlined,
+                                          size: 18,
+                                        ),
+                                        label: const Text(
+                                          '패스 상세보기',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w800,
+                                          ),
+                                        ),
+                                        style: OutlinedButton.styleFrom(
+                                          foregroundColor: AppColors.primary,
+                                          side: const BorderSide(
+                                            color: AppColors.primary,
+                                          ),
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 12,
+                                            vertical: 9,
+                                          ),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                              14,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
 
-                                      if (currentDay.dateLabel.isNotEmpty)
-                                        Text(
-                                          currentDay.dateLabel,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium
-                                              ?.copyWith(
-                                                color: AppColors.textSecondary,
-                                                fontWeight: FontWeight.w700,
-                                              ),
+                                  Container(
+                                    width: double.infinity,
+                                    margin: const EdgeInsets.only(top: 10),
+                                    padding: const EdgeInsets.all(14),
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFFEFF6FF),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: Text(
+                                      recommendedPass,
+                                      style: const TextStyle(height: 1.5),
+                                    ),
+                                  ),
+                                  if (_guidance.isNotEmpty)
+                                    ExpansionTile(
+                                      tilePadding: EdgeInsets.zero,
+                                      expandedCrossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      title: const Text(
+                                        '추가 안내',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                      children: [
+                                        for (final group in _guidance.entries)
+                                          Container(
+                                            margin: const EdgeInsets.only(
+                                              bottom: 10,
+                                            ),
+                                            padding: const EdgeInsets.all(14),
+                                            decoration: BoxDecoration(
+                                              color: const Color(0xFFF4F6F9),
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.stretch,
+                                              children: [
+                                                Text(
+                                                  group.key,
+                                                  style: const TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                const SizedBox(height: 6),
+                                                for (final message
+                                                    in group.value)
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                          bottom: 5,
+                                                        ),
+                                                    child: Text(
+                                                      message,
+                                                      style: const TextStyle(
+                                                        height: 1.5,
+                                                      ),
+                                                    ),
+                                                  ),
+                                              ],
+                                            ),
+                                          ),
+                                      ],
+                                    ),
+                                  buildDayGuidance(currentDay),
+                                  const SizedBox(height: 12),
+
+                                  // =================================================
+                                  // 날짜 페이지 위치 표시
+                                  // =================================================
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      for (
+                                        int index = 0;
+                                        index < days.length;
+                                        index++
+                                      )
+                                        AnimatedContainer(
+                                          duration: const Duration(
+                                            milliseconds: 180,
+                                          ),
+                                          margin: const EdgeInsets.symmetric(
+                                            horizontal: 4,
+                                          ),
+                                          width: index == selectedDayIndex
+                                              ? 20
+                                              : 7,
+                                          height: 7,
+                                          decoration: BoxDecoration(
+                                            color: index == selectedDayIndex
+                                                ? AppColors.primary
+                                                : AppColors.border,
+                                            borderRadius: BorderRadius.circular(
+                                              999,
+                                            ),
+                                          ),
                                         ),
                                     ],
                                   ),
-                                ),
 
-                                OutlinedButton.icon(
-                                  onPressed: _showRecommendedPass,
-                                  icon: const Icon(
-                                    Icons.confirmation_number_outlined,
-                                    size: 18,
-                                  ),
-                                  label: const Text(
-                                    '패스 상세보기',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w800,
-                                    ),
-                                  ),
-                                  style: OutlinedButton.styleFrom(
-                                    foregroundColor: AppColors.primary,
-                                    side: const BorderSide(
-                                      color: AppColors.primary,
-                                    ),
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 12,
-                                      vertical: 9,
-                                    ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(14),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
+                                  const SizedBox(height: 8),
 
-                            Container(
-                              width: double.infinity,
-                              margin: const EdgeInsets.only(top: 10),
-                              padding: const EdgeInsets.all(14),
-                              decoration: BoxDecoration(
-                                color: const Color(0xFFEFF6FF),
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Text(
-                                recommendedPass,
-                                style: const TextStyle(height: 1.5),
-                              ),
-                            ),
-                            if (_guidance.isNotEmpty)
-                              ExpansionTile(
-                                tilePadding: EdgeInsets.zero,
-                                expandedCrossAxisAlignment:
-                                    CrossAxisAlignment.stretch,
-                                title: const Text(
-                                  '추가 안내',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w700,
+                                  Center(
+                                    child: Text(
+                                      '좌우로 넘겨 날짜별 일정을 확인하세요.',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall
+                                          ?.copyWith(
+                                            color: AppColors.textSecondary,
+                                          ),
+                                    ),
                                   ),
-                                ),
-                                children: [
-                                  for (final group in _guidance.entries)
-                                    Container(
-                                      margin: const EdgeInsets.only(bottom: 10),
-                                      padding: const EdgeInsets.all(14),
-                                      decoration: BoxDecoration(
-                                        color: const Color(0xFFF4F6F9),
-                                        borderRadius: BorderRadius.circular(12),
+
+                                  const SizedBox(height: 14),
+
+                                  // =================================================
+                                  // 날짜별 일정 PageView
+                                  //
+                                  // 오른쪽 / 왼쪽 스와이프로 날짜 변경
+                                  // =================================================
+                                  _dayNavigation('top'),
+                                  GestureDetector(
+                                    onHorizontalDragEnd: (details) {
+                                      final velocity =
+                                          details.primaryVelocity ?? 0;
+                                      if (velocity.abs() < 150) return;
+                                      final next =
+                                          selectedDayIndex +
+                                          (velocity < 0 ? 1 : -1);
+                                      if (next >= 0 && next < days.length)
+                                        _handleDayChanged(next);
+                                    },
+                                    child: Column(
+                                      key: ValueKey(
+                                        'timeline-$selectedDayIndex',
                                       ),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.stretch,
-                                        children: [
-                                          Text(
-                                            group.key,
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
+                                      children: [
+                                        for (
+                                          int index = 0;
+                                          index < currentDay.items.length;
+                                          index++
+                                        )
+                                          GestureDetector(
+                                            key: _itemKey(index),
+                                            onTap: () => _selectItem(index),
+                                            child: _TimelineItem(
+                                              key: ValueKey(
+                                                'timeline-card-$selectedDayIndex-$index',
+                                              ),
+                                              selected:
+                                                  _selectedItemIndex == index,
+                                              item: currentDay.items[index],
+                                              onMoreTap: () => _showItemMenu(
+                                                currentDay,
+                                                currentDay.items[index],
+                                              ),
                                             ),
                                           ),
-                                          const SizedBox(height: 6),
-                                          for (final message in group.value)
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                bottom: 5,
-                                              ),
-                                              child: Text(
-                                                message,
-                                                style: const TextStyle(
-                                                  height: 1.5,
-                                                ),
-                                              ),
-                                            ),
-                                        ],
-                                      ),
-                                    ),
-                                ],
-                              ),
-                            buildDayGuidance(currentDay),
-                            const SizedBox(height: 12),
-
-                            // =================================================
-                            // 날짜 페이지 위치 표시
-                            // =================================================
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                for (
-                                  int index = 0;
-                                  index < days.length;
-                                  index++
-                                )
-                                  AnimatedContainer(
-                                    duration: const Duration(milliseconds: 180),
-                                    margin: const EdgeInsets.symmetric(
-                                      horizontal: 4,
-                                    ),
-                                    width: index == selectedDayIndex ? 20 : 7,
-                                    height: 7,
-                                    decoration: BoxDecoration(
-                                      color: index == selectedDayIndex
-                                          ? AppColors.primary
-                                          : AppColors.border,
-                                      borderRadius: BorderRadius.circular(999),
+                                      ],
                                     ),
                                   ),
-                              ],
-                            ),
-
-                            const SizedBox(height: 8),
-
-                            Center(
-                              child: Text(
-                                '좌우로 넘겨 날짜별 일정을 확인하세요.',
-                                style: Theme.of(context).textTheme.bodySmall
-                                    ?.copyWith(color: AppColors.textSecondary),
-                              ),
-                            ),
-
-                            const SizedBox(height: 14),
-
-                            // =================================================
-                            // 날짜별 일정 PageView
-                            //
-                            // 오른쪽 / 왼쪽 스와이프로 날짜 변경
-                            // =================================================
-                            _dayNavigation('top'),
-                            GestureDetector(
-                              onHorizontalDragEnd: (details) {
-                                final velocity = details.primaryVelocity ?? 0;
-                                if (velocity.abs() < 150) return;
-                                final next =
-                                    selectedDayIndex + (velocity < 0 ? 1 : -1);
-                                if (next >= 0 && next < days.length)
-                                  _handleDayChanged(next);
-                              },
-                              child: Column(
-                                key: ValueKey('timeline-$selectedDayIndex'),
-                                children: [
-                                  for (
-                                    int index = 0;
-                                    index < currentDay.items.length;
-                                    index++
-                                  )
-                                    GestureDetector(
-                                      key: _itemKey(index),
-                                      onTap: () => _selectItem(index),
-                                      child: _TimelineItem(
-                                        key: ValueKey(
-                                          'timeline-card-$selectedDayIndex-$index',
-                                        ),
-                                        selected: _selectedItemIndex == index,
-                                        item: currentDay.items[index],
-                                        onMoreTap: () => _showItemMenu(
-                                          currentDay,
-                                          currentDay.items[index],
-                                        ),
-                                      ),
-                                    ),
+                                  const SizedBox(height: 20),
+                                  _dayNavigation('bottom'),
                                 ],
                               ),
                             ),
-                            const SizedBox(height: 20),
-                            _dayNavigation('bottom'),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
                 ),
               ),
@@ -2321,3 +2425,22 @@ class _ItineraryItem {
 // ===========================================================
 // 대체 추천 장소
 // ===========================================================
+
+class _ItineraryMapHeader extends SliverPersistentHeaderDelegate {
+  const _ItineraryMapHeader({required this.extent, required this.child});
+  final double extent;
+  final Widget child;
+  @override
+  double get minExtent => extent;
+  @override
+  double get maxExtent => extent;
+  @override
+  Widget build(
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) => SizedBox.expand(child: child);
+  @override
+  bool shouldRebuild(covariant _ItineraryMapHeader oldDelegate) =>
+      oldDelegate.extent != extent || oldDelegate.child != child;
+}

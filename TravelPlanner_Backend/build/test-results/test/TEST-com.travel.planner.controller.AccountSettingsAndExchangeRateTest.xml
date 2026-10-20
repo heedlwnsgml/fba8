@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.travel.planner.controller.AccountSettingsAndExchangeRateTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-10-20T15:27:29.354Z" hostname="DESKTOP-L0O1S4Q" time="0.139">
+  <properties/>
+  <testcase name="invalidTimeAndRatesAreRejectedByValidation()" classname="com.travel.planner.controller.AccountSettingsAndExchangeRateTest" time="0.092"/>
+  <testcase name="onlyConfiguredEditorWithAdminRoleCanWriteRates()" classname="com.travel.planner.controller.AccountSettingsAndExchangeRateTest" time="0.012"/>
+  <testcase name="settingsPersistPerAccountAndNeverLeakAcrossUsers()" classname="com.travel.planner.controller.AccountSettingsAndExchangeRateTest" time="0.003"/>
+  <testcase name="hotelCurrencyDefaultsToWonAndPersistsOnlyForItsOwner()" classname="com.travel.planner.controller.AccountSettingsAndExchangeRateTest" time="0.004"/>
+  <testcase name="onlyWonAndYenAreAcceptedAsDefaultCurrency()" classname="com.travel.planner.controller.AccountSettingsAndExchangeRateTest" time="0.005"/>
+  <system-out><![CDATA[2026-10-21T00:27:29.355+09:00  INFO 26736 --- [planner] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.travel.planner.controller.AccountSettingsAndExchangeRateTest]: AccountSettingsAndExchangeRateTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-21T00:27:29.373+09:00  INFO 26736 --- [planner] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.travel.planner.PlannerApplication for test class com.travel.planner.controller.AccountSettingsAndExchangeRateTest
+2026-10-21T00:27:29.374+09:00  INFO 26736 --- [planner] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.travel.planner.controller.AccountSettingsAndExchangeRateTest]: AccountSettingsAndExchangeRateTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-21T00:27:29.375+09:00  INFO 26736 --- [planner] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.travel.planner.PlannerApplication for test class com.travel.planner.controller.AccountSettingsAndExchangeRateTest
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

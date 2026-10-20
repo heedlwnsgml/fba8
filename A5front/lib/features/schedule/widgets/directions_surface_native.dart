@@ -11,7 +11,7 @@ Widget directionsSurface(Uri route, Uri embedded) {
   ].contains(defaultTargetPlatform)) {
     return const Center(child: Text('지도 미리보기는 휴대폰 또는 웹에서 이용할 수 있습니다.'));
   }
-  return _DirectionsWebView(route: route);
+  return _DirectionsWebView(route: embedded);
 }
 
 class _DirectionsWebView extends StatefulWidget {
@@ -29,9 +29,19 @@ class _DirectionsWebViewState extends State<_DirectionsWebView> {
   @override
   void initState() {
     super.initState();
-    controller = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setNavigationDelegate(
+    controller = WebViewController();
+    initialize();
+  }
+
+  Future<void> initialize() async {
+    try {
+      await controller.setJavaScriptMode(JavaScriptMode.unrestricted);
+      // Finish configuring the map renderer before the first request. Otherwise
+      // Android can request the mobile text directions page with its default UA.
+      await controller.setUserAgent(
+        'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36',
+      );
+      await controller.setNavigationDelegate(
         NavigationDelegate(
           onNavigationRequest: (request) =>
               Uri.tryParse(request.url)?.scheme == 'https'
@@ -52,7 +62,14 @@ class _DirectionsWebViewState extends State<_DirectionsWebView> {
           },
         ),
       );
-    load();
+      if (mounted) load();
+    } catch (_) {
+      if (mounted)
+        setState(() {
+          failed = true;
+          loading = false;
+        });
+    }
   }
 
   void load() {

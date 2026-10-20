@@ -13,6 +13,41 @@ import lombok.RequiredArgsConstructor;
 public class RemainingDayReflow {
     private final PlanService engine;
 
+    /** Prefer full stays, shorten the replacement first, and only then shorten
+     * remaining visits if needed. Never remove/reorder stops or trim reservations. */
+    public List<PlanService.SimulatedItinerary> reflowFlexible(PlanRequest request, PlanService.DayContext ctx,
+            List<PlanService.DayItem> originals, int from) {
+        var day = originals.stream().map(d -> new PlanService.DayItem(d.type,d.place,d.title,d.startMin,d.endMin))
+            .collect(java.util.stream.Collectors.toCollection(ArrayList::new));
+        IllegalArgumentException failure;
+        try { return reflow(request,ctx,day,from); } catch(IllegalArgumentException ex) { failure=ex; }
+        if(from>=0 && from<day.size()) {
+            while(shorten(day.get(from))) {
+                try { return reflow(request,ctx,day,from); } catch(IllegalArgumentException ex) { failure=ex; }
+            }
+        }
+        boolean reduced;
+        do {
+            reduced=false;
+            for(int i=day.size()-1;i>from;i--) {
+                if(!shorten(day.get(i)))continue;
+                reduced=true;
+                try { return reflow(request,ctx,day,from); } catch(IllegalArgumentException ex) { failure=ex; }
+            }
+        } while(reduced);
+        throw failure;
+    }
+    private static boolean shorten(PlanService.DayItem item) {
+        if(item.type!=PlanService.SimulatedItinerary.Type.VISIT || item.place==null || item.endMin==null
+            || PlanService.isLodging(item.place) || PlanService.isAirport(item.place))return false;
+        var kind=com.travel.planner.util.PlaceKind.of(item.place);
+        int minimum=(kind==com.travel.planner.util.PlaceKind.RESTAURANT || kind==com.travel.planner.util.PlaceKind.BAR)?30:15;
+        int duration=item.endMin-item.startMin;
+        if(duration<=minimum)return false;
+        item.endMin=item.startMin+Math.max(minimum,duration-5);
+        return true;
+    }
+
     public List<PlanService.SimulatedItinerary> reflow(PlanRequest request, PlanService.DayContext ctx,
             List<PlanService.DayItem> day, int from) {
         List<PlanService.SimulatedItinerary> result = new ArrayList<>();

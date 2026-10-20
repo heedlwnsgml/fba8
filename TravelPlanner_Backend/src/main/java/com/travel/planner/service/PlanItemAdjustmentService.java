@@ -23,19 +23,20 @@ public class PlanItemAdjustmentService {
     @org.springframework.beans.factory.annotation.Autowired(required=false) private SupplementalFoodService food;
     @org.springframework.beans.factory.annotation.Autowired(required=false) private LodgingCostService prices;
 
-    private record Target(Plan plan,Itinerary item,List<Itinerary> day,int index,PlanRequest request) {}
+    private record Target(Plan plan,Itinerary item,List<Itinerary> day,int index,PlanRequest request,Place place) {}
     private Target target(String email,Long planId,Long itemId,String theme,String companion) {
         Plan plan=plans.findDetailById(planId).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,"일정을 찾을 수 없습니다."));
         if(plan.getUser()==null || !email.equals(plan.getUser().getEmail()))throw new ResponseStatusException(HttpStatus.FORBIDDEN,"본인의 일정만 수정할 수 있습니다.");
         Itinerary item=plan.getItineraries().stream().filter(i->itemId.equals(i.getId())).findFirst().orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,"일정 항목을 찾을 수 없습니다."));
-        if(item.getPlace()!=null && PlanService.isAirport(item.getPlace()))throw new IllegalArgumentException("공항 일정은 변경할 수 없습니다.");
+        Place shown=shownPlace(item);
+        if(shown!=null && PlanService.isAirport(shown))throw new IllegalArgumentException("공항 일정은 변경할 수 없습니다.");
         if(item.getPlace()!=null && "DUMMY_FIXED_SCHEDULE".equals(item.getPlace().getPlaceId()))throw new IllegalArgumentException("고정 일정은 변경할 수 없습니다.");
         // A hotel departure refers to the previous night's stay.
-        if(item.getPlace()!=null && PlanService.isLodging(item.getPlace()) && item.getDayNumber()>1) {
+        if(shown!=null && PlanService.isLodging(shown) && item.getDayNumber()>1) {
             int priorDay=item.getDayNumber()-1;
             var prior=plan.getItineraries().stream().filter(i->i.getDayNumber()==priorDay)
                 .max(Comparator.comparing(Itinerary::getSequence)).orElse(null);
-            if(prior!=null && same(prior.getPlace(),item.getPlace()))item=prior;
+            if(prior!=null && same(shownPlace(prior),shown))item=prior;
         }
         final Itinerary selected=item;
         var day=plan.getItineraries().stream().filter(i->i.getDayNumber().equals(selected.getDayNumber())).sorted(Comparator.comparing(Itinerary::getSequence)).toList();
@@ -43,26 +44,35 @@ public class PlanItemAdjustmentService {
         if(theme!=null && !theme.isBlank()) {
             String normalized=ThemeVocabulary.normalize(theme);
             if(normalized==null)throw new IllegalArgumentException("테마를 다시 선택해주세요.");
-            request.setThemes(List.of(normalized));
+            // The selected theme filters this replacement only; keep the original
+            // trip themes so food-trip meal spacing and remaining constraints do not change.
         }
         if(companion!=null && !companion.isBlank()) {
             var values=Arrays.stream(companion.split(",")).map(String::trim).toList();
             if(values.stream().anyMatch(v->!Set.of("혼자","친구","연인","부모님","어린이","배우자","가족").contains(v)) || (values.contains("혼자") && values.size()>1))throw new IllegalArgumentException("동행인을 다시 선택해주세요.");
             request.setCompanion(companion);
         }
-        return new Target(plan,item,day,day.indexOf(item),request);
+        return new Target(plan,item,day,day.indexOf(item),request,shownPlace(item));
+    }
+    private Place shownPlace(Itinerary item) {
+        if(food==null)return item.getPlace();
+        return food.load(List.of(item)).getOrDefault(item.getId(),item.getPlace());
     }
     private List<PlanService.DayItem> inputs(List<Itinerary> day) {
         if(food==null)return PlanReplaceService.toDayItems(day);
         var overlay=food.load(day);var result=PlanReplaceService.toDayItems(day);
         for(int i=0;i<day.size();i++)if(overlay.containsKey(day.get(i).getId())) {
-            var d=result.get(i);d.place=overlay.get(day.get(i).getId());d.type=PlanService.SimulatedItinerary.Type.VISIT;d.title=null;
+            var d=result.get(i);d.place=overlay.get(day.get(i).getId());d.title=null;
+            boolean anchor=PlanService.isLodging(d.place) || PlanService.isAirport(d.place);
+            d.type=anchor && i==0?PlanService.SimulatedItinerary.Type.START:
+                anchor && i==day.size()-1?PlanService.SimulatedItinerary.Type.END:PlanService.SimulatedItinerary.Type.VISIT;
         }
         return result;
     }
     private List<Place> pool(Target t,String theme) {
-        var old=t.item.getPlace();boolean hotel=old!=null && PlanService.isLodging(old);
+        var old=t.place;boolean hotel=old!=null && PlanService.isLodging(old);
         Set<String> used=new HashSet<>();for(var i:t.plan.getItineraries())if(i.getPlace()!=null)used.add(i.getPlace().getPlaceId());
+        if(food!=null)for(var shown:food.load(t.plan.getItineraries()).values())used.add(shown.getPlaceId());
         if(t.plan.getRejectedPlaceIds()!=null)used.addAll(Arrays.asList(t.plan.getRejectedPlaceIds().split(",")));
         var cityList=new ArrayList<String>(t.request.getCities()==null?List.of():t.request.getCities());
         if(old!=null && old.getCity()!=null && !cityList.contains(old.getCity()))cityList.add(old.getCity());
@@ -84,8 +94,8 @@ public class PlanItemAdjustmentService {
                 if("맛집".equals(wanted))return k==PlaceKind.RESTAURANT;
                 if("카페".equals(wanted))return k==PlaceKind.CAFE;
                 return k!=PlaceKind.RESTAURANT && k!=PlaceKind.BAR && k!=PlaceKind.CAFE;})
-            .filter(p->hotel || wanted==null || PlaceDescriber.themeListOf(p).stream().anyMatch(v->wanted.equals(ThemeVocabulary.normalize(v))))
-            .sorted(Comparator.comparingDouble(p->distance(center,p))).limit(30).toList();
+            .filter(p->hotel || wanted==null || (ThemeVocabulary.explicitThemes(p).contains(wanted) || ThemeVocabulary.inferredThemes(p).contains(wanted)))
+            .sorted(Comparator.comparingDouble(p->distance(center,p))).limit(120).toList();
     }
     private static boolean located(Place p) {return p!=null && !PlanService.isPseudoCategory(p.getCategory()) && p.getLatitude()!=null && p.getLongitude()!=null && !(p.getLatitude()==0 && p.getLongitude()==0);}
     private static double distance(Place a,Place b) {
@@ -103,7 +113,7 @@ public class PlanItemAdjustmentService {
         var type=hotel?old.type:PlanService.SimulatedItinerary.Type.VISIT;
         day.set(t.index,new PlanService.DayItem(type,selected,null,old.startMin,end));
         Map<Integer,List<PlanService.SimulatedItinerary>> result=new TreeMap<>();
-        var updated=reflow.reflow(t.request,context(t,t.item.getDayNumber(),day),day,t.index);
+        var updated=reflow.reflowFlexible(t.request,context(t,t.item.getDayNumber(),day),day,t.index);
         result.put(t.item.getDayNumber(),updated);
         if(hotel && old.type==PlanService.SimulatedItinerary.Type.END) {
             int next=t.item.getDayNumber()+1;
@@ -113,7 +123,7 @@ public class PlanItemAdjustmentService {
                 if(!same(first.place,old.place))throw new IllegalArgumentException("다음 날 출발 숙소를 확인할 수 없어 변경할 수 없습니다.");
                 int depart=Math.max(first.startMin,updated.getLast().getStartMin()-1440);
                 following.set(0,new PlanService.DayItem(first.type,selected,null,depart,null));
-                result.put(next,reflow.reflow(t.request,context(t,next,following),following,0));
+                result.put(next,reflow.reflowFlexible(t.request,context(t,next,following),following,0));
             }
         }
         return result;
@@ -122,8 +132,12 @@ public class PlanItemAdjustmentService {
     public List<Map<String,Object>> alternatives(String email,Long planId,Long itemId,String theme,String companion) {
         Target t=target(email,planId,itemId,theme,companion);List<Map<String,Object>> result=new ArrayList<>();
         for(var p:pool(t,theme)) {
-            try {changed(t,p);}catch(IllegalArgumentException ex){continue;}
-            Map<String,Object> row=new LinkedHashMap<>();row.put("placeId",p.getPlaceId());row.put("placeName",p.shownName());row.put("address",p.getAddress());row.put("category",p.getCategory());result.add(row);
+            Map<Integer,List<PlanService.SimulatedItinerary>> preview;
+            try {preview=changed(t,p);}catch(IllegalArgumentException ex){continue;}
+            Map<String,Object> row=new LinkedHashMap<>();row.put("placeId",p.getPlaceId());row.put("placeName",p.shownName());row.put("address",p.getAddress());row.put("category",p.getCategory());
+            var adjusted=preview.get(t.item.getDayNumber()).get(t.index);
+            if(adjusted.getEndMin()!=null)row.put("stayMinutes",adjusted.getEndMin()-adjusted.getStartMin());
+            result.add(row);
             if(result.size()==8)break;
         }
         return result;
@@ -136,7 +150,7 @@ public class PlanItemAdjustmentService {
         if(PlanService.isLodging(selected) && t.index==t.day.size()-1)updateStay(t,selected);
         for(var entry:adjusted.entrySet())persistence.replaceDay(t.plan,entry.getKey(),entry.getValue());
         var rejected=new LinkedHashSet<String>();if(t.plan.getRejectedPlaceIds()!=null)rejected.addAll(Arrays.asList(t.plan.getRejectedPlaceIds().split(",")));
-        if(t.item.getPlace()!=null)rejected.add(t.item.getPlace().getPlaceId());t.plan.setRejectedPlaceIds(String.join(",",rejected));plans.save(t.plan);
+        if(t.place!=null)rejected.add(t.place.getPlaceId());t.plan.setRejectedPlaceIds(String.join(",",rejected));plans.save(t.plan);
     }
     private void updateStay(Target t,Place hotel) {
         var night=(t.plan.undated()?Plan.UNDATED_BASE:t.plan.getStartDate()).plusDays(t.item.getDayNumber()-1);

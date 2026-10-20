@@ -55,6 +55,20 @@ public final class BusStopIndex {
     private final int[][] stopsOfRoute;
     private final Map<Long, int[]> grid = new HashMap<>();
     private final String sourceName;
+    private final java.util.concurrent.ConcurrentHashMap<Integer,int[]> transferNeighbours = new java.util.concurrent.ConcurrentHashMap<>();
+    private int[] transferNeighbours(int stop) {
+        int[] known = transferNeighbours.get(stop);if(known!=null)return known;
+        var candidates=new java.util.ArrayList<Integer>();
+        long cx=(long)Math.floor(lat[stop]/CELL),cy=(long)Math.floor(lng[stop]/CELL);
+        for(long x=cx-1;x<=cx+1;x++)for(long y=cy-1;y<=cy+1;y++) {
+            int[] cellStops=grid.get(key(x,y));if(cellStops==null)continue;
+            for(int next:cellStops)if(Math.abs(lat[stop]-lat[next])<=0.003 && dist(stop,next)<=TRANSFER_KM)candidates.add(next);
+        }
+        // Original route arrays are stop-index ordered. Keep exactly the same tie order.
+        int[] result=candidates.stream().mapToInt(Integer::intValue).sorted().toArray();
+        if(transferNeighbours.size()<8192)transferNeighbours.putIfAbsent(stop,result);
+        return result;
+    }
 
     /** 읽는 중에 정류장을 모으는 도구 */
     public static final class Builder {
@@ -320,13 +334,13 @@ public final class BusStopIndex {
         int[] best = null;
         double bestCost = Double.MAX_VALUE;
         for (int x : stopsOfRoute[r1]) {
+            if(Thread.currentThread().isInterrupted())throw new java.util.concurrent.CancellationException("일정 생성이 취소되었습니다.");
             if (x == a) continue;
-            for (int y : stopsOfRoute[r2]) {
-                if (y == b) continue;
-                if (Math.abs(lat[x] - lat[y]) > 0.003) continue;          // 빠른 걸러내기 (약 330m)
+            double firstKm=dist(a,x);
+            for (int y : transferNeighbours(x)) {
+                if (y == b || java.util.Arrays.binarySearch(stopsOfRoute[r2],y)<0) continue;
                 double walk = dist(x, y);
-                if (walk > TRANSFER_KM) continue;
-                double cost = dist(a, x) + dist(y, b) + walk * 2;
+                double cost = firstKm + dist(y, b) + walk * 2;
                 if (cost < bestCost) {
                     bestCost = cost;
                     best = new int[]{x, y};

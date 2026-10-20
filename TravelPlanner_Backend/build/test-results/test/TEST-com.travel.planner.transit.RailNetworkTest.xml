@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.travel.planner.transit.RailNetworkTest" tests="12" skipped="0" failures="0" errors="0" timestamp="2026-10-20T15:27:52.026Z" hostname="DESKTOP-L0O1S4Q" time="0.046">
+  <properties/>
+  <testcase name="directRideOnOneLine()" classname="com.travel.planner.transit.RailNetworkTest" time="0.011"/>
+  <testcase name="transferBetweenOperatorsChargesEachOperatorSeparately()" classname="com.travel.planner.transit.RailNetworkTest" time="0.003"/>
+  <testcase name="stationOffTheTrackVertexIsSnappedAndFarOneIsReportedAsUnlinked()" classname="com.travel.planner.transit.RailNetworkTest" time="0.004"/>
+  <testcase name="stationsAreOrderedAlongTheTrackWithTrackDistance()" classname="com.travel.planner.transit.RailNetworkTest" time="0.003"/>
+  <testcase name="nearbyStationOfAnotherLineIsAWalkingTransfer()" classname="com.travel.planner.transit.RailNetworkTest" time="0.003"/>
+  <testcase name="bypassTrackDoesNotCreateALinkThatSkipsAStation()" classname="com.travel.planner.transit.RailNetworkTest" time="0.003"/>
+  <testcase name="propertyKeysAndGeometryVariantsAreAccepted()" classname="com.travel.planner.transit.RailNetworkTest" time="0.0"/>
+  <testcase name="fareTablesMatchKnownPublishedFares()" classname="com.travel.planner.transit.RailNetworkTest" time="0.001"/>
+  <testcase name="legPlannerChoosesWalkRailOrDistanceEstimate()" classname="com.travel.planner.transit.RailNetworkTest" time="0.005"/>
+  <testcase name="shinkansenIsTakenOnlyWhenItSavesEnoughTime()" classname="com.travel.planner.transit.RailNetworkTest" time="0.01"/>
+  <testcase name="shinkansenAddsExpressSurchargeOnJrFare()" classname="com.travel.planner.transit.RailNetworkTest" time="0.002"/>
+  <testcase name="noRouteWhenNoStationIsWithinWalkingDistance()" classname="com.travel.planner.transit.RailNetworkTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

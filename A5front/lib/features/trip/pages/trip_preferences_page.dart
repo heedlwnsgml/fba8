@@ -416,7 +416,7 @@ class _TripPreferencesPageState extends State<TripPreferencesPage> {
         section(
           '어떤 여행을 좋아하나요?',
           excludedMode
-              ? '피하고 싶은 테마를 고르세요. 선택한 테마는 추천 후보에서 제외됩니다.'
+              ? '금지 테마를 고르세요. 선택한 테마는 추천 후보에서 제외됩니다.'
               : '좋아하는 테마를 최대 3개 선택하세요. 선택한 취향을 중심으로 방문지를 추천합니다.',
           [
             SegmentedButton<bool>(
@@ -428,7 +428,7 @@ class _TripPreferencesPageState extends State<TripPreferencesPage> {
                 ),
                 ButtonSegment(
                   value: true,
-                  label: Text('피하고 싶은 테마'),
+                  label: Text('금지 테마'),
                   icon: Icon(Icons.block_outlined),
                 ),
               ],

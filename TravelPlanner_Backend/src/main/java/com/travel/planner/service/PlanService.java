@@ -976,6 +976,7 @@ public class PlanService {
             if (start == null && day == 1) start = in.lodgingByNight.get(1);   // 입국 공항을 모르면 숙소에서 출발
             Place end = day == totalDays ? in.departureAirport : in.lodgingByNight.get(day);
 
+            PlanGenerationJobs.progress(day + "/" + totalDays + "일차 동선과 방문 시간을 계산하고 있습니다.");
             DayContext ctx = buildDayContext(req, day, totalDays, start, end);
             ctx.city = dayCities.get(day - 1);
             ctx.badWeather = Boolean.TRUE.equals(in.badWeatherByDate.get(ctx.date));
@@ -1549,16 +1550,51 @@ public class PlanService {
         return inDayCity && !ds.longOutboundUsed;
     }
 
+    /** An upper bound only: final feasibility and utility still use the exact DB route. */
+    private double utilityUpperBound(Cand c,DayContext ctx,DayState ds,TripState st) {
+        double value=c.baseScore+themeBalanceBonus(c,st,ds);
+        int lower=ds.locLat==null?0:TravelTimeEstimator.minutes(ds.locLat,ds.locLng,c.lat,c.lng,ctx.transportation);
+        value-=TRAVEL_WEIGHT*lower;
+        if(ds.seed!=null && !ds.leftSeedArea) {
+            if(ds.seed==c)value+=SEED_BONUS;
+            else value-=Math.min(180.0,SEED_DISTANCE_WEIGHT*DistanceUtil.calculateDistance(c.lat,c.lng,ds.seed.lat,ds.seed.lng));
+        }
+        if(!ds.leftSeedArea && ctx.city!=null && c.place.getCity()!=null && !ctx.city.equals(c.place.getCity()))value-=CITY_MISMATCH_PENALTY;
+        if(ctx.badWeather) {
+            String type=c.place.getPlaceType();
+            if("실내".equals(type))value+=25;
+            else if("실외".equals(type))value-=35;
+            else if(c.themes.contains("자연"))value-=25;
+        }
+        if(c.kind.isFood())value+=20;
+        if(c.cuisine!=null && ds.cuisinesToday.contains(c.cuisine))value-=CUISINE_REPEAT_PENALTY;
+        if(!st.nightViewLover && c.themes.contains("야경") && c.kind==PlaceKind.ATTRACTION)value+=25;
+        return value;
+    }
+
     private Eval pickBest(DayContext ctx, DayState ds, TripState st, boolean deferred) {
         List<Eval> feasible = new ArrayList<>();
         int minTravel = Integer.MAX_VALUE;
-        for (Cand c : st.pool) {
+        var order = new java.util.IdentityHashMap<Cand,Integer>();
+        var bounds = new java.util.IdentityHashMap<Cand,Double>();
+        for(int i=0;i<st.pool.size();i++){Cand c=st.pool.get(i);order.put(c,i);if(!deferred)bounds.put(c,utilityUpperBound(c,ctx,ds,st));}
+        List<Cand> candidates = deferred ? st.pool : st.pool.stream().sorted(Comparator.comparingDouble((Cand c)->-bounds.get(c))).toList();
+        Eval dominant = null;
+        for (Cand c : candidates) {
+            // Only stop when every unexamined candidate is provably worse, and
+            // the current winner remains eligible even if minTravel later becomes zero.
+            if(!deferred && dominant!=null && bounds.get(c)<dominant.utility &&
+                (dominant.fills!=null || dominant.utility+dominant.waitPenalty>=MIN_NET_UTILITY)) return dominant;
             if (st.visited.contains(c.place.getPlaceId()) && !revisitAllowed(c, ctx, st)) continue;
             Eval e = evaluate(c, ctx, ds, st, deferred);
             if (e == null) continue;
             feasible.add(e);
             minTravel = Math.min(minTravel, e.travel);
+            if(dominant==null || e.utility>dominant.utility ||
+               (e.utility==dominant.utility && order.get(e.cand)<order.get(dominant.cand))) dominant=e;
         }
+        // Preserve the original stable tie-breaking when exhaustive fallback is needed.
+        feasible.sort(Comparator.comparingInt(e->order.get(e.cand)));
 
         Eval best = null;
         for (Eval e : feasible) {
@@ -1693,6 +1729,22 @@ public class PlanService {
         // 같은 체인의 다른 지점은 여행 중 한 번만 (돈키호테 4개 지점 같은 일정 방지)
         if (c.brandKey != null && st.visitedBrands.contains(c.brandKey) && !revisitAllowed(c, ctx, st)) return null;
 
+        // The exact route is always >= this estimate (see travel). Reject provably
+        // impossible candidates before exploring the national transit graph.
+        int lower = ds.locLat == null ? 0 : TravelTimeEstimator.minutes(ds.locLat, ds.locLng, c.lat, c.lng, ctx.transportation);
+        int minimumDwell = c.kind == PlaceKind.THEME_PARK ? 300 :
+            (c.kind == PlaceKind.RESTAURANT || c.kind == PlaceKind.BAR ? Math.min(c.dwell, Math.min(SNACK_DWELL_MAX_MIN, LATE_DWELL_MAX_MIN)) : c.dwell);
+        if (ds.cur + lower + minimumDwell > ctx.endMin) return null;
+        int earliestPossible = intervals(c, ctx.date, st).stream().mapToInt(iv -> {
+            int first = Math.max(ds.cur + lower, iv[0]);
+            return first + minimumDwell <= iv[1] ? first : Integer.MAX_VALUE;
+        }).min().orElse(Integer.MAX_VALUE);
+        if (earliestPossible == Integer.MAX_VALUE) return null;
+        if (ctx.endAnchor != null) {
+            int backLower = TravelTimeEstimator.minutes(c.lat, c.lng, ctx.endAnchor.getLatitude(), ctx.endAnchor.getLongitude(), ctx.transportation);
+            int limit = ctx.hardDeadlineMin == null ? ctx.endMin + RETURN_GRACE_MIN : ctx.hardDeadlineMin - st.buffer;
+            if ((long)earliestPossible + minimumDwell + backLower > limit) return null;
+        }
         int travel = travelFromCurrent(ctx, ds, c.lat, c.lng);
         int arrive = ds.cur + travel;
 
@@ -1922,6 +1974,12 @@ public class PlanService {
     // ---- 그날의 중심(시드) 선택: 일차별 권역 분리 + 테마 보장 ----
 
     private boolean roughlyFeasible(Cand c, DayContext ctx, TripState st) {
+        int lower = ctx.startAnchor == null ? 0 : TravelTimeEstimator.minutes(ctx.startAnchor.getLatitude(), ctx.startAnchor.getLongitude(), c.lat, c.lng, ctx.transportation);
+        int minimumDwell = c.kind == PlaceKind.THEME_PARK ? 300 : c.dwell;
+        if (intervals(c, ctx.date, st).stream().noneMatch(iv -> {
+            int first = Math.max(ctx.startMin + lower, iv[0]);
+            return first + minimumDwell <= Math.min(iv[1], ctx.endMin);
+        })) return false;
         int travel = ctx.startAnchor == null ? 0
                 : travel(ctx, ctx.startAnchor.getLatitude(), ctx.startAnchor.getLongitude(), c.lat, c.lng);
         int arrive = ctx.startMin + travel;
@@ -1970,8 +2028,9 @@ public class PlanService {
                         .filter(c -> !st.visited.contains(c.place.getPlaceId()))
                         .filter(c -> theme == null ? !c.kind.isFood() : c.matched.contains(theme))
                         .filter(c -> remotePass ? !seedEligible(c, st) : seedEligible(c, st))
-                        .filter(c -> roughlyFeasible(c, ctx, st))
+                        // Stable score order first: stop as soon as the same 40 feasible seeds are found.
                         .sorted(Comparator.comparingDouble((Cand c) -> -c.baseScore))
+                        .filter(c -> roughlyFeasible(c, ctx, st))
                         .limit(40)
                         .collect(Collectors.toList());
                 for (Cand c : options) {

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.travel.planner.service.AiServiceProviderTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-10-20T15:27:30.600Z" hostname="DESKTOP-L0O1S4Q" time="4.053">
+  <properties/>
+  <testcase name="answerWrappedInOneExtraObjectIsUnwrapped()" classname="com.travel.planner.service.AiServiceProviderTest" time="0.03"/>
+  <testcase name="geminiTakesOverWhenOpenAiKeepsFailing()" classname="com.travel.planner.service.AiServiceProviderTest" time="2.007"/>
+  <testcase name="primaryCanBeSwitchedBackToGemini()" classname="com.travel.planner.service.AiServiceProviderTest" time="0.003"/>
+  <testcase name="missingOpenAiKeyFallsThroughToGemini()" classname="com.travel.planner.service.AiServiceProviderTest" time="0.002"/>
+  <testcase name="openAiIsCalledFirstAndGeminiIsNotTouchedWhenItAnswers()" classname="com.travel.planner.service.AiServiceProviderTest" time="0.005"/>
+  <testcase name="emptyResultWhenBothFail()" classname="com.travel.planner.service.AiServiceProviderTest" time="2.004"/>
+  <system-out><![CDATA[[AI] openai 호출 실패(CLEANSING) → 보조 모델로 전환합니다.
+[AI] 주 모델(openai)의 API 키가 설정되지 않아 다른 모델로 호출합니다.
+[AI] openai 호출 실패(CLEANSING) → 보조 모델로 전환합니다.
+]]></system-out>
+  <system-err><![CDATA[
+[AI 통신 장애 리포트]
+▶ 발생 위치 (타입): AI_CLEANSING_OPENAI_FAIL_1
+▶ AI 서버 응답: 429 Too Many Requests
+=========================================
+
+
+[AI 통신 장애 리포트]
+▶ 발생 위치 (타입): AI_CLEANSING_OPENAI_FAIL_2
+▶ AI 서버 응답: 429 Too Many Requests
+=========================================
+
+
+[AI 통신 장애 리포트]
+▶ 발생 위치 (타입): AI_CLEANSING_OPENAI_FAIL_1
+▶ AI 서버 응답: 429 Too Many Requests
+=========================================
+
+
+[AI 통신 장애 리포트]
+▶ 발생 위치 (타입): AI_CLEANSING_OPENAI_FAIL_2
+▶ AI 서버 응답: 429 Too Many Requests
+=========================================
+
+
+[AI 통신 장애 리포트]
+▶ 발생 위치 (타입): AI_CLEANSING_GEMINI_FAIL_1
+▶ AI 서버 응답: 429 Too Many Requests
+=========================================
+
+]]></system-err>
+</testsuite>

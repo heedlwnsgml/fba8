@@ -1,0 +1,7 @@
+#Tue Oct 20 23:40:08 KST 2026
+base.1=C\:\\Users\\USER\\Desktop\\TravelPlanner_GitHub_refresh\\A5front\\build\\app\\intermediates\\dex\\debugAndroidTest\\mergeProjectDexDebugAndroidTest\\6\\classes.dex
+path.1=6/classes.dex
+base.0=C\:\\Users\\USER\\Desktop\\TravelPlanner_GitHub_refresh\\A5front\\build\\app\\intermediates\\dex\\debugAndroidTest\\mergeProjectDexDebugAndroidTest\\0\\classes.dex
+renamed.1=classes2.dex
+renamed.0=classes.dex
+path.0=0/classes.dex

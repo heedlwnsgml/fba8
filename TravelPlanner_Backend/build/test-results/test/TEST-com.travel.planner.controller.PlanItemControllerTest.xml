@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.travel.planner.controller.PlanItemControllerTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-10-19T17:29:05.354Z" hostname="DESKTOP-L0O1S4Q" time="1.05">
+<testsuite name="com.travel.planner.controller.PlanItemControllerTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-10-20T15:27:29.755Z" hostname="DESKTOP-L0O1S4Q" time="0.676">
   <properties/>
-  <testcase name="previewAndMutationRejectOtherUsersBeforeAnyPlaceLookup()" classname="com.travel.planner.controller.PlanItemControllerTest" time="0.089"/>
-  <testcase name="existingClientPathsListAndReplaceSelectedPlace()" classname="com.travel.planner.controller.PlanItemControllerTest" time="0.961"/>
-  <system-out><![CDATA[02:29:05.896 [Test worker] INFO org.hibernate.validator.internal.util.Version -- HV000001: Hibernate Validator 9.1.0.Final
-02:29:06.189 [Test worker] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
-02:29:06.191 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
-02:29:06.193 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 2 ms
+  <testcase name="previewAndMutationRejectOtherUsersBeforeAnyPlaceLookup()" classname="com.travel.planner.controller.PlanItemControllerTest" time="0.4"/>
+  <testcase name="existingClientPathsListAndReplaceSelectedPlace()" classname="com.travel.planner.controller.PlanItemControllerTest" time="0.275"/>
+  <system-out><![CDATA[2026-10-21T00:27:30.262+09:00  INFO 26736 --- [planner] [    Test worker] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2026-10-21T00:27:30.262+09:00  INFO 26736 --- [planner] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-21T00:27:30.263+09:00  INFO 26736 --- [planner] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

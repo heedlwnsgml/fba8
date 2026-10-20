@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.travel.planner.service.PlaceNameDisplayTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-10-20T15:27:41.302Z" hostname="DESKTOP-L0O1S4Q" time="0.007">
+  <properties/>
+  <testcase name="summariesUseTheKoreanName()" classname="com.travel.planner.service.PlaceNameDisplayTest" time="0.005"/>
+  <testcase name="itineraryRowKnowsBothNames()" classname="com.travel.planner.service.PlaceNameDisplayTest" time="0.0"/>
+  <testcase name="pdfRowsUseTheKoreanName()" classname="com.travel.planner.service.PlaceNameDisplayTest" time="0.001"/>
+  <testcase name="everyPlaceOfThePlanIsOfferedForNaming()" classname="com.travel.planner.service.PlaceNameDisplayTest" time="0.0"/>
+  <testcase name="otherLanguagesKeepTheOriginalName()" classname="com.travel.planner.service.PlaceNameDisplayTest" time="0.0"/>
+  <testcase name="timelineShowsTheKoreanNameAndKeepsTheOriginalBesideIt()" classname="com.travel.planner.service.PlaceNameDisplayTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

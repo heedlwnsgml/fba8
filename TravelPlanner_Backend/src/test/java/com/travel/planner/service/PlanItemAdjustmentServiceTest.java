@@ -63,4 +63,39 @@ class PlanItemAdjustmentServiceTest {
         assertThrows(IllegalArgumentException.class,()->service.replace("owner@example.com",1L,2L,otherHotel.getPlaceId(),null,null));
         verify(persistence,never()).replaceDay(any(),anyInt(),anyList());assertEquals(hotel.getPlaceId(),stay.getPlaceId());
     }
+
+    @Test void genericSightseeingThemeIncludesAttractionsWithSpecificStoredThemes(){
+        row(1,1,1,sight,"09:00","10:00");row(2,1,2,hotel,"20:00",null);
+        var park=p("자연 공원","관광지",35.612);park.setTheme("자연");
+        when(places.findByCityIn(anyList())).thenReturn(List.of(hotel,otherHotel,sight,park));
+        var choices=service.alternatives("owner@example.com",1L,1L,"관광","친구");
+        assertTrue(choices.stream().anyMatch(c->park.getPlaceId().equals(c.get("placeId"))));
+    }
+    @Test void hotelOverlaysRemainAnchorsInsteadOfBeingTreatedAsFreeMeals(){
+        var dummy=p("DUMMY_MEAL","식사",0);
+        var first=row(1,1,1,sight,"09:00","10:00");var night=row(2,1,2,dummy,"20:00",null);
+        var morning=row(3,2,1,dummy,"09:00",null);row(4,2,2,sight,"10:00","11:00");
+        var food=mock(SupplementalFoodService.class);
+        when(food.load(anyList())).thenAnswer(call->{
+            Map<Long,Place> m=new HashMap<>();
+            for(Itinerary it:(List<Itinerary>)call.getArgument(0))if(it.getId()==2L || it.getId()==3L)m.put(it.getId(),hotel);
+            return m;
+        });
+        org.springframework.test.util.ReflectionTestUtils.setField(service,"food",food);
+        var stay=new Accommodation();stay.setName(hotel.getName());stay.setPlaceId(hotel.getPlaceId());stay.setCheckIn(plan.getStartDate());stay.setCheckOut(plan.getEndDate());plan.addAccommodation(stay);
+        service.replace("owner@example.com",1L,2L,otherHotel.getPlaceId(),null,"친구");
+        var cap=ArgumentCaptor.forClass(List.class);verify(persistence).replaceDay(eq(plan),eq(2),cap.capture());
+        var next=(List<PlanService.SimulatedItinerary>)cap.getValue();
+        assertEquals(PlanService.SimulatedItinerary.Type.START,next.getFirst().getType());
+        assertSame(otherHotel,next.getFirst().getPlace());assertSame(sight,next.get(1).getPlace());
+    }
+
+    @Test void changingOneThemeDoesNotResetFoodTripMealSpacing(){
+        row(1,1,1,sight,"09:00","10:00");row(2,1,2,hotel,"20:00",null);
+        var park=p("자연 공원","관광지",35.612);park.setTheme("자연");
+        when(places.findByCityIn(anyList())).thenReturn(List.of(hotel,otherHotel,sight,park));
+        request.setThemes(List.of("맛집"));request.setMealCount(5);
+        service.alternatives("owner@example.com",1L,1L,"관광","친구");
+        assertEquals(List.of("맛집"),request.getThemes());assertEquals(5,PlanService.mealCount(request));
+    }
 }

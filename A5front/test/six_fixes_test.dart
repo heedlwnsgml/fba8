@@ -8,6 +8,7 @@ class AdminViewApi extends PlannerApi {
 }
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
   test('제목에 도시가 없으면 첫 선택 도시를 기준으로 정렬한다', () {
     expect(itineraryAnchorCity('', ['도쿄', '가마쿠라'], ['도쿄']), '도쿄');
     expect(itineraryAnchorCity('여름 여행', ['도쿄', '가마쿠라'], ['도쿄']), '도쿄');

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.travel.planner.service.UndatedPlanTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-10-20T15:27:50.436Z" hostname="DESKTOP-L0O1S4Q" time="1.342">
+  <properties/>
+  <testcase name="sameResultAsADatedTripWhenNothingDependsOnTheDate()" classname="com.travel.planner.service.UndatedPlanTest" time="0.033"/>
+  <testcase name="undatedPlanIsSavedRestoredAndPrintedWithoutDates()" classname="com.travel.planner.service.UndatedPlanTest" time="0.013"/>
+  <testcase name="periodIsEitherDatesOrDayCount()" classname="com.travel.planner.service.UndatedPlanTest" time="0.001"/>
+  <testcase name="randomUndatedTripsKeepEveryInvariant()" classname="com.travel.planner.service.UndatedPlanTest" time="1.273"/>
+  <testcase name="requestValidationWithoutDates()" classname="com.travel.planner.service.UndatedPlanTest" time="0.001"/>
+  <testcase name="weeklyClosingDayAndSunsetFollowTheDateOnlyWhenThereIsOne()" classname="com.travel.planner.service.UndatedPlanTest" time="0.005"/>
+  <testcase name="responseHasDayNumbersButNoDates()" classname="com.travel.planner.service.UndatedPlanTest" time="0.009"/>
+  <testcase name="typicalOpeningHoursIgnoreTheWeeklyClosingDay()" classname="com.travel.planner.service.UndatedPlanTest" time="0.0"/>
+  <testcase name="undatedTripIsPlannedLikeADatedOne()" classname="com.travel.planner.service.UndatedPlanTest" time="0.006"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

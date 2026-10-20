@@ -97,7 +97,7 @@ void main() {
       expect(tester.takeException(), isNull);
       for (int i = 0; i < 18; i++) {
         await tester.drag(
-          find.byType(SingleChildScrollView).first,
+          find.byKey(const ValueKey('itinerary-day-scroll')),
           const Offset(0, -600),
         );
         await tester.pumpAndSettle();

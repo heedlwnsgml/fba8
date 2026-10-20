@@ -11,6 +11,7 @@ public final class TimelineConsistency {
     static int ceiling(int minute){return ((minute+4)/5)*5;}
     public static void repair(List<PlanService.DayPlan> days,RailRouteService routes,PlanRequest request,List<String> warnings){
         for(var day:days){
+            PlanGenerationJobs.progress(day.getDayNumber()+"/"+days.size()+"일차 이동 시간과 도착 시각을 확인하고 있습니다.");
             var originals=new ArrayList<>(day.getItems());
             int deadline=request.getPreferredEndTime()==null?22*60:TimeUtil.toMinutes(request.getPreferredEndTime());
             if(day.getDayNumber()==days.size() && request.getOutCity()!=null && !request.getOutCity().isBlank()) {
@@ -47,7 +48,7 @@ public final class TimelineConsistency {
                 if(finish<=deadline || originals.size()<=1){day.getItems().clear();day.getItems().addAll(adjusted);break;}
                 int remove=-1;
                 for(int i=originals.size()-1;i>=0;i--)if(originals.get(i).getType()==PlanService.SimulatedItinerary.Type.VISIT && !"교통".equals(originals.get(i).getCategory())){remove=i;break;}
-                if(remove<0)throw new PlanGenerationException("이동 시간과 숙소·공항 도착 시간을 동시에 만족할 수 없습니다. 기간 또는 지역을 조정해주세요.");
+                if(remove<0)throw new PlanGenerationException(day.getDayNumber()+"일차는 "+adjusted.getFirst().getDisplayName()+"에서 "+last.getDisplayName()+"까지 이동하면 "+TimeUtil.format(finish)+"에 도착하여 종료 시각 "+TimeUtil.format(deadline)+"을 넘습니다. 해당 일차의 숙소·지역 또는 종료 시각을 조정해주세요.");
                 originals.remove(remove);
                 if(!warnings.contains("이동 시간을 확보하기 위해 일부 방문지를 조정했습니다."))warnings.add("이동 시간을 확보하기 위해 일부 방문지를 조정했습니다.");
             }

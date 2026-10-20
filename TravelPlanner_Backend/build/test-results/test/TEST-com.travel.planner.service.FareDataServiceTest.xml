@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.travel.planner.service.FareDataServiceTest" tests="13" skipped="0" failures="0" errors="0" timestamp="2026-10-20T15:27:36.556Z" hostname="DESKTOP-L0O1S4Q" time="0.106">
+  <properties/>
+  <testcase name="passesAreSavedListedAndSwitchedOff()" classname="com.travel.planner.service.FareDataServiceTest" time="0.008"/>
+  <testcase name="bundledLineKilometresIncreaseAlongTheLine()" classname="com.travel.planner.service.FareDataServiceTest" time="0.035"/>
+  <testcase name="bundledFilesLoadCompletely()" classname="com.travel.planner.service.FareDataServiceTest" time="0.015"/>
+  <testcase name="brokenRowsInTheDatabaseDoNotBreakFareCalculation()" classname="com.travel.planner.service.FareDataServiceTest" time="0.001"/>
+  <testcase name="bundledFareBandsNeverDecrease()" classname="com.travel.planner.service.FareDataServiceTest" time="0.002"/>
+  <testcase name="passValidation()" classname="com.travel.planner.service.FareDataServiceTest" time="0.001"/>
+  <testcase name="disabledManualTableSwitchesTheBundledOneOff()" classname="com.travel.planner.service.FareDataServiceTest" time="0.014"/>
+  <testcase name="invalidTableIsRejectedAndNothingIsSaved()" classname="com.travel.planner.service.FareDataServiceTest" time="0.001"/>
+  <testcase name="lineKilometresCanBeRegisteredAndReplaced()" classname="com.travel.planner.service.FareDataServiceTest" time="0.001"/>
+  <testcase name="bundledPassesCoverWhatTheySay()" classname="com.travel.planner.service.FareDataServiceTest" time="0.005"/>
+  <testcase name="pairsAreUpsertedByStationPairRegardlessOfOrder()" classname="com.travel.planner.service.FareDataServiceTest" time="0.001"/>
+  <testcase name="manualRowsOverrideBundledOnesAndSurviveResync()" classname="com.travel.planner.service.FareDataServiceTest" time="0.015"/>
+  <testcase name="bundledValuesReproducePublishedFares()" classname="com.travel.planner.service.FareDataServiceTest" time="0.002"/>
+  <system-out><![CDATA[[요금] 형식이 맞지 않아 건너뛴 요금 자료가 1건 있습니다.
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

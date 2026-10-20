@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.travel.planner.service.PlaceNameServiceTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-20T15:27:41.309Z" hostname="DESKTOP-L0O1S4Q" time="2.511">
+  <properties/>
+  <testcase name="canBeTurnedOffAndAiFailureKeepsTheOriginalNames()" classname="com.travel.planner.service.PlaceNameServiceTest" time="0.002"/>
+  <testcase name="onlyForeignNamesWithoutAKoreanNameAreAskedAndOnlyTheNameColumnIsSaved()" classname="com.travel.planner.service.PlaceNameServiceTest" time="0.0"/>
+  <testcase name="slowAiDoesNotHoldTheResponseAndTheLateAnswerIsStillSaved()" classname="com.travel.planner.service.PlaceNameServiceTest" time="2.509"/>
+  <system-out><![CDATA[[장소 이름] AI 호출 중 오류가 있어 그 묶음은 원래 이름을 사용합니다: java.lang.IllegalStateException: AI 서버 오류
+[장소 이름] 영어·일본어 이름 1곳 중 0곳에 한국어 이름을 붙였습니다. (0ms)
+[장소 이름] 영어·일본어 이름 6곳 중 4곳에 한국어 이름을 붙였습니다. (1ms)
+[장소 이름] 1초 안에 AI 응답이 다 오지 않아 0/1곳만 반영했습니다. 나머지는 원래 이름으로 응답하고, 늦게 온 답은 DB 에 저장해 다음부터 씁니다.
+[교통] 전국 버스 정류장 자료를 읽었습니다: P11-22_SHP.zip: 정류장 278515개, 노선 23608개 (14548ms)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
