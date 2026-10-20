@@ -1,0 +1,48 @@
+{
+  "peach-fares-2026.txt": {
+    "missing": true
+  },
+  "national_index_pairs": 277,
+  "national_statistics_pairs": 276,
+  "national_observed_passenger_pairs": 272,
+  "index_without_statistics": [
+    [
+      "KTD",
+      "MMD"
+    ]
+  ],
+  "ana-summer-2026.txt": {
+    "flight_rows": 2675,
+    "distinct_routes": 282
+  },
+  "ana-winter-2026.txt": {
+    "flight_rows": 2512,
+    "distinct_routes": 266
+  },
+  "jetstar-summer-2026.txt": {
+    "route_pairs": 18
+  },
+  "jetstar-winter-2026.txt": {
+    "route_pairs": 18
+  },
+  "peach-summer-2026.txt": {
+    "route_pairs": 25
+  },
+  "peach-winter-2026.txt": {
+    "route_pairs": 23
+  },
+  "fda_period_links": 110,
+  "jetstar_starter_bands": 30,
+  "airports": 87,
+  "airport_pairs": 278,
+  "directional_routes": 556,
+  "route_evidence": 2204,
+  "published_directional_routes": 388,
+  "schedules": 2716,
+  "monthly_statistics": 4140,
+  "fare_options": 44,
+  "priced_directional_pairs": 86,
+  "unpriced_directional_pairs": 470,
+  "integrity_check": "ok",
+  "checked_at": "2026-10-09"
+}

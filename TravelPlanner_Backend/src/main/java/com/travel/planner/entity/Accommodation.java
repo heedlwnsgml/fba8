@@ -1,0 +1,48 @@
+package com.travel.planner.entity;
+
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import java.time.LocalDate;
+
+@Entity
+@Getter
+@Setter
+public class Accommodation {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    // 이 숙소가 어떤 여행 계획(Plan)에 속해 있는지 연결합니다. (다대일 관계)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "plan_id", nullable = false)
+    private Plan plan;
+
+    @Column(nullable = false)
+    private String name; // 숙소 이름 (예: "도쿄 프린스 호텔")
+
+    @Column
+    private String address; // 숙소 주소
+
+    @Column
+    private String placeId; // 좌표를 찾은 경우 구글 place_id
+
+    @Column(nullable = false)
+    private LocalDate checkIn; // 체크인 날짜
+
+    @Column(nullable = false)
+    private LocalDate checkOut; // 체크아웃 날짜
+
+    @Transient
+    private Integer priceYen;       // 이 숙소의 숙박비 합계 (일행 전체, 엔). 모르면 null
+
+    @Transient
+    private String priceSource;     // user / rakuten / rakuten-estimate
+
+    // 숙박비 조회에만 쓰는 좌표 (DB 에 저장하지 않는다. 구글에서 찾은 숙소 위치)
+    @Transient
+    private Double latitude;
+    @Transient
+    private Double longitude;
+}

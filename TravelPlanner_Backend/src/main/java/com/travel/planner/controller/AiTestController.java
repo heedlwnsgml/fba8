@@ -1,0 +1,52 @@
+package com.travel.planner.controller;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+import lombok.RequiredArgsConstructor;
+
+@RestController
+@RequestMapping("/api/test")
+@RequiredArgsConstructor
+public class AiTestController {
+
+    private final RestTemplate restTemplate;
+    private final com.travel.planner.service.AiService aiService;
+
+    /** 주 모델(ai.primary)이 무엇이고, OpenAI·Gemini 가 각각 응답하는지 확인한다. API 키는 출력하지 않는다. */
+    @GetMapping("/ai")
+    public String testAi() {
+        return aiService.selfTest();
+    }
+
+    // 1. API 키 불러오기
+    @Value("${ai.gemini.api-key}")
+    private String geminiApiKey;
+
+    // 2. 모델명도 yml에서 불러오기
+    @Value("${ai.gemini.model}")
+    private String geminiModel;
+
+    @GetMapping("/gemini")
+    public String testGemini() {
+        // 3. 하드코딩된 pro/flash 글자를 지우고 변수로 조립
+        String url = "https://generativelanguage.googleapis.com/v1beta/models/" + geminiModel + ":generateContent?key=" + geminiApiKey;
+
+        String prompt = "일본 오사카 3박 4일 여행에서 교통 약자(휠체어)를 위한 숙소 위치를 딱 한 곳만 추천하고 그 사유를 1줄로 말해줘.";
+        String requestBody = "{ \"contents\": [{ \"parts\":[{\"text\": \"" + prompt + "\"}] }] }";
+
+        try {
+            org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();
+            headers.setContentType(org.springframework.http.MediaType.APPLICATION_JSON);
+
+            org.springframework.http.HttpEntity<String> request = new org.springframework.http.HttpEntity<>(requestBody, headers);
+
+            String response = restTemplate.postForObject(url, request, String.class);
+            return "Gemini 응답 성공: " + response;
+        } catch (Exception e) {
+            return "에러 발생: " + e.getMessage();
+        }
+    }
+}

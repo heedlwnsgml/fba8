@@ -1,0 +1,11 @@
+앞서 제공한 TravelPlanner_usability_update 수정본 기준의 수집 패치입니다.
+백엔드를 Ctrl+C로 종료하고 TravelPlanner_Backend 폴더를 바탕 화면 TravelPlanner_GitHub_refresh 안에 복사하여 덮어쓰세요. 프론트 파일과 기존 DB는 수정하지 않습니다.
+백엔드를 재시작한 뒤 별도 PowerShell에서 python tools/collect_kanto.py --cities 가마쿠라 --repeat를 실행하세요.
+기본 검색어는 13개입니다. --keywords로 검색 범위를 줄일 수 있습니다.
+앱 이메일과 앱 로그인 비밀번호를 입력합니다. 평점 4.0+리뷰150 또는 평점3.6+리뷰750 기준을 사용합니다.
+도시 좌표 범위는 Geocoding의 bounds 또는 viewport에서 얻는 사각형이므로 정확한 행정 경계 다각형은 아닙니다.
+상세 로그: 응답 건수, 정보 오류, 지역 밖, 검색 중복, 평점 누락, 평점·리뷰 탈락, 신규/기존 장소.
+완료 기록은 별도 kanto_collection_state_v2.json에 남깁니다. localhost와 127.0.0.1은 같은 주소로 처리합니다.
+자동 테마 분류는 실행하지 않습니다. CSV에서 테마·실내외·체류 시간을 검토하세요.
+Google API 호출 비용이 발생할 수 있으며 수량을 보장하지 않습니다. 실제 API/DB 실행은 사용자 PC에서 확인해야 합니다.
+품질/좌표 검사11개, Python 도구검사7개 통과. Java 문법 검사 통과. Google 응답과 페이지 처리의 JUnit 테스트를 추가했으나 전체 Gradle/JUnit 실행은 이 환경에서 수행하지 못했습니다.

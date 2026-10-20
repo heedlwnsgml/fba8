@@ -1,0 +1,82 @@
+[
+  {
+    "id": "AOMORI_CITY_BUS",
+    "cities": [
+      "아오모리"
+    ],
+    "status": "ok",
+    "routes": 285,
+    "stops": 837,
+    "trips": 4705,
+    "stop_times": 130496,
+    "fares": 81,
+    "shape_points": 47264,
+    "service_until": "2027-07-23"
+  },
+  {
+    "id": "NAGASAKI_KENEI",
+    "cities": [
+      "나가사키"
+    ],
+    "status": "ok",
+    "routes": 49,
+    "stops": 1756,
+    "trips": 3826,
+    "stop_times": 112290,
+    "fares": 99,
+    "shape_points": 249884,
+    "service_until": "2027-04-01"
+  },
+  {
+    "id": "HIRODEN_BUS",
+    "cities": [
+      "히로시마"
+    ],
+    "status": "failed",
+    "reason": "HTTP Error 403: Forbidden"
+  },
+  {
+    "id": "HIROSHIMA_BUS",
+    "cities": [
+      "히로시마"
+    ],
+    "status": "failed",
+    "reason": "HTTP Error 403: Forbidden"
+  },
+  {
+    "id": "HIROSHIMA_KOTSU",
+    "cities": [
+      "히로시마"
+    ],
+    "status": "failed",
+    "reason": "HTTP Error 403: Forbidden"
+  },
+  {
+    "id": "KOTODEN_RAIL",
+    "cities": [
+      "다카마쓰"
+    ],
+    "status": "ok",
+    "routes": 3,
+    "stops": 237,
+    "trips": 627,
+    "stop_times": 10586,
+    "fares": 2756,
+    "shape_points": 962,
+    "service_until": "2027-02-28"
+  },
+  {
+    "id": "KOTODEN_BUS",
+    "cities": [
+      "다카마쓰"
+    ],
+    "status": "ok",
+    "routes": 22,
+    "stops": 658,
+    "trips": 1034,
+    "stop_times": 25248,
+    "fares": 95,
+    "shape_points": 23316,
+    "service_until": "2027-03-31"
+  }
+]

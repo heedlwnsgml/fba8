@@ -1,0 +1,64 @@
+package com.travel.planner.repository;
+
+import com.travel.planner.entity.Place;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@Repository
+public interface PlaceRepository extends JpaRepository<Place, Long> {
+
+    List<Place> findByCity(String city);
+
+    List<Place> findByCityIn(List<String> cities);
+
+    List<Place> findTop10ByCityAndCategory(String city, String category);
+
+    boolean existsByPlaceId(String placeId);
+
+    java.util.Optional<Place> findByPlaceId(String placeId);
+
+    // 테마, 영업시간 등 인리치먼트가 필요한 장소만 핀포인트로 가져오기.
+    //  - 영업시간은 "한 번도 조회 안 한 것"(NULL / 빈 값 / 예전 기본 문구)만 대상이다.
+    //    구글에 조회했는데 영업시간이 없던 곳은 "확인 불가"로 표시되어 여기 걸리지 않는다.
+    //    (이전의 LIKE '%없음%' 조건은 거리·공원처럼 원래 영업시간이 없는 곳을 실행할 때마다 다시 조회했다)
+    //  - 숙소·교통과 더미 장소는 테마가 필요 없으므로 제외한다.
+    @Query("SELECT p FROM Place p WHERE (p.category IS NULL OR p.category NOT IN ('숙소', '교통', '자유시간', '식사', '고정일정')) "
+            + "AND (p.theme IS NULL OR p.theme = '' OR p.placeType IS NULL OR p.placeType = '' OR p.recommendedDuration IS NULL "
+            + "OR p.openingHours IS NULL OR p.openingHours = '' OR p.openingHours = '영업시간 정보 없음') ORDER BY p.id")
+    List<Place> findPlacesNeedingEnrichment(Pageable pageable);
+
+    // 한 줄 소개가 비어 있는 방문 대상 장소 (숙소·교통·더미·공항 제외)
+    @Query("SELECT p FROM Place p WHERE (p.category IS NULL OR p.category NOT IN ('숙소', '교통', '자유시간', '식사', '고정일정')) "
+            + "AND p.placeId NOT LIKE 'DUMMY%' AND p.placeId NOT LIKE 'AIRPORT%' "
+            + "AND (p.summary IS NULL OR p.summary = '') ORDER BY p.id")
+    List<Place> findPlacesNeedingSummary(Pageable pageable);
+
+    // 카테고리 정제가 필요한 장소만 핀포인트로 가져오기
+    @Query("SELECT p FROM Place p WHERE p.category IS NULL OR p.category = '' ORDER BY p.id")
+    List<Place> findPlacesNeedingCategory(Pageable pageable);
+
+    // 30일 갱신 배치 대상: 오래된 순으로 일부만 (한 번에 전부 재조회하지 않도록 페이지로 끊는다)
+    @Query("SELECT p FROM Place p WHERE p.placeId NOT LIKE 'DUMMY%' AND p.placeId NOT LIKE 'AIRPORT%' "
+            + "AND (p.lastUpdated IS NULL OR p.lastUpdated < :threshold) ORDER BY p.lastUpdated ASC")
+    List<Place> findRefreshTargets(@Param("threshold") java.time.LocalDateTime threshold, Pageable pageable);
+
+    List<Place> findByNameContaining(String keyword);
+
+    // 보여 줄 한국어 이름만 고친다. 다른 칸(원래 이름·소개 등)은 건드리지 않으므로, 같은 장소를 다른 작업이 동시에 저장해도 서로 덮어쓰지 않는다.
+    @Modifying
+    @Transactional
+    @Query("UPDATE Place p SET p.nameKo = :nameKo WHERE p.id = :id")
+    int updateNameKo(@Param("id") Long id, @Param("nameKo") String nameKo);
+
+    /** 도시별 장소 수 {도시, 수} (장기 투어에서 장소가 넉넉한 도시를 먼저 더하는 데 쓴다) */
+    @Query("SELECT p.city, COUNT(p) FROM Place p WHERE p.city IS NOT NULL GROUP BY p.city")
+    List<Object[]> countByCity();
+
+}

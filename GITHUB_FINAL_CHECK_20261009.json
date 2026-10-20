@@ -1,0 +1,24 @@
+{
+  "checked_at": "2026-10-09T12:03:15.329116+00:00",
+  "source_files_sha256": {
+    "controller/PlanGenerationController.java": "327fc96c1319a1787655e331ede9f35f0f1954d3485cc5219c6d4c6609e97397",
+    "service/PlanGenerationJobs.java": "6ff120696388dd0ba25a2d12313615851cc30452898b8bd67ecec8fa2949e491",
+    "controller/PlanController.java": "3cb7a497dce43bf844e96e6d3009ce3156c52fa05f492116400b397179282564",
+    "service/PlanService.java": "253786ee3f0ad84ccba146f7a20271075954894051797b877b6e1e448c3ad91e",
+    "util/CityDayPlanner.java": "ba04eb919b345f9cdd7b8000f92572ae1913cbf84a1fe70cd6080302bb854d6b",
+    "service/StayPlanner.java": "d6bd5d7492e1f2d96e4fdd26f91e19e6f98c0c0164b9516a316601e11693c325",
+    "service/TransportService.java": "9f565f6910f6545a4a51c24d03f162ddbe4a165b649b7d3ad8db5f837eba9a25",
+    "util/OpeningHoursParser.java": "4b3d1dd6ae4d1a3611671415a3ad171453588560eb5b4e319feaa918fef44295",
+    "service/DayBoundaryService.java": "f92c0c357c8a276d2544751d0042ae5e07f5e599908c8515cc0f43ccbaf01e6e",
+    "service/WeatherService.java": "55ea45e997fc6ae6b22ae8130a24814411f687500084431b821dd15612ab8d76",
+    "service/DistanceTransportEstimateService.java": "0f624b2025d19203f2fc02c0d3ec7b03fbf61259c9add3a9a362e39452b9a58a",
+    "service/RouteGeometryService.java": "fb12d4ab98cbde9d2283a2c5f1f235a0110517c43ed78ce44ac4bf053f99548c",
+    "service/TransitCostService.java": "ad809b403d55bbce819d16c49d1635a6f3be272e7a05ed07ace37cab8ea0adde",
+    "controller/SavedPlanController.java": "e10c8222e86ca5d071ce782544a8cf770412f9406ecaea1f62fef3569d837151"
+  },
+  "frontend_remote_sha": "dc3d1649b20adb15863679f53bf03ce2de206f6c",
+  "backend_refactor_remote_sha": "bb9abc6e560dcf9ea0bd8d7aaaccd7ee5c06fedd",
+  "backend_master_remote_sha": "26ee93d4f644b9b0ac5b5172294df68458987bfc",
+  "source_code_modified": false,
+  "document_sha256": "de7718d75345b2735d5c42d80e64293beb1ea35bba7a27733fcb734385d2ab0d"
+}

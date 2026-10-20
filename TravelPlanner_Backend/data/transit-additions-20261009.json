@@ -1,0 +1,100 @@
+{
+  "feeds": [
+    {
+      "id": "GEIYO_BUS",
+      "agency": "芸陽バス",
+      "start": "2026-10-02",
+      "end": "2027-02-24",
+      "source": "https://ajt-mobusta-gtfs.mcapps.jp/static/11/current_data.zip",
+      "license": "CC BY 4.0 / 芸陽バス / 広島県バス協会",
+      "counts": {
+        "gtfs_route": 64,
+        "gtfs_stop": 1682,
+        "gtfs_trip": 1593,
+        "gtfs_stop_time": 44152,
+        "gtfs_fare": 119,
+        "gtfs_shape": 60342
+      },
+      "active_trips_this_week": 1491,
+      "active_routes_this_week": 57
+    },
+    {
+      "id": "BIHOKU_KOTSU",
+      "agency": "備北交通",
+      "start": "2026-10-02",
+      "end": "2027-04-01",
+      "source": "https://ajt-mobusta-gtfs.mcapps.jp/static/12/current_data.zip",
+      "license": "CC BY 4.0 / 備北交通 / 広島県バス協会",
+      "counts": {
+        "gtfs_route": 39,
+        "gtfs_stop": 1141,
+        "gtfs_trip": 575,
+        "gtfs_stop_time": 18791,
+        "gtfs_fare": 165,
+        "gtfs_shape": 91701
+      },
+      "active_trips_this_week": 575,
+      "active_routes_this_week": 37
+    },
+    {
+      "id": "JR_CHUGOKU_BUS",
+      "agency": "ＪＲバス中国",
+      "start": "2026-10-02",
+      "end": "2027-02-15",
+      "source": "https://ajt-mobusta-gtfs.mcapps.jp/static/15/current_data.zip",
+      "license": "CC BY 4.0 / JRバス中国 / 広島県バス協会",
+      "counts": {
+        "gtfs_route": 18,
+        "gtfs_stop": 891,
+        "gtfs_trip": 1094,
+        "gtfs_stop_time": 34700,
+        "gtfs_fare": 164,
+        "gtfs_shape": 39428
+      },
+      "active_trips_this_week": 1073,
+      "active_routes_this_week": 17
+    },
+    {
+      "id": "HD_NISHIHIROSHIMA",
+      "agency": "ボンバス",
+      "start": "2026-10-02",
+      "end": "2027-04-01",
+      "source": "https://ajt-mobusta-gtfs.mcapps.jp/static/13/current_data.zip",
+      "license": "CC BY 4.0 / エイチ・ディー西広島 / 広島県バス協会",
+      "counts": {
+        "gtfs_route": 37,
+        "gtfs_stop": 132,
+        "gtfs_trip": 769,
+        "gtfs_stop_time": 13917,
+        "gtfs_fare": 30,
+        "gtfs_shape": 14374
+      },
+      "active_trips_this_week": 769,
+      "active_routes_this_week": 37
+    },
+    {
+      "id": "KUMAMOTO_SANKO_BUS",
+      "agency": "九州産交バス",
+      "start": "2026-10-02",
+      "end": "2027-01-10",
+      "source": "https://api.gtfs-data.jp/v2/organizations/sankobus/feeds/sankobus/files/feed.zip?rid=current",
+      "license": "CC BY 4.0 / 産交バス / GTFSデータリポジトリ",
+      "counts": {
+        "gtfs_route": 488,
+        "gtfs_stop": 4647,
+        "gtfs_trip": 14269,
+        "gtfs_stop_time": 561590,
+        "gtfs_fare": 20201,
+        "gtfs_shape": 0
+      },
+      "active_trips_this_week": 12258,
+      "active_routes_this_week": 486
+    }
+  ],
+  "new_routes": 646,
+  "new_stops": 8493,
+  "new_trips": 18300,
+  "active_trips_this_week": 16166,
+  "active_routes_this_week": 634,
+  "foreign_key_violations": 0
+}

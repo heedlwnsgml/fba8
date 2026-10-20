@@ -1,0 +1,122 @@
+[
+  {
+    "url": "https://www.city.hakodate.hokkaido.jp/docs/2025060500015/",
+    "status": "ok",
+    "passes": [
+      {
+        "id": "hakodate-tram-day",
+        "cities": [
+          "하코다테"
+        ],
+        "adult_yen": 800,
+        "child_yen": 400
+      },
+      {
+        "id": "hakodate-tram-24h",
+        "cities": [
+          "하코다테"
+        ],
+        "adult_yen": 1130,
+        "child_yen": 570
+      },
+      {
+        "id": "hakodate-bus-tram-day",
+        "cities": [
+          "하코다테"
+        ],
+        "adult_yen": 1600,
+        "child_yen": 800
+      },
+      {
+        "id": "hakodate-bus-tram-2day",
+        "cities": [
+          "하코다테"
+        ],
+        "adult_yen": 2600,
+        "child_yen": 1300
+      }
+    ]
+  },
+  {
+    "url": "https://www.kotsu.city.sendai.jp/waribiki/",
+    "status": "ok",
+    "passes": [
+      {
+        "id": "sendai-subway-day",
+        "cities": [
+          "센다이"
+        ],
+        "adult_yen": 840,
+        "child_yen": 420
+      },
+      {
+        "id": "sendai-subway-weekend",
+        "cities": [
+          "센다이"
+        ],
+        "adult_yen": 620,
+        "child_yen": 310
+      },
+      {
+        "id": "sendai-loople-day",
+        "cities": [
+          "센다이"
+        ],
+        "adult_yen": 700,
+        "child_yen": 350
+      },
+      {
+        "id": "sendai-loople-subway",
+        "cities": [
+          "센다이"
+        ],
+        "adult_yen": 1000,
+        "child_yen": 500
+      },
+      {
+        "id": "sendai-bus-city",
+        "cities": [
+          "센다이"
+        ],
+        "adult_yen": 750,
+        "child_yen": 380
+      },
+      {
+        "id": "sendai-bus-suburb",
+        "cities": [
+          "센다이"
+        ],
+        "adult_yen": 1150,
+        "child_yen": 580
+      }
+    ]
+  },
+  {
+    "url": "https://oneday-pass.kyoto/overview/",
+    "status": "ok",
+    "passes": [
+      {
+        "id": "kyoto-subway-bus-day",
+        "cities": [
+          "교토"
+        ],
+        "adult_yen": 1100,
+        "child_yen": 550
+      }
+    ]
+  },
+  {
+    "url": "https://www.aizubus.com/rosen/machinaka-shuyu.php?stt_lang=en",
+    "status": "ok",
+    "passes": [
+      {
+        "id": "aizu-loop-day",
+        "cities": [
+          "아이즈와카마쓰"
+        ],
+        "adult_yen": 700,
+        "child_yen": 350
+      }
+    ]
+  }
+]

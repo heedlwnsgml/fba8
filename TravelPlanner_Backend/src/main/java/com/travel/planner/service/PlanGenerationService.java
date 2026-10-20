@@ -1,0 +1,896 @@
+package com.travel.planner.service;
+
+import com.travel.planner.dto.AiRouteResponse;
+import com.travel.planner.dto.PlanRequest;
+import com.travel.planner.entity.Accommodation;
+import com.travel.planner.entity.Place;
+import com.travel.planner.entity.Plan;
+import com.travel.planner.entity.User;
+import com.travel.planner.repository.PlaceRepository;
+import com.travel.planner.repository.UserRepository;
+import com.travel.planner.util.PlaceNames;
+import com.travel.planner.util.AirportDirectory;
+import com.travel.planner.util.DistanceUtil;
+import com.travel.planner.util.JapanCities;
+import com.travel.planner.util.SeasonNotes;
+import com.travel.planner.util.TripProfile;
+import com.travel.planner.util.ThemeVocabulary;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+/**
+ * 일정 생성 전체 흐름.
+ *   입력 검증 → 후보 수집(부족하면 긴급 수집) → 공항·숙소 확정 → 방문일 예보 → 엔진 → 저장 → 응답
+ * 컨트롤러에 있던 로직을 옮겨 왔다. 컨트롤러는 인증 정보만 꺼내 이 서비스를 호출한다.
+ */
+@Service
+@RequiredArgsConstructor
+public class PlanGenerationService {
+
+    /** 날짜를 정한 일정의 최대 일수 (안전 한도). 날짜 미정 일정은 UNDATED_MAX_DAYS */
+    static final int MAX_TRIP_DAYS = 365;
+    static final int UNDATED_MAX_DAYS = 30;
+
+    private final PlanService planService;
+    private final PlanValidationService planValidationService;
+    private final PlanPersistenceService planPersistenceService;
+    private final TimelineAssembler timelineAssembler;
+    private final PlaceRepository placeRepository;
+    private final UserRepository userRepository;
+    private final GoogleMapsService googleMapsService;
+    private final WeatherService weatherService;
+    private final PlaceDescriptionService placeDescriptionService;
+    private final PlaceNameService placeNameService;
+    private final RailRouteService railRouteService;
+    private final PassAdvisorService passAdvisorService;
+    @org.springframework.beans.factory.annotation.Autowired
+    private SupplementalFoodService supplementalFood;
+    @org.springframework.beans.factory.annotation.Autowired
+    private LodgingCatalog lodgingCatalog;
+    @org.springframework.beans.factory.annotation.Autowired
+    private HotelRecommendation hotelRecommendation;
+    @org.springframework.beans.factory.annotation.Autowired
+    private HotelBudgetService hotelBudget;
+    @org.springframework.beans.factory.annotation.Autowired
+    private AirportAccessService airportAccess;
+    @org.springframework.beans.factory.annotation.Autowired
+    private LodgingCostService lodgingCostService;
+    @org.springframework.beans.factory.annotation.Value("${app.lodging-cost.enabled:true}")
+    private boolean lodgingCostEnabled;
+    @org.springframework.beans.factory.annotation.Autowired
+    private HikeAccessService hikeAccessService;
+
+    public AiRouteResponse createPlan(String email, PlanRequest request) {
+        // ------------------------------------------------------------------
+        // Step 1. 입력 검증 (잘못된 입력은 400 으로 돌려준다)
+        // ------------------------------------------------------------------
+        PlanGenerationJobs.progress("여행 조건과 장소 정보를 확인하고 있습니다.");
+        validate(request);
+        if(request.getHotelBudgetYen()!=null && (request.getHotelBudgetYen()<=0 || request.getHotelBudgetYen()>1_000_000_000L)) throw new IllegalArgumentException("숙소 요금 상한은 1~1,000,000,000엔으로 입력해주세요.");
+        if(request.getHotelBudgetMode()!=null && !Set.of("perNight","total").contains(request.getHotelBudgetMode())) throw new IllegalArgumentException("숙소 예산 방식은 하루당 또는 전체 숙박비로 선택해주세요.");
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("회원을 찾을 수 없습니다."));
+
+        int totalDays = planService.totalDays(request);
+        List<String> warnings = new ArrayList<>();
+        // 장기(15일~) 투어: 일수에 맞게 근처 도시를 더하고 입국 쪽에서 출국 쪽으로 순서를 맞춘다
+        TripProfile.Style style = TripProfile.styleOf(totalDays, request.isExcludeSuburbs());
+        List<String> addedCities = new ArrayList<>();
+        if (style == TripProfile.Style.TOUR) {
+            List<String> before = new ArrayList<>(request.getCities());
+            List<String> expanded = JapanCities.expandForTour(before, totalDays, request.getInCity(), request.getOutCity(), placeCountsByCity());
+            for (String c : expanded) if (!before.contains(c)) addedCities.add(c);
+            if (!addedCities.isEmpty()) request.setCities(expanded);
+        }
+        List<String> cities = request.getCities();
+        final String mainCity = cities.get(0);
+
+        // ------------------------------------------------------------------
+        // Step 2. 후보 장소 수집 (DB → 부족하면 구글 긴급 수집)
+        // ------------------------------------------------------------------
+        List<Place> allPlaces = new ArrayList<>(placeRepository.findByCityIn(cities));
+        if(supplementalFood!=null)supplementalFood.supplement(allPlaces,cities);
+        supplementCandidates(request, totalDays, allPlaces);
+        if (!addedCities.isEmpty()) {
+            // 더한 도시 가운데 장소를 하나도 구하지 못한 곳은 뺀다 (그 도시에 배정된 날이 통째로 비지 않도록)
+            List<String> empty = new ArrayList<>();
+            for (String c : addedCities) {
+                if (allPlaces.stream().noneMatch(p -> c.equals(p.getCity()) && planService.isVisitCandidate(p))) empty.add(c);
+            }
+            if (!empty.isEmpty()) {
+                addedCities.removeAll(empty);
+                List<String> kept = new ArrayList<>(request.getCities());
+                kept.removeAll(empty);
+                request.setCities(kept);
+                cities = kept;
+            }
+            if (!addedCities.isEmpty()) {
+                warnings.add(totalDays + "일 장기 투어라 근처 도시 " + String.join(", ", addedCities) + "을(를) 더해 "
+                        + String.join(" → ", cities) + " 순서로 짰습니다. 한 도시에 머물고 싶으면 '근교 제외'를 켜 주세요(살아보기).");
+            }
+        }
+
+        if (allPlaces.stream().noneMatch(planService::isVisitCandidate)) {
+            throw new PlanGenerationException("선택한 도시(" + String.join(", ", cities)
+                    + ")에 방문 가능한 장소 데이터가 없습니다. 관리자 장소 수집을 먼저 실행해 주세요.");
+        }
+        Map<String, double[]> centers = planService.cityCenters(allPlaces, cities);
+
+        // ------------------------------------------------------------------
+        // Step 3. 입·출국 공항 (출국은 outCity 기준. 없으면 입국 공항과 같다고 본다)
+        // ------------------------------------------------------------------
+        Place arrivalAirport = isBlank(request.getInCity()) ? null : resolveAirport(request.getInCity(), centers, mainCity, "입국", warnings);
+        String outCity = request.getOutCity();
+        Place departureAirport = isBlank(outCity) ? null : resolveAirport(outCity, centers, cities.get(cities.size() - 1), "출국", warnings);
+
+        // ------------------------------------------------------------------
+        // Step 4. 숙소 (날짜별) + 일차별 도시 배정
+        // ------------------------------------------------------------------
+        Map<Integer, Place> lodgingByNight = new HashMap<>();
+        List<Accommodation> accommodationEntities = new ArrayList<>();
+        List<String> dayCities;
+
+        boolean hasUserLodging = request.getAccommodations() != null && !request.getAccommodations().isEmpty();
+        if (hasUserLodging) {
+            resolveUserAccommodations(request, totalDays, centers, mainCity, lodgingByNight, accommodationEntities, warnings);
+            dayCities = planService.assignDayCities(request, totalDays, centers, arrivalAirport, departureAirport, lodgingByNight);
+        } else {
+            // 숙소가 정해져 있지 않으면 도시별 볼거리 분량을 보고 일수를 나눈다 (볼거리가 적은 도시에 이틀을 주지 않는다)
+            dayCities = planService.assignDayCities(request, totalDays, centers, arrivalAirport, departureAirport, lodgingByNight,
+                    planService.sightMinutesByCity(request, allPlaces));
+        }
+        // Complete every overnight stay, including gaps in user-provided accommodations.
+        if (totalDays > 1) suggestHotels(request, totalDays, dayCities, centers, mainCity, lodgingByNight, accommodationEntities, warnings,email);
+
+        // 숙박비는 라쿠텐에 묻느라 시간이 걸리므로(호출 사이 1초) 일정 엔진·AI 와 동시에 돌린다
+        int adults = request.getAdults() == null ? 1 : request.getAdults();
+        java.util.concurrent.CompletableFuture<LodgingCostService.Result> lodgingCost = java.util.concurrent.CompletableFuture.supplyAsync(
+                () -> !lodgingCostEnabled || lodgingCostService == null ? new LodgingCostService.Result() : lodgingCostService.estimate(accommodationEntities.stream().map(PlanGenerationService::copyStay).toList(), PlanService.baseDate(request), PlanService.isUndated(request), adults));
+
+        // ------------------------------------------------------------------
+        // Step 5. 방문일 예보 (예보 범위 밖이면 날씨 가감 없음)
+        // ------------------------------------------------------------------
+        Map<LocalDate, Boolean> badWeatherByDate = forecast(request, totalDays, dayCities, centers, mainCity);
+
+        // ------------------------------------------------------------------
+        // Step 6. 일정 엔진
+        // ------------------------------------------------------------------
+        // 등산하는 곳마다 대중교통으로 등산 입구(1.5km 안의 역·정류장)까지 갈 수 있는지 적어 둔다 (없으면 대중교통 여행에서 조금 낮춘다)
+        hikeAccessService.markTransitAccess(allPlaces);
+
+        PlanService.TripInput input = new PlanService.TripInput();
+        input.request = request;
+        input.candidates = allPlaces;
+        input.arrivalAirport = arrivalAirport;
+        input.departureAirport = departureAirport;
+        input.lodgingByNight = lodgingByNight;
+        input.dayCities = dayCities;
+        input.badWeatherByDate = badWeatherByDate;
+        if (request.getRestDaysEnabled() == null) request.setRestDaysEnabled(!Boolean.FALSE.equals(user.getRestDaysEnabled()));
+        input.pace = UserService.paceOf(user);   // 마이페이지 "장기 일정" 설정 (15일 이상에만 쓰인다)
+
+        PlanGenerationJobs.progress("날짜별 동선과 방문 시간을 계산하고 있습니다.");
+        PlanService.TripPlan tripPlan = planService.planTrip(input);
+        // 식사 시간에 갈 식당이 없어 "자유 식사"가 된 자리가 있으면, 그 주변 식당을 찾아 넣고 한 번 더 짠다
+        tripPlan = fillMealGaps(input, tripPlan, dayCities, mainCity);
+        if(airportAccess!=null)airportAccess.add(tripPlan.getDays(),request.getTransportation(),warnings);
+        TimelineConsistency.repair(tripPlan.getDays(),railRouteService,request,warnings);
+        validateOvernightAnchors(tripPlan);
+        warnings.addAll(tripPlan.getWarnings());
+
+        boolean anyVisit = tripPlan.getDays().stream().flatMap(d -> d.getItems().stream())
+                .anyMatch(i -> i.getType() == PlanService.SimulatedItinerary.Type.VISIT);
+        if (!anyVisit) {
+            throw new PlanGenerationException("현재 조건으로 생성 가능한 일정이 없습니다. 조건을 완화해주세요.\n" + String.join("\n", warnings));
+        }
+
+        // ------------------------------------------------------------------
+        // Step 7. 응답 조립 + DB 저장
+        // ------------------------------------------------------------------
+        // 일정에 들어간 장소 중 이름이 영어·일본어뿐인 곳에 보여 줄 한국어 이름을 붙이고, AI 소개가 아직 없는 곳은 소개를 채운다.
+        // 둘 다 DB 에 남으므로 같은 장소는 다시 묻지 않는다. 서로 기다리지 않도록 이름은 따로 돌린다.
+        List<Place> shownPlaces = placesInPlan(tripPlan.getDays());
+        java.util.concurrent.CompletableFuture<Integer> naming =
+                java.util.concurrent.CompletableFuture.supplyAsync(() -> placeNameService.fillMissing(shownPlaces));
+        placeDescriptionService.fillMissing(placesToDescribe(tripPlan.getDays()));
+        try {
+            naming.join();
+        } catch (Exception e) {
+            System.out.println("[장소 이름] 한국어 이름을 붙이지 못해 원래 이름으로 응답합니다: " + e.getMessage());
+        }
+        // 대중교통 입구가 없는 등산하는 곳은 정상 근처 주차장을 찾아 둔다 (택시로 주차장까지 안내. 한 번 찾으면 DB 에 남는다)
+        try {
+            hikeAccessService.fillParking(shownPlaces);
+        } catch (Exception e) {
+            System.out.println("[등산] 주차장을 찾지 못해 가까운 역·정류장 기준으로 안내합니다: " + e.getMessage());
+        }
+        // 엔진이 일정을 짜면서 남긴 안내 문장에는 원래 이름이 들어 있다
+        warnings.replaceAll(w -> PlaceNames.localize(w, shownPlaces));
+
+        AiRouteResponse response = new AiRouteResponse();
+        // 어떤 여행인지: 전체 요약(reason)·제목·일자별 개요. 일정 결과에서 바로 만들므로 AI 호출이 없다.
+        response.setTitle(PlanSummarizer.tripTitle(request, tripPlan.getDays()));
+        response.setReason(PlanSummarizer.tripOverview(request, tripPlan.getDays()));
+        response.setDays(PlanSummarizer.summarizeDays(tripPlan.getDays()));
+        PlanGenerationJobs.progress("이동 정보와 일정 결과를 정리하고 있습니다.");
+        response.setTimeline(timelineAssembler.toTimeline(tripPlan.getDays(), request.getLanguage(), request.getTransportation()));
+        // 구간별 교통 정보에서 일자별·전체 교통비를 합산해 개요와 요약에 붙인다
+        TransitTotals.apply(response, railRouteService.isNetworkLoaded());
+        // 여행 전체의 요금 합계와 견주어 이득인 교통 패스를 고른다
+        passAdvisorService.apply(response);
+        LodgingCostService.Result lodging;
+        try {
+            // 숙소 한 곳에 라쿠텐 1~2번(1초 간격). 장기 투어는 숙소가 많으므로 그만큼 더 기다린다 (최대 2분)
+            lodging = lodgingCost.get(Math.min(120, 30 + 3L * accommodationEntities.size()), java.util.concurrent.TimeUnit.SECONDS);
+        } catch (Exception e) {
+            System.out.println("[숙박비] 시간 안에 숙박비를 다 찾지 못했습니다: " + e.getClass().getSimpleName());
+            lodgingCost.cancel(true);
+            if (e instanceof InterruptedException) Thread.currentThread().interrupt();
+            lodging = !lodgingCostEnabled || lodgingCostService==null ? new LodgingCostService.Result() : lodgingCostService.estimateCached(accommodationEntities.stream().map(PlanGenerationService::copyStay).toList(),PlanService.baseDate(request),PlanService.isUndated(request),adults);
+        }
+        if(lodgingCostEnabled) LodgingCostService.apply(response, lodging, adults);
+        if(airportAccess!=null)airportAccess.attach(response);
+        response.setTripDays(totalDays);
+        response.setTripLength(TripProfile.lengthOf(totalDays).label);
+        response.setTripStyle(style == null ? null : style.label);
+        response.setAddedCities(addedCities);
+        addSeasonNotes(request, totalDays, dayCities, centers, response, warnings);
+        response.setDateUndecided(PlanService.isUndated(request));
+        if (PlanService.isUndated(request)) warnings.add(0, UNDATED_NOTICE);
+        response.setWarnings(warnings);
+
+        PlanGenerationJobs.beforeCommit();
+        Plan saved = planPersistenceService.saveNewPlan(user, request, tripPlan.getDays(), accommodationEntities, response.getReason());
+        response.setPlanId(saved.getId());
+        java.util.Map<Integer,java.util.List<com.travel.planner.entity.Itinerary>> savedDays=saved.getItineraries().stream()
+            .collect(java.util.stream.Collectors.groupingBy(com.travel.planner.entity.Itinerary::getDayNumber));
+        java.util.Map<Integer,Integer> ordinal=new java.util.HashMap<>();
+        savedDays.values().forEach(list->list.sort(java.util.Comparator.comparing(com.travel.planner.entity.Itinerary::getSequence)));
+        for(var item:response.getTimeline()) {
+            int index=ordinal.merge(item.getDay(),1,Integer::sum)-1;
+            var list=savedDays.get(item.getDay());
+            if(list!=null && index<list.size()) item.setItineraryId(list.get(index).getId());
+        }
+        return response;
+    }
+
+    private static Accommodation copyStay(Accommodation stay) {
+        Accommodation copy=new Accommodation();
+        copy.setName(stay.getName());copy.setPlaceId(stay.getPlaceId());copy.setAddress(stay.getAddress());
+        copy.setCheckIn(stay.getCheckIn());copy.setCheckOut(stay.getCheckOut());
+        copy.setLatitude(stay.getLatitude());copy.setLongitude(stay.getLongitude());
+        copy.setPriceYen(stay.getPriceYen());copy.setPriceSource(stay.getPriceSource());return copy;
+    }
+
+    static void validateOvernightAnchors(PlanService.TripPlan trip) {
+        var days=trip.getDays();
+        for(int index=0;index+1<days.size();index++) {
+            var today=days.get(index).getItems();var next=days.get(index+1).getItems();
+            if(today.isEmpty() || next.isEmpty())throw new PlanGenerationException((index+1)+"일차 숙소 일정을 확인하지 못했습니다.");
+            var end=today.getLast();var start=next.getFirst();
+            if(!PlanService.isLodging(end.getPlace()) || end.getType()!=PlanService.SimulatedItinerary.Type.END
+                || start.getType()!=PlanService.SimulatedItinerary.Type.START || start.getPlace()==null
+                || !java.util.Objects.equals(end.getPlace().getPlaceId(),start.getPlace().getPlaceId()))
+                throw new PlanGenerationException((index+1)+"일차 숙소와 다음 날 출발지가 연결되지 않았습니다.");
+        }
+    }
+
+    // =====================================================================
+    // 입력 검증
+    // =====================================================================
+
+    /** 날짜가 정해지지 않은 일정의 응답에 붙이는 안내 */
+    static final String UNDATED_NOTICE = "여행 날짜가 정해지지 않아 날씨, 요일별 정기 휴무, 계절에 따른 일몰 시각은 반영하지 않았습니다. "
+            + "버스·열차는 평일 운행 기준이고, 특정 요일에만 쓸 수 있는 교통 패스는 추천에서 뺐습니다. 날짜가 정해지면 날짜를 넣어 다시 만들어 주세요.";
+
+    /**
+     * 여행 기간을 정한다. 두 가지 방식 가운데 하나여야 한다.
+     *  - 날짜를 정한 일정: startDate + endDate (또는 startDate + tripDays)
+     *  - 날짜를 정하지 않은 일정: tripDays 만 (startDate·endDate 는 비워 둔다)
+     * 돌아온 뒤에는 "startDate 가 null 이면 날짜 미정"이다 ({@link PlanService#isUndated}).
+     */
+    static void normalizePeriod(PlanRequest request) {
+        LocalDate start = request.getStartDate();
+        LocalDate end = request.getEndDate();
+        Integer days = request.getTripDays();
+        if (days != null && days < 1) throw new IllegalArgumentException("여행 일수(tripDays)는 1 이상이어야 합니다.");
+
+        if (start != null && end != null) {
+            request.setTripDays(null);                 // 날짜를 정한 일정: 일수는 날짜에서 계산한다
+            return;
+        }
+        if (start != null && days != null) {           // 시작일 + 일수
+            request.setEndDate(start.plusDays(days - 1L));
+            request.setTripDays(null);
+            return;
+        }
+        if (start == null && end == null && days != null) return;   // 날짜 미정
+        if (start == null && end != null) {
+            throw new IllegalArgumentException("여행 시작일을 입력해주세요. 날짜가 정해지지 않았으면 startDate·endDate 를 비우고 여행 일수(tripDays)만 보내주세요.");
+        }
+        throw new IllegalArgumentException("여행 시작일과 종료일을 입력해주세요. 날짜가 정해지지 않았으면 여행 일수(tripDays)를 보내주세요.");
+    }
+
+    private static LocalDate dayToDate(PlanRequest.AccommodationInput acc, int day, LocalDate tripStart, int totalDays) {
+        if (day < 1 || day > Math.max(1, totalDays)) {
+            throw new IllegalArgumentException("[" + acc.getName() + "] 숙소의 일차가 여행 기간(1~" + totalDays + "일차)을 벗어납니다: " + day);
+        }
+        return tripStart.plusDays(day - 1L);
+    }
+
+    void validate(PlanRequest request) {
+        if (request == null) throw new IllegalArgumentException("요청 본문이 비어 있습니다.");
+        normalizePeriod(request);
+        boolean undated = PlanService.isUndated(request);
+        if (!undated && request.getEndDate().isBefore(request.getStartDate())) {
+            throw new IllegalArgumentException("여행 종료일이 시작일보다 빠릅니다.");
+        }
+        if (request.getAdults() != null && (request.getAdults() < 1 || request.getAdults() > 10)) {
+            throw new IllegalArgumentException("어른 인원(adults)은 1~10명 사이로 입력해주세요.");
+        }
+        int maxDays = undated ? UNDATED_MAX_DAYS : MAX_TRIP_DAYS;
+        if (planService.totalDays(request) > maxDays) {
+            throw new IllegalArgumentException(undated
+                    ? "날짜를 정하지 않은 일정은 최대 " + maxDays + "일(" + (maxDays - 1) + "박 " + maxDays + "일)까지 지원합니다. 더 긴 여행은 날짜를 정해 주세요."
+                    : "여행 기간은 최대 " + maxDays + "일까지 지원합니다.");
+        }
+
+        List<String> cities = request.getCities() == null ? new ArrayList<>()
+                : request.getCities().stream().filter(c -> c != null && !c.isBlank()).map(String::trim).distinct().collect(Collectors.toList());
+        if (cities.isEmpty()) throw new IllegalArgumentException("여행 도시를 1개 이상 선택해주세요.");
+        request.setCities(cities);
+
+        if (request.getMealCount() != null) {
+            int max = PlanService.maxMealCount(request);
+            if (request.getMealCount() < 1 || request.getMealCount() > max) {
+                throw new IllegalArgumentException("하루 식사 횟수는 1~" + max + "회 사이로 선택해주세요."
+                        + (max < PlanService.MAX_MEALS_FOOD_THEME ? " (4회 이상은 맛집 테마를 선택했을 때만 가능합니다.)" : ""));
+            }
+        }
+
+        if (request.getPreferredStartTime() != null && request.getPreferredStartTime().equals(request.getPreferredEndTime())) {
+            throw new IllegalArgumentException("하루 일정 시작 시간과 종료 시간이 같습니다.");
+        }
+
+        if (request.getFixedSchedules() != null) {
+            for (PlanRequest.FixedScheduleInput f : request.getFixedSchedules()) {
+                if (f == null || f.getStartTime() == null || f.getEndTime() == null) {
+                    throw new IllegalArgumentException("고정 일정에는 시작 시간과 종료 시간이 모두 필요합니다.");
+                }
+                if (!f.getEndTime().isAfter(f.getStartTime())) {
+                    throw new IllegalArgumentException("고정 일정 [" + f.getName() + "]의 종료 시간이 시작 시간보다 빠릅니다.");
+                }
+                if (undated && f.getDate() != null) {
+                    throw new IllegalArgumentException("날짜가 정해지지 않은 일정에서는 고정 일정 [" + f.getName() + "]을(를) 날짜 대신 일차(dayNumber)로 지정해주세요.");
+                }
+                if (f.getDate() != null && (f.getDate().isBefore(request.getStartDate()) || f.getDate().isAfter(request.getEndDate()))) {
+                    throw new IllegalArgumentException("고정 일정 [" + f.getName() + "]의 날짜가 여행 기간을 벗어납니다.");
+                }
+                if (f.getDayNumber() != null && (f.getDayNumber() < 1 || f.getDayNumber() > planService.totalDays(request))) {
+                    throw new IllegalArgumentException("고정 일정 [" + f.getName() + "]의 일차가 여행 기간을 벗어납니다.");
+                }
+            }
+            PlanValidationService.ValidationResult fixed = planValidationService.validateFixedSchedules(request.getFixedSchedules(), request.getStartDate());
+            if (fixed.isWarning) throw new IllegalArgumentException(fixed.warningMessage);
+        }
+
+        if (request.getAccommodations() != null && !request.getAccommodations().isEmpty()) {
+            // 숙박 기간은 날짜로 계산한다. 날짜를 정하지 않은 일정은 일차(checkInDay·checkOutDay)를 자리 표시 날짜로 바꿔서 같은 계산을 탄다.
+            int totalDays = planService.totalDays(request);
+            LocalDate tripStart = PlanService.baseDate(request);
+            LocalDate tripEnd = tripStart.plusDays(totalDays - 1L);
+            for (PlanRequest.AccommodationInput acc : request.getAccommodations()) {
+                if (acc == null || isBlank(acc.getName())) throw new IllegalArgumentException("숙소 이름을 입력해주세요.");
+                if (acc.getPriceYen() != null && acc.getPriceYen() < 0) {
+                    throw new IllegalArgumentException("[" + acc.getName() + "] 숙소의 숙박비는 0 이상이어야 합니다.");
+                }
+                if (undated && (acc.getCheckIn() != null || acc.getCheckOut() != null)) {
+                    throw new IllegalArgumentException("날짜가 정해지지 않은 일정에서는 [" + acc.getName()
+                            + "] 숙소의 기간을 날짜 대신 일차(checkInDay, checkOutDay)로 입력해주세요.");
+                }
+                if (acc.getCheckIn() == null && acc.getCheckInDay() != null) acc.setCheckIn(dayToDate(acc, acc.getCheckInDay(), tripStart, totalDays));
+                if (acc.getCheckOut() == null && acc.getCheckOutDay() != null) acc.setCheckOut(dayToDate(acc, acc.getCheckOutDay(), tripStart, totalDays));
+                // 기간이 비어 있으면 여행 전체 기간 숙박으로 본다
+                if (acc.getCheckIn() == null) acc.setCheckIn(tripStart);
+                if (acc.getCheckOut() == null) acc.setCheckOut(tripEnd);
+                if (!acc.getCheckOut().isAfter(acc.getCheckIn()) && totalDays > 1) {
+                    throw new IllegalArgumentException("[" + acc.getName() + "] 숙소의 체크아웃이 체크인보다 빠르거나 같습니다.");
+                }
+            }
+            PlanValidationService.ValidationResult accValidation = planValidationService.validateAccommodations(
+                    request.getAccommodations(), tripStart, tripEnd);
+            if (accValidation.isWarning) throw new IllegalArgumentException(accValidation.warningMessage);
+        }
+    }
+
+    private static boolean isBlank(String s) {
+        return s == null || s.isBlank();
+    }
+
+    // =====================================================================
+    // 후보 수집
+    // =====================================================================
+
+    /**
+     * DB 후보가 부족할 때만 구글에서 보충한다.
+     *  (1) 요청 테마별로 후보가 너무 적으면 그 테마에 맞는 검색어로 수집
+     *  (2) 전체 체류 시간 합이 여행 시간의 1.5배에 못 미치면 일반 명소 수집
+     * 호출 횟수는 요청당 max(3, 테마 수)회로 제한한다.
+     */
+    private void supplementCandidates(PlanRequest request, int totalDays, List<Place> allPlaces) {
+        List<String> cities = request.getCities();
+        List<String> themes = ThemeVocabulary.normalizeAll(request.getThemes());
+        int maxCalls = Math.max(3, themes.size());
+        int calls = 0;
+
+        int minPerTheme = Math.max(4, totalDays * 2);
+        for (String theme : themes) {
+            if (calls >= maxCalls) break;
+            long count = allPlaces.stream()
+                    .filter(planService::isVisitCandidate)
+                    .filter(p -> planService.themesOf(p).contains(theme))
+                    .count();
+            if (count >= minPerTheme) continue;
+            // 여러 도시면 그 테마 후보가 가장 적은 도시에서 수집한다 (이전에는 호출 순번대로 도시를 돌았다)
+            String city = neediestCity(cities, allPlaces, theme);
+            emergencyCollect(city, ThemeVocabulary.searchQueryFor(theme), theme, allPlaces);
+            calls++;
+        }
+
+        // 식당: 관광지처럼 테마로만 세면 "맛집" 테마를 고르지 않은 여행에서 식당이 모자라 식사가 "자유 식사"가 된다.
+        // 도시마다 (그 도시에서 보낼 일수 × 하루 식사 수 × 2)곳은 있도록 모자란 도시에서 식당을 더 찾는다.
+        // 장기(15일~): 도시마다 그 도시에서 보낼 일수만큼 볼거리가 있는지 본다 (투어로 더한 도시는 DB 에 장소가 없을 수 있다)
+        if (TripProfile.lengthOf(totalDays) == TripProfile.Length.LONG) {
+            int daysInCity = (int) Math.ceil(totalDays / (double) cities.size());
+            for (String city : cities) {
+                long sights = allPlaces.stream().filter(planService::isVisitCandidate).filter(p -> city.equals(p.getCity()))
+                        .filter(p -> !com.travel.planner.util.PlaceKind.of(p).isFood()).count();
+                if (sights < Math.min(40, daysInCity * 4L)) emergencyCollect(city, "관광 명소", null, allPlaces);
+            }
+        }
+
+        int restaurantCalls = 0;
+        int restaurantCallCap = Math.max(MAX_RESTAURANT_CALLS, cities.size());
+        for (String city : cities) {
+            if (restaurantCalls >= restaurantCallCap) break;
+            int need = restaurantTarget(totalDays, cities.size(), PlanService.mealCount(request));
+            if (restaurantCount(allPlaces, city) >= need) continue;
+            emergencyCollect(city, "현지 인기 식당", null, allPlaces);
+            restaurantCalls++;
+            if (restaurantCount(allPlaces, city) < need && restaurantCalls < restaurantCallCap) {
+                emergencyCollect(city, "점심 저녁 맛집", null, allPlaces);
+                restaurantCalls++;
+            }
+        }
+
+        int targetVolume = (int) (planService.calculateTotalPhysicalMinutes(request, totalDays) * 1.5);
+        // 도시 1개당 평균 2일이 필요하다고 보고, 그보다 3일 이상 남으면 근교까지 넓힌다.
+        boolean expandToSuburbs = totalDays - cities.size() * 2 >= 3 && !request.isExcludeSuburbs();
+        List<String> generic = Arrays.asList("관광 명소", "인기 맛집", "랜드마크");
+
+        while (calls < maxCalls) {
+            int volume = allPlaces.stream()
+                    .filter(planService::isVisitCandidate)
+                    .mapToInt(p -> planService.calculateDwellTime(p, request))
+                    .sum();
+            if (volume >= targetVolume) break;
+
+            String city = cities.get(calls % cities.size());
+            String keyword = generic.get(calls % generic.size());
+            emergencyCollect(city, expandToSuburbs ? keyword + " 근교" : keyword, null, allPlaces);
+            calls++;
+        }
+    }
+
+    /** 그 테마의 방문 후보가 가장 적은 도시 */
+    private String neediestCity(List<String> cities, List<Place> allPlaces, String theme) {
+        String best = cities.get(0);
+        long bestCount = Long.MAX_VALUE;
+        for (String city : cities) {
+            long count = allPlaces.stream()
+                    .filter(p -> city.equals(p.getCity()))
+                    .filter(planService::isVisitCandidate)
+                    .filter(p -> planService.themesOf(p).contains(theme))
+                    .count();
+            if (count < bestCount) {
+                bestCount = count;
+                best = city;
+            }
+        }
+        return best;
+    }
+
+    /** 도시별 장소 수 (실패하면 빈 맵: 거리만 보고 도시를 더한다) */
+    private Map<String, Long> placeCountsByCity() {
+        Map<String, Long> counts = new HashMap<>();
+        try {
+            for (Object[] row : placeRepository.countByCity()) {
+                if (row != null && row.length >= 2 && row[0] != null && row[1] instanceof Number) counts.put(row[0].toString(), ((Number) row[1]).longValue());
+            }
+        } catch (Exception e) {
+            System.out.println("[투어] 도시별 장소 수를 읽지 못해 거리만 보고 도시를 더합니다: " + e.getMessage());
+        }
+        return counts;
+    }
+
+    /** 날씨 예보를 일정에 반영하는 범위(오늘부터 일수). WeatherService 의 One Call 범위와 같다 */
+    static final int FORECAST_DAYS = 16;
+
+    /**
+     * 예보 범위 밖 날짜: 날씨를 반영하지 않았다고 알리고, 장마·태풍·폭설 시기(평년 기준)를 일자별 개요와 안내에 붙인다.
+     * 일정 점수에는 쓰지 않는다 (몇 주 뒤의 하루 날씨는 맞히기 어렵다).
+     */
+    static void addSeasonNotes(PlanRequest request, int totalDays, List<String> dayCities, Map<String, double[]> centers,
+                               AiRouteResponse response, List<String> warnings) {
+        if (PlanService.isUndated(request) || request.getStartDate() == null) return;
+        LocalDate horizon = LocalDate.now(java.time.ZoneId.of("Asia/Tokyo")).plusDays(FORECAST_DAYS);
+        LocalDate end = request.getStartDate().plusDays(totalDays - 1L);
+        if (!end.isAfter(horizon)) return;
+        LocalDate firstOutside = request.getStartDate().isAfter(horizon) ? request.getStartDate() : horizon.plusDays(1);
+        warnings.add(firstOutside.getMonthValue() + "월 " + firstOutside.getDayOfMonth() + "일부터는 날씨 예보 범위(오늘부터 " + FORECAST_DAYS
+                + "일) 밖이라 날씨를 반영하지 않았습니다. 출발이 가까워지면 다시 만들면 예보가 반영됩니다.");
+        java.util.Set<String> tags = new java.util.LinkedHashSet<>();
+        if (response.getDays() == null) return;
+        for (AiRouteResponse.DaySummary day : response.getDays()) {
+            LocalDate date = request.getStartDate().plusDays(day.getDay() - 1L);
+            if (!date.isAfter(horizon)) continue;
+            String city = day.getCity() != null ? day.getCity()
+                    : (dayCities != null && day.getDay() - 1 < dayCities.size() ? dayCities.get(day.getDay() - 1) : null);
+            double[] center = city == null ? null : centers.get(city);
+            if (center == null) continue;
+            List<String> here = SeasonNotes.of(date, center[0], center[1]);
+            day.setSeasonNote(SeasonNotes.dayNote(here));
+            tags.addAll(here);
+        }
+        for (String tag : tags) warnings.add(SeasonNotes.tripWarning(tag));
+    }
+
+    /** 식당이 모자란 도시에서 식당을 더 찾는 검색 횟수 상한 (일정 하나에) */
+    static final int MAX_RESTAURANT_CALLS = 4;
+    /** "자유 식사" 자리 주변을 찾는 횟수 상한과 반경(m) */
+    static final int MAX_MEAL_GAP_SEARCHES = 4;
+    static final double MEAL_GAP_RADIUS_M = 1500;
+
+    /** 도시 하나에 있어야 할 식당 수: 그 도시에서 보낼 일수 × 하루 식사 수 × 2 (최소 8) */
+    static int restaurantTarget(int totalDays, int cityCount, int mealsPerDay) {
+        int daysInCity = (int) Math.ceil(totalDays / (double) Math.max(1, cityCount));
+        return Math.max(8, daysInCity * Math.max(1, mealsPerDay) * 2);
+    }
+
+    long restaurantCount(List<Place> places, String city) {
+        return places.stream()
+                .filter(planService::isVisitCandidate)
+                .filter(p -> city.equals(p.getCity()))
+                .filter(p -> com.travel.planner.util.PlaceKind.of(p) == com.travel.planner.util.PlaceKind.RESTAURANT)
+                .count();
+    }
+
+    /**
+     * "자유 식사"(갈 식당이 없어 넣은 자리)마다 그 직전에 있던 곳(없으면 직후)의 좌표와 그날 도시.
+     * 1km 안에 겹치는 자리는 하나로 친다. 최대 MAX_MEAL_GAP_SEARCHES 곳.
+     */
+    static List<Object[]> mealGapAnchors(List<PlanService.DayPlan> days, List<String> dayCities, String mainCity) {
+        List<Object[]> anchors = new ArrayList<>();
+        for (PlanService.DayPlan day : days) {
+            List<PlanService.SimulatedItinerary> items = day.getItems();
+            for (int i = 0; i < items.size(); i++) {
+                PlanService.SimulatedItinerary item = items.get(i);
+                if (item.getType() != PlanService.SimulatedItinerary.Type.MEAL || item.getPlace() != null) continue;
+                double[] at = located(items, i, -1);
+                if (at == null) at = located(items, i, +1);
+                if (at == null) continue;
+                boolean dup = false;
+                for (Object[] a : anchors) {
+                    if (DistanceUtil.calculateDistance(at[0], at[1], (double) a[0], (double) a[1]) < 1.0) dup = true;
+                }
+                if (dup) continue;
+                String city = dayCities != null && day.getDayNumber() - 1 < dayCities.size() && dayCities.get(day.getDayNumber() - 1) != null
+                        ? dayCities.get(day.getDayNumber() - 1) : (day.getCity() != null ? day.getCity() : mainCity);
+                anchors.add(new Object[]{at[0], at[1], city});
+                if (anchors.size() >= MAX_MEAL_GAP_SEARCHES) return anchors;
+            }
+        }
+        return anchors;
+    }
+
+    private static double[] located(List<PlanService.SimulatedItinerary> items, int from, int step) {
+        for (int j = from + step; j >= 0 && j < items.size(); j += step) {
+            PlanService.SimulatedItinerary it = items.get(j);
+            if (it.getPlace() == null || it.getLatitude() == null || it.getLongitude() == null) continue;
+            if (it.getLatitude() == 0.0 && it.getLongitude() == 0.0) continue;
+            return new double[]{it.getLatitude(), it.getLongitude()};
+        }
+        return null;
+    }
+
+    static int mealGapCount(PlanService.TripPlan plan) {
+        return (int) plan.getDays().stream().flatMap(d -> d.getItems().stream())
+                .filter(i -> i.getType() == PlanService.SimulatedItinerary.Type.MEAL && i.getPlace() == null).count();
+    }
+
+    /** 자유 식사 자리 주변 식당을 구글에서 찾아 후보에 넣고, 새로 넣은 곳이 있으면 한 번 더 짠다. 더 나아지지 않으면 처음 일정을 쓴다. */
+    PlanService.TripPlan fillMealGaps(PlanService.TripInput input, PlanService.TripPlan plan, List<String> dayCities, String mainCity) {
+        int gaps = mealGapCount(plan);
+        if (gaps == 0) return plan;
+        Set<String> known = input.candidates.stream().map(Place::getPlaceId).filter(java.util.Objects::nonNull).collect(Collectors.toSet());
+        int added = 0;
+        for (Object[] anchor : mealGapAnchors(plan.getDays(), dayCities, mainCity)) {
+            try {
+                for (Place p : googleMapsService.searchRestaurantsNear((double) anchor[0], (double) anchor[1], MEAL_GAP_RADIUS_M, (String) anchor[2])) {
+                    if (p.getPlaceId() == null || !known.add(p.getPlaceId())) continue;
+                    Place saved = planPersistenceService.upsertPlace(p);
+                    input.candidates.add(saved);
+                    added++;
+                }
+            } catch (Exception e) {
+                System.out.println("[식당] 자유 식사 자리 주변 식당을 넣지 못했습니다: " + e.getMessage());
+            }
+        }
+        if (added == 0) return plan;
+        PlanService.TripPlan again = planService.planTrip(input);
+        int after = mealGapCount(again);
+        System.out.println("[식당] 자유 식사 " + gaps + "곳 주변에서 식당 " + added + "곳을 찾아 다시 짰습니다: 자유 식사 " + gaps + " → " + after);
+        return after < gaps ? again : plan;
+    }
+
+    private void emergencyCollect(String city, String query, String provisionalTheme, List<Place> allPlaces) {
+        if (query == null) return;
+        try {
+            String formalizedCity = googleMapsService.getFormalizedJapanCity(city);
+            List<double[]> grid = googleMapsService.getCityGrid(formalizedCity);
+            if (grid.isEmpty()) return;
+            double[] center = grid.get(0);
+
+            List<Place> fetched = googleMapsService.searchNewPlacesFromGoogle(city, formalizedCity, center[0], center[1], center[2], query, true);
+            Set<String> known = allPlaces.stream().map(Place::getPlaceId).collect(Collectors.toSet());
+
+            for (Place p : fetched) {
+                if (p.getPlaceId() == null || p.getPlaceId().isBlank() || known.contains(p.getPlaceId())) continue;
+                if (p.getCity() == null) p.setCity(city);
+                if (p.getCategory() == null) p.setCategory("관광지");
+                // 테마는 12개 어휘에 있는 값만 "임시로" 넣는다. placeType/체류시간은 비워 두므로
+                // 관리자 인리치먼트 배치가 나중에 리뷰 기반으로 다시 분류한다.
+                // (이전에는 검색어 "필수 관광지" 같은 문자열이 그대로 테마로 저장됐다)
+                if (p.getTheme() == null && provisionalTheme != null) p.setTheme(provisionalTheme);
+
+                Place saved = planPersistenceService.upsertPlace(p);
+                if (known.add(saved.getPlaceId())) allPlaces.add(saved);
+            }
+        } catch (Exception e) {
+            System.out.println("긴급 수집 통신 에러(" + city + " / " + query + "): " + e.getMessage());
+        }
+    }
+
+    // =====================================================================
+    // 공항
+    // =====================================================================
+
+    private Place resolveAirport(String cityOrAirport, Map<String, double[]> centers, String fallbackCity,
+                                 String label, List<String> warnings) {
+        if (isBlank(cityOrAirport)) return null;
+
+        double[] center = centers.get(cityOrAirport.trim());
+        if (center == null) center = centers.get(fallbackCity);
+
+        AirportDirectory.Resolution resolution = AirportDirectory.resolve(cityOrAirport, center);
+        if (resolution == null) {
+            warnings.add(label + " 공항을 '" + cityOrAirport + "'에서 찾지 못해 공항 이동 없이 계획했습니다. 공항 이름을 직접 입력해 주세요.");
+            return null;
+        }
+        AirportDirectory.Airport airport = resolution.airport;
+        if (resolution.ambiguous) {
+            warnings.add(label + " 공항을 '" + airport.name + "'(으)로 가정했습니다. 다른 공항이면 "
+                    + ("입국".equals(label) ? "inCity" : "outCity") + " 에 공항 이름을 넣어 주세요.");
+        }
+
+        // DB 에 같은 공항의 구글 장소가 있으면 그 좌표(실제 터미널)를 쓴다.
+        Place fromDb = placeRepository.findByNameContaining("공항").stream()
+                .filter(p -> "교통".equals(p.getCategory()) && p.getLatitude() != null && p.getLongitude() != null)
+                .filter(p -> !p.getName().endsWith("역") && !p.getName().toLowerCase().contains("station"))   // "간사이공항역" 제외
+                .filter(p -> DistanceUtil.calculateDistance(p.getLatitude(), p.getLongitude(), airport.latitude, airport.longitude) <= 5.0)
+                .min(Comparator.comparingDouble(p -> DistanceUtil.calculateDistance(
+                        p.getLatitude(), p.getLongitude(), airport.latitude, airport.longitude)))
+                .orElse(null);
+        if (fromDb != null) return fromDb;
+
+        Place place = new Place();
+        place.setPlaceId(airport.placeId());
+        place.setName(airport.name);
+        place.setCategory("교통");
+        place.setCity(fallbackCity);
+        place.setLatitude(airport.latitude);
+        place.setLongitude(airport.longitude);
+        return saveAnchor(place, "교통");
+    }
+
+    /** 일정에 나오는 모든 장소 (방문지·숙소·공항). 보여 줄 한국어 이름을 붙일 대상이다. */
+    static List<Place> placesInPlan(List<PlanService.DayPlan> days) {
+        List<Place> out = new ArrayList<>();
+        for (PlanService.DayPlan day : days) {
+            for (PlanService.SimulatedItinerary item : day.getItems()) {
+                if (item.getPlace() != null && !SupplementalFoodService.supplemental(item.getPlace())) out.add(item.getPlace());
+            }
+        }
+        return out;
+    }
+
+    /**
+     * AI 소개를 붙일 장소: 방문지 전부와 그 여행의 숙소.
+     * 숙소는 "숙소 출발"·"숙소 도착" 줄에만 나오므로 방문지와 따로 골라 넣는다. 공항은 넣지 않는다.
+     */
+    static List<Place> placesToDescribe(List<PlanService.DayPlan> days) {
+        List<Place> out = new ArrayList<>();
+        for (PlanService.DayPlan day : days) {
+            for (PlanService.SimulatedItinerary item : day.getItems()) {
+                Place place = item.getPlace();
+                if (place == null || SupplementalFoodService.supplemental(place)) continue;
+                PlanService.SimulatedItinerary.Type type = item.getType();
+                boolean visit = type == PlanService.SimulatedItinerary.Type.VISIT;
+                boolean lodging = (type == PlanService.SimulatedItinerary.Type.START || type == PlanService.SimulatedItinerary.Type.END)
+                        && "숙소".equals(place.getCategory());
+                if (visit || lodging) out.add(place);
+            }
+        }
+        return out;
+    }
+
+    // =====================================================================
+    // 숙소
+    // =====================================================================
+
+    /** 사용자가 입력한 숙소를 전부 좌표로 바꾸고, 체크인·체크아웃 날짜에 따라 밤마다 배정한다. */
+    private void resolveUserAccommodations(PlanRequest request, int totalDays, Map<String, double[]> centers, String mainCity,
+                                           Map<Integer, Place> lodgingByNight, List<Accommodation> entities, List<String> warnings) {
+        for (PlanRequest.AccommodationInput acc : request.getAccommodations()) {
+            Accommodation entity = new Accommodation();
+            entity.setName(acc.getName());
+            entity.setAddress(acc.getAddress());
+            entity.setCheckIn(acc.getCheckIn());
+            entity.setCheckOut(acc.getCheckOut());
+            entity.setPriceYen(acc.getPriceYen());
+            if (acc.getPriceYen() != null) entity.setPriceSource("user");
+            entities.add(entity);
+
+            String query = isBlank(acc.getAddress()) ? acc.getName() + " " + mainCity : acc.getName() + " " + acc.getAddress();
+            Place found = lodgingCatalog==null?null:lodgingCatalog.findByName(acc.getName(),request.getCities());
+            if(found==null)found = googleMapsService.findPlaceByText(query, request.getLanguage());
+            if (found == null && !isBlank(acc.getAddress())) {
+                found = googleMapsService.findPlaceByText(acc.getName() + " " + mainCity, request.getLanguage());
+            }
+            if (found == null) {
+                throw new PlanGenerationException("숙소 '" + acc.getName() + "'의 위치를 찾지 못했습니다. 정확한 숙소명과 주소를 입력해주세요.");
+            }
+            Place lodging;
+            if(found.getId()!=null && PlanService.isLodging(found))lodging=found;
+            else {
+                String city=nearestCity(found,centers,mainCity);
+                lodging=lodgingCatalog==null?saveAnchor(found,"숙소"):lodgingCatalog.storeFetched(found,city);
+            }
+            entity.setPlaceId(lodging.getPlaceId());
+            entity.setLatitude(lodging.getLatitude());
+            entity.setLongitude(lodging.getLongitude());
+            if (entity.getAddress() == null) entity.setAddress(lodging.getAddress());
+
+            for (int night = 1; night < totalDays; night++) {
+                LocalDate date = PlanService.baseDate(request).plusDays(night - 1L);
+                if (!date.isBefore(acc.getCheckIn()) && date.isBefore(acc.getCheckOut())) {
+                    lodgingByNight.put(night, lodging);
+                }
+            }
+        }
+    }
+
+    /** 숙소 역제안: 그 날 도는 도시마다 중심에서 가장 가까운 추천 호텔 1곳 */
+    private void suggestHotels(PlanRequest request, int totalDays, List<String> dayCities, Map<String, double[]> centers, String mainCity,
+                               Map<Integer, Place> lodgingByNight, List<Accommodation> entities, List<String> warnings) {
+        suggestHotels(request,totalDays,dayCities,centers,mainCity,lodgingByNight,entities,warnings,null);
+    }
+    private void suggestHotels(PlanRequest request,int totalDays,List<String> dayCities,Map<String,double[]> centers,String mainCity,
+                               Map<Integer,Place> lodgingByNight,List<Accommodation> entities,List<String> warnings,String email) {
+        Map<String, Place> hotelByCity = new LinkedHashMap<>();
+        Set<String> nightCities = new LinkedHashSet<>();
+        for (int night = 1; night < totalDays; night++) {
+            if(lodgingByNight.containsKey(night))continue;
+            String city = dayCities.get(night - 1) != null ? dayCities.get(night - 1) : mainCity;
+            nightCities.add(city);
+        }
+
+        for (String city : nightCities) {
+            List<Place> hotels = lodgingCatalog==null?placeRepository.findByCity(city).stream().filter(PlanService::isLodging).filter(LodgingCatalog::located).toList():lodgingCatalog.recommended(city);
+            if(hotels.isEmpty())hotels=googleMapsService.searchRecommendedHotels(city).stream().filter(LodgingCatalog::located).toList();
+            if(hotels.isEmpty())throw new PlanGenerationException(city+" 추천 숙소를 찾지 못했습니다. 해당 지역의 숙소명과 주소를 입력해주세요.");
+            if(hotelBudget!=null) hotels=hotelBudget.eligible(hotels,request,totalDays-1,warnings);
+            double[] center = centers.get(city);
+            Place best = hotelRecommendation!=null ? hotelRecommendation.select(hotels,center,email) : center == null ? hotels.get(0) : hotels.stream()
+                    .min(Comparator.comparingDouble(h -> DistanceUtil.calculateDistance(center[0], center[1], h.getLatitude(), h.getLongitude())))
+                    .orElse(hotels.get(0));
+            Place hotel=best.getId()!=null && PlanService.isLodging(best)?best:lodgingCatalog==null?saveAnchor(best,"숙소"):lodgingCatalog.storeFetched(best,city);
+            hotelByCity.put(city,hotel);
+        }
+
+        // 같은 호텔에 연속으로 묵는 구간을 하나의 숙박 기록으로 묶는다.
+        Place current = null;
+        Accommodation entity = null;
+        for (int night = 1; night < totalDays; night++) {
+            String city = dayCities.get(night - 1) != null ? dayCities.get(night - 1) : mainCity;
+            if(lodgingByNight.containsKey(night)){current=null;continue;}
+            Place hotel = hotelByCity.get(city);
+            if (hotel == null) throw new PlanGenerationException(night+"일차 숙소를 확인하지 못했습니다.");
+            lodgingByNight.put(night, hotel);
+            LocalDate date = PlanService.baseDate(request).plusDays(night - 1L);
+            if (current == null || !current.getPlaceId().equals(hotel.getPlaceId())) {
+                entity = new Accommodation();
+                entity.setName(hotel.getName());
+                entity.setAddress(hotel.getAddress());
+                entity.setPlaceId(hotel.getPlaceId());
+                entity.setLatitude(hotel.getLatitude());
+                entity.setLongitude(hotel.getLongitude());
+                entity.setCheckIn(date);
+                entities.add(entity);
+                current = hotel;
+            }
+            entity.setCheckOut(date.plusDays(1));
+        }
+    }
+
+    /**
+     * 숙소·공항을 저장하고 분류를 확정한다.
+     * 같은 장소가 예전에 분류 없이(또는 다른 분류로) 저장돼 있으면 그 행의 분류를 바로잡는다.
+     * 분류가 비어 있으면 숙소가 방문지로 뽑히거나, 재탐색에서 출발·도착 지점으로 인식되지 않는다.
+     */
+    private Place saveAnchor(Place fetched, String category) {
+        fetched.setCategory(category);
+        Place saved = planPersistenceService.upsertPlace(fetched);
+        if (!category.equals(saved.getCategory())) {
+            saved.setCategory(category);
+            saved = placeRepository.save(saved);
+        }
+        return saved;
+    }
+
+    private String nearestCity(Place place, Map<String, double[]> centers, String fallback) {
+        String best = fallback;
+        double bestDistance = Double.MAX_VALUE;
+        for (Map.Entry<String, double[]> e : centers.entrySet()) {
+            double d = DistanceUtil.calculateDistance(place.getLatitude(), place.getLongitude(), e.getValue()[0], e.getValue()[1]);
+            if (d < bestDistance) {
+                bestDistance = d;
+                best = e.getKey();
+            }
+        }
+        return best;
+    }
+
+    // =====================================================================
+    // 날씨
+    // =====================================================================
+
+    Map<LocalDate, Boolean> forecast(PlanRequest request, int totalDays, List<String> dayCities,
+                                             Map<String, double[]> centers, String mainCity) {
+        Map<LocalDate, Boolean> result = new HashMap<>();
+        if (PlanService.isUndated(request)) return result;   // 날짜를 모르면 예보를 볼 수 없다
+        Map<String, Map<LocalDate, Boolean>> byCity = new HashMap<>();
+        for (int day = 1; day <= totalDays; day++) {
+            String city = dayCities.get(day - 1) != null ? dayCities.get(day - 1) : mainCity;
+            double[] center = centers.get(city);
+            if (center == null) continue;
+            Map<LocalDate, Boolean> cityForecast = byCity.computeIfAbsent(city,
+                    c -> weatherService.getBadWeatherByDate(center[0], center[1], request.getStartDate(), request.getEndDate()));
+            LocalDate date = request.getStartDate().plusDays(day - 1L);
+            if (cityForecast.containsKey(date)) result.put(date, cityForecast.get(date));
+        }
+        return result;
+    }
+}

@@ -1,0 +1,133 @@
+package com.travel.planner.dto;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
+
+@Getter
+@Setter
+@com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)
+public class PlanRequest {
+    private String clientRequestId;
+    // null inherits the account default; explicit value applies only to this trip.
+    private Boolean restDaysEnabled;
+    private Boolean includeSnacks;
+    @Schema(description="숙소 요금만의 상한, JPY. 객실 1개 기준이며 식비·교통비·관광 비용은 제외")
+    private Long hotelBudgetYen;
+    @Schema(description="perNight: 객실 1개 1박당 / total: 객실 1개 전체 숙박비")
+    private String hotelBudgetMode;
+
+    @com.fasterxml.jackson.annotation.JsonFormat(shape = com.fasterxml.jackson.annotation.JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @Schema(description = "여행 시작일 (Step 1)", example = "2026-07-02")
+    private LocalDate startDate;
+
+    @com.fasterxml.jackson.annotation.JsonFormat(shape = com.fasterxml.jackson.annotation.JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @Schema(description = "여행 종료일 (Step 1)", example = "2026-07-05")
+    private LocalDate endDate;
+
+    @Schema(description = "여행 일수 (1~30). 날짜가 아직 정해지지 않았을 때 startDate·endDate 대신 보낸다. 3박 4일이면 4. "
+            + "이 값만 보내면 날씨·요일별 휴무·계절별 일몰은 반영하지 않고 일정을 만든다. startDate·endDate 를 보내면 이 값은 쓰지 않는다.", example = "4")
+    private Integer tripDays;
+
+    @Schema(description = "어른 인원 (1~10, 기본 1). 숙박비 조회와 1인 경비 계산에 쓴다", example = "2")
+    private Integer adults;
+
+    @Schema(description = "여행 도시 목록 (Step 2)", example = "[\"오사카\", \"교토\"]")
+    private List<String> cities;
+
+    @Schema(description = "동행자 유형 (Step 3)", example = "친구")
+    private String companion;
+
+    @Schema(description = "여행 테마 최대 3개 (Step 4)", example = "[\"맛집\", \"사진\", \"카페\"]")
+    private List<String> themes;
+
+    // 사용자가 제외하고 싶은 테마(블랙리스트) 파라미터 추가
+    @Schema(description = "제외할 테마 (선택 사항)", example = "[\"서브컬쳐\", \"액티비티\"]")
+    private List<String> excludedThemes;
+
+    // 유동적인 일과 시작/종료 시간 파라미터 추가 (미입력 시 09:00~22:00 적용)
+    @Schema(description = "선호하는 하루 일정 시작 시간 (기본 09:00)", type = "string", example = "09:00:00")
+    private LocalTime preferredStartTime;
+
+    @Schema(description = "선호하는 하루 일정 종료 시간 (기본 22:00)", type = "string", example = "22:00:00")
+    private LocalTime preferredEndTime;
+
+    @Schema(description = "주요 이동수단 (Step 5)", example = "도보 및 대중교통")
+    private String transportation;
+
+    @Schema(description = "고정 일정 리스트 (Step 6)")
+    private List<FixedScheduleInput> fixedSchedules;
+
+    @Getter @Setter
+    public static class FixedScheduleInput {
+        private String name;
+        private java.time.LocalTime startTime;
+        private java.time.LocalTime endTime;
+
+        // 고정 일정이 있는 날. date 또는 dayNumber 중 하나를 보내면 그 날에만 적용된다.
+        // 둘 다 없으면 기존 동작대로 매일 적용되고, 응답 warnings 에 안내가 붙는다.
+        @com.fasterxml.jackson.annotation.JsonFormat(shape = com.fasterxml.jackson.annotation.JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+        @Schema(description = "고정 일정 날짜 (선택)", example = "2026-07-03")
+        private LocalDate date;
+
+        @Schema(description = "고정 일정 일차 (선택, 1부터)", example = "2")
+        private Integer dayNumber;
+
+        // 장소 좌표를 알면 앞뒤 이동 시간을 계산에 반영한다 (선택).
+        private Double latitude;
+        private Double longitude;
+    }
+
+    @Schema(description = "입국 도시 또는 공항명", example = "오사카")
+    private String inCity;
+    @Schema(description = "출국 도시 또는 공항명 (입국과 달라도 됨)", example = "오사카")
+    private String outCity;
+
+    @Schema(description = "입국편 도착 시각. \"HH:mm\" 권장, \"오전/오후/저녁/미정\"도 허용", example = "10:30")
+    private String inTime;
+    @Schema(description = "출국편 출발 시각. \"HH:mm\" 권장, \"오전/오후/저녁/미정\"도 허용", example = "18:20")
+    private String outTime;
+
+    @Schema(description = "사용자 앱/단말기 언어 설정", example = "ko")
+    private String language;
+
+    @Schema(description = "사용자가 확정한 숙소 리스트 (없으면 빈 배열)")
+    private List<AccommodationInput> accommodations;
+
+    @Schema(description = "숙소 역제안 받기 여부 (true: 추천해줘, false: 숙소 없이 동선 짜줘)", example = "true")
+    private boolean suggestHotel;
+
+    @Schema(description = "근교 추천 제외 여부 (true: 선택한 도시 내부만 탐색, false: 일정 여유 시 근교 자동 확장). "
+            + "장기(15일~) 여행에서는 방식도 정한다: true = 살아보기(한 도시에 머물며 느슨하게, 5일마다 여유일), "
+            + "false = 투어(일수에 맞게 근처 도시를 자동으로 더하고, 7일마다 가벼운 날)", example = "false")
+    private boolean excludeSuburbs;
+
+    // 하루에 추천받을 식사(식당) 횟수. 맛집 테마를 골랐으면 1~5, 아니면 1~3. 보내지 않으면 2(점심·저녁).
+    @com.fasterxml.jackson.annotation.JsonAlias({"mealsPerDay", "mealCountPerDay", "foodCount", "restaurantCount"})
+    @Schema(description = "하루 식사 추천 횟수 (맛집 테마 1~5, 그 외 1~3, 기본 2). 1: 저녁 / 2: 점심·저녁 / 3: +아침 / 4: +오후 간식 / 5: +야식", example = "2")
+    private Integer mealCount;
+
+    // 카페 테마를 고르지 않았을 때 "카페 추천 받지 않기" 체크박스. 카페 테마를 골랐으면 이 값은 무시된다.
+    @com.fasterxml.jackson.annotation.JsonAlias({"noCafe", "skipCafe", "excludeCafes", "cafeExcluded"})
+    @Schema(description = "카페 추천 받지 않기 (카페 테마를 선택하지 않았을 때만 적용)", example = "false")
+    private Boolean excludeCafe;
+
+    @Getter
+    @Setter
+    public static class AccommodationInput {
+        private String name;
+        private String address;
+        private LocalDate checkIn;
+        private LocalDate checkOut;
+        @Schema(description = "숙박비 (선택). 이 숙소에 묵는 기간 전체의 합계, 일행 전체, 엔. 비우면 라쿠텐 트래블에서 최저가를 찾아 본다", example = "36000")
+        private Integer priceYen;
+        @Schema(description = "체크인 일차 (1부터). 날짜가 정해지지 않은 일정(tripDays)에서 checkIn 대신 쓴다. 비우면 1일차", example = "1")
+        private Integer checkInDay;
+        @Schema(description = "체크아웃 일차. 날짜가 정해지지 않은 일정(tripDays)에서 checkOut 대신 쓴다. 비우면 마지막 날", example = "3")
+        private Integer checkOutDay;
+    }
+}

@@ -1,0 +1,121 @@
+{
+  "before": {
+    "station": 85,
+    "route": 573,
+    "pass": 129
+  },
+  "after": {
+    "station": 88,
+    "route": 577,
+    "pass": 133
+  },
+  "added": {
+    "station": 3,
+    "route": 4,
+    "pass": 4
+  },
+  "passes": [
+    {
+      "id": "chuo-sapporo-day",
+      "name": "홋카이도 중앙버스 삿포로 1일권",
+      "cities": [
+        "삿포로"
+      ],
+      "adult_yen": 900,
+      "child_yen": 450,
+      "hours": 24,
+      "operators": [],
+      "lines": [],
+      "auto": 0,
+      "conditions": "삿포로 시내 특수운임 구간의 중앙버스만 이용 가능. JR·지하철·공항버스·고속버스 제외. 24시간권이 아닌 사용일 1일권.",
+      "url": "https://www.chuo-bus.co.jp/support/faq/",
+      "checked_at": "2026-10-09T09:18:42.395438+00:00",
+      "method": "Official page retrieved with web tool and reviewed on 2026-10-09; exact fare-zone eligibility required before automatic comparison."
+    },
+    {
+      "id": "chuo-otaru-day",
+      "name": "홋카이도 중앙버스 오타루 1일권",
+      "cities": [
+        "오타루"
+      ],
+      "adult_yen": 800,
+      "child_yen": 400,
+      "hours": 24,
+      "operators": [],
+      "lines": [],
+      "auto": 0,
+      "conditions": "오타루 시내 중앙버스 균일운임 구간만 이용 가능. 고속·공항버스 및 균일구간 밖 제외. 사용일 1일권.",
+      "url": "https://www.chuo-bus.co.jp/support/faq/",
+      "checked_at": "2026-10-09T09:18:42.395438+00:00",
+      "method": "Official page retrieved with web tool and reviewed on 2026-10-09; exact fare-zone eligibility required before automatic comparison."
+    },
+    {
+      "id": "chuo-otaru-sapporo-oneway-set",
+      "name": "오타루 1일권·삿포로행 편도 세트",
+      "cities": [
+        "오타루",
+        "삿포로"
+      ],
+      "adult_yen": 1400,
+      "child_yen": 700,
+      "hours": 24,
+      "operators": [],
+      "lines": [],
+      "auto": 0,
+      "conditions": "오타루 시내 중앙버스 1일권과 오타루→삿포로 고속버스 편도. 반대 방향 또는 JR 철도에 적용하지 않음.",
+      "url": "https://www.chuo-bus.co.jp/main/setticket/?ge=22&ope=list",
+      "checked_at": "2026-10-09T09:18:42.395438+00:00",
+      "method": "Official page retrieved with web tool and reviewed on 2026-10-09; exact fare-zone eligibility required before automatic comparison."
+    },
+    {
+      "id": "chuo-sapporo-otaru-roundtrip-set",
+      "name": "삿포로·오타루 왕복·오타루 1일 세트",
+      "cities": [
+        "삿포로",
+        "오타루"
+      ],
+      "adult_yen": 2000,
+      "child_yen": 1000,
+      "hours": 24,
+      "operators": [],
+      "lines": [],
+      "auto": 0,
+      "conditions": "삿포로↔오타루 고속버스 왕복과 오타루 시내 중앙버스 균일구간 1일권. 고속버스 왕복은 중앙버스·JR 홋카이도버스 공동 운행 구간 이용 가능. JR 철도 제외.",
+      "url": "https://www.chuo-bus.co.jp/highway.cn/pocket/pdf/otaru.pdf",
+      "checked_at": "2026-10-09T09:18:42.395438+00:00",
+      "method": "Official page retrieved with web tool and reviewed on 2026-10-09; exact fare-zone eligibility required before automatic comparison."
+    }
+  ],
+  "route_fares": [
+    {
+      "origin": "SAP",
+      "destination": "CTS",
+      "minutes": 37,
+      "adult_yen": 1230,
+      "time_source": "https://www.jrhokkaido.co.jp/global/images/ticket/regular/time-e.jpg"
+    },
+    {
+      "origin": "SAP",
+      "destination": "OTR",
+      "minutes": 34,
+      "adult_yen": 800,
+      "time_source": "https://www.jrhokkaido.co.jp/global/images/ticket/regular/time-e.jpg"
+    },
+    {
+      "origin": "CTS",
+      "destination": "SAP",
+      "minutes": 37,
+      "adult_yen": 1230,
+      "time_source": "https://www.jrhokkaido.co.jp/airport/index.html"
+    },
+    {
+      "origin": "CTS",
+      "destination": "OTR",
+      "minutes": 73,
+      "adult_yen": 2040,
+      "time_source": "https://www.jrhokkaido.co.jp/airport/index.html"
+    }
+  ],
+  "fare_source": "https://www.jrhokkaido.co.jp/global/english/ticket/regular/index.html",
+  "coordinates": "Existing official HOKKAIDO_CHUO GTFS nearby bus access coordinates; rail access approximation; no route geometry inferred."
+}

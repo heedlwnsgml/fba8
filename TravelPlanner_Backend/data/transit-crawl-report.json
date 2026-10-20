@@ -1,0 +1,91 @@
+{
+  "sources": [
+    {
+      "url": "https://www.enoden.co.jp/train/fare/",
+      "status": "ok"
+    },
+    {
+      "url": "https://www.enoden.co.jp/tourism/ticket/noriorikun/",
+      "status": "ok"
+    },
+    {
+      "url": "https://odakyu-global.com/passes/enoshima-kamakura-freepass/",
+      "status": "ok"
+    },
+    {
+      "url": "https://www.city.yokohama.lg.jp/kotsu/bus/unchin/unchin.html",
+      "status": "ok"
+    },
+    {
+      "url": "https://www.city.yokohama.lg.jp/kotsu/bus/unchin/minatoburari.html",
+      "status": "ok"
+    },
+    {
+      "url": "https://japanrailpass.net/en/purchase/price/",
+      "status": "ok"
+    },
+    {
+      "url": "https://www.mm21railway.co.jp/station/yokohama/fare.html",
+      "status": "ok"
+    },
+    {
+      "url": "https://www.mm21railway.co.jp/station/shintakashima/fare.html",
+      "status": "ok"
+    },
+    {
+      "url": "https://www.mm21railway.co.jp/station/minatomirai/fare.html",
+      "status": "ok"
+    },
+    {
+      "url": "https://www.mm21railway.co.jp/station/basyamichi/fare.html",
+      "status": "ok"
+    },
+    {
+      "url": "https://www.mm21railway.co.jp/station/nihonodori/fare.html",
+      "status": "ok"
+    },
+    {
+      "url": "https://www.mm21railway.co.jp/station/motomachi/fare.html",
+      "status": "ok"
+    },
+    {
+      "url": "https://www.mm21railway.co.jp/info/ticket.html",
+      "status": "ok"
+    },
+    {
+      "url": "https://www.yurikamome.co.jp/ride-guidance/fare.html",
+      "status": "ok"
+    },
+    {
+      "url": "https://www.yurikamome.co.jp/979bde452966f7efda342544ce645001_1.pdf",
+      "status": "ok"
+    },
+    {
+      "url": "https://www.city.yokohama.lg.jp/kotsu/bus/norikata/akaikutsu.html",
+      "status": "ok"
+    },
+    {
+      "url": "https://www.city.yokohama.lg.jp/kotsu/bus/norikata/baysideblue.html",
+      "status": "ok"
+    },
+    {
+      "url": "https://www.city.yokohama.lg.jp/kotsu/bus/unchin/ichinichi.html",
+      "status": "ok"
+    },
+    {
+      "url": "https://www8.cao.go.jp/chosei/shukujitsu/syukujitsu.csv",
+      "status": "ok"
+    }
+  ],
+  "counts": {
+    "station": 37,
+    "route": 480,
+    "pass": 128,
+    "fare_rule": 1,
+    "bus_line": 2,
+    "bus_stop": 33,
+    "bus_trip": 86,
+    "bus_stop_time": 1458,
+    "calendar_holiday": 1067
+  }
+}

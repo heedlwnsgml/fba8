@@ -1,0 +1,1026 @@
+{
+  "excluded": [
+    {
+      "path": "TravelPlanner_Backend/data/transit-catalog.sqlite-shm",
+      "reason": "merged-into-consistent-sqlite-snapshot"
+    },
+    {
+      "path": "TravelPlanner_Backend/data/transit-catalog.sqlite-wal",
+      "reason": "merged-into-consistent-sqlite-snapshot"
+    },
+    {
+      "path": "A5front.zip",
+      "reason": "archive-credential-pattern"
+    },
+    {
+      "path": "GITHUB_REFRESH_GUIDE.md",
+      "reason": "configured-credential"
+    },
+    {
+      "path": "TravelPlanner_Backend (2).zip",
+      "reason": "archive-contains-secret-file"
+    },
+    {
+      "path": "USABILITY_UPDATE_GUIDE.md",
+      "reason": "configured-credential"
+    },
+    {
+      "path": "A5front/android/local.properties",
+      "reason": "credential-pattern"
+    },
+    {
+      "path": "A5front/build/2a5a5b6aad691fd5a93a8a62aa8ddb6c.cache.dill.track.dill",
+      "reason": "configured-credential"
+    },
+    {
+      "path": "A5front/build/5e839a17c96adb261c68470fc0d75bde.cache.dill.track.dill",
+      "reason": "configured-credential"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/shared_proto_db/000003.log",
+      "reason": "credential-pattern"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/shared_proto_db/000004.log",
+      "reason": "credential-pattern"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/shared_proto_db/000005.ldb",
+      "reason": "credential-pattern"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/shared_proto_db/000007.log",
+      "reason": "credential-pattern"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/shared_proto_db/000008.ldb",
+      "reason": "credential-pattern"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Shared Dictionary/cache/d59a8fc58fe9a917_0",
+      "reason": "credential-pattern"
+    },
+    {
+      "path": "A5front/.dart_tool/flutter_build/251c46dd09c4748c250f2b5b88a45ac3/app.dill",
+      "reason": "credential-pattern"
+    },
+    {
+      "path": "A5front/.dart_tool/flutter_build/30aedf5b3eee5a824cb0875f7205a58f/app.dill",
+      "reason": "credential-pattern"
+    },
+    {
+      "path": "A5front/.dart_tool/flutter_build/e8cbbe80e47e2c0a91c8e7195d3c027e/app.dill",
+      "reason": "configured-credential"
+    },
+    {
+      "path": "A5front/.dart_tool/flutter_build/f0a9e5fa94911252508c58bd2586bc18/app.dill",
+      "reason": "credential-pattern"
+    },
+    {
+      "path": "A5front/.dart_tool/flutter_build/f62f51ebf6592d70ca9b2ee39ab34b72/app.dill",
+      "reason": "credential-pattern"
+    },
+    {
+      "path": "A5front/android/.gradle/8.14.3/executionHistory/executionHistory.bin",
+      "reason": "credential-pattern"
+    },
+    {
+      "path": "A5front/build/app/intermediates/assets/debug/mergeDebugAssets/flutter_assets/kernel_blob.bin",
+      "reason": "configured-credential"
+    },
+    {
+      "path": "A5front/build/app/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/flutter_assets/kernel_blob.bin.jar",
+      "reason": "archive-configured-credential"
+    },
+    {
+      "path": "A5front/build/app/intermediates/flutter/debug/flutter_assets/kernel_blob.bin",
+      "reason": "configured-credential"
+    },
+    {
+      "path": "A5front/build/app/intermediates/linked_resources_binary_format/debug/processDebugResources/linked-resources-binary-format-debug.ap_",
+      "reason": "archive-configured-credential"
+    },
+    {
+      "path": "A5front/build/app/intermediates/manifest_merge_blame_file/debug/processDebugMainManifest/manifest-merger-blame-debug-report.txt",
+      "reason": "credential-pattern"
+    },
+    {
+      "path": "A5front/build/app/intermediates/merged_manifest/debug/outputDebugAppLinkSettings/AndroidManifest.xml",
+      "reason": "credential-pattern"
+    },
+    {
+      "path": "A5front/build/app/intermediates/merged_manifest/debug/processDebugMainManifest/AndroidManifest.xml",
+      "reason": "credential-pattern"
+    },
+    {
+      "path": "A5front/build/app/intermediates/merged_manifests/debug/processDebugManifest/AndroidManifest.xml",
+      "reason": "credential-pattern"
+    },
+    {
+      "path": "A5front/build/app/intermediates/merged_native_libs/debug/mergeDebugNativeLibs/out/lib/arm64-v8a/libflutter.so",
+      "reason": "credential-pattern"
+    },
+    {
+      "path": "A5front/build/app/intermediates/merged_native_libs/debug/mergeDebugNativeLibs/out/lib/arm64-v8a/libVkLayer_khronos_validation.so",
+      "reason": "credential-pattern"
+    },
+    {
+      "path": "A5front/build/app/intermediates/merged_native_libs/debug/mergeDebugNativeLibs/out/lib/armeabi-v7a/libflutter.so",
+      "reason": "credential-pattern"
+    },
+    {
+      "path": "A5front/build/app/intermediates/merged_native_libs/debug/mergeDebugNativeLibs/out/lib/x86_64/libflutter.so",
+      "reason": "credential-pattern"
+    },
+    {
+      "path": "A5front/build/app/intermediates/packaged_manifests/debug/processDebugManifestForPackage/AndroidManifest.xml",
+      "reason": "credential-pattern"
+    },
+    {
+      "path": "A5front/build/app/intermediates/stripped_native_libs/debug/stripDebugDebugSymbols/out/lib/arm64-v8a/libVkLayer_khronos_validation.so",
+      "reason": "credential-pattern"
+    },
+    {
+      "path": "A5front/build/app/outputs/flutter-apk/app-debug.apk",
+      "reason": "credential-pattern"
+    },
+    {
+      "path": "A5front/build/app/outputs/apk/debug/app-debug.apk",
+      "reason": "credential-pattern"
+    },
+    {
+      "path": "A5front/build/reports/problems/problems-report.html",
+      "reason": "credential-pattern"
+    },
+    {
+      "path": "A5front/build/test_cache/build/4189cf65caed1f673f0abbe75cfabebb.cache.dill.track.dill",
+      "reason": "configured-credential"
+    },
+    {
+      "path": "A5front/build/test_cache/build/82dcd05b153d455f1ee958ef0ff242a0.cache.dill.track.dill",
+      "reason": "credential-pattern"
+    },
+    {
+      "path": "A5front/build/test_cache/build/999535ccdf65dcbae04504b8ee86a35f.cache.dill.track.dill",
+      "reason": "credential-pattern"
+    },
+    {
+      "path": "TravelPlanner_Backend/config/application-secret.yml",
+      "reason": "secret-configuration"
+    },
+    {
+      "path": "TravelPlanner_Backend/config/database-local.properties",
+      "reason": "secret-configuration"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/libs/planner-0.0.1-SNAPSHOT.jar",
+      "reason": "archive-credential-pattern"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Account Web Data",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Account Web Data-journal",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Affiliation Database",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Affiliation Database-journal",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/BookmarkMergedSurfaceOrdering",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/declarative_performance_observer.db",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/declarative_performance_observer.db-journal",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/DIPS",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Favicons",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Favicons-journal",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/heavy_ad_intervention_opt_out.db",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/heavy_ad_intervention_opt_out.db-journal",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/History",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/History-journal",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/LOCK",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/LOG",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/LOG.old",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Login Data",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Login Data For Account",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Login Data For Account-journal",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Login Data-journal",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/MediaDeviceSalts",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/MediaDeviceSalts-journal",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Network Action Predictor",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Network Action Predictor-journal",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Preferences",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/PreferredApps",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/README",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Secure Preferences",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/ServerCertificate",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/ServerCertificate-journal",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Shortcuts",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Shortcuts-journal",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Top Sites",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Top Sites-journal",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Web Data",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Web Data-journal",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/AutofillStrikeDatabase/LOCK",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/AutofillStrikeDatabase/LOG",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/AutofillStrikeDatabase/LOG.old",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/BudgetDatabase/LOCK",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/BudgetDatabase/LOG",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/BudgetDatabase/LOG.old",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/chrome_cart_db/LOCK",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/chrome_cart_db/LOG",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/chrome_cart_db/LOG.old",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/ClientCertificates/LOCK",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/ClientCertificates/LOG",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/ClientCertificates/LOG.old",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/commerce_subscription_db/LOCK",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/commerce_subscription_db/LOG",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/commerce_subscription_db/LOG.old",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/discounts_db/LOCK",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/discounts_db/LOG",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/discounts_db/LOG.old",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/discount_infos_db/LOCK",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/discount_infos_db/LOG",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/discount_infos_db/LOG.old",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Extension Rules/000003.log",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Extension Rules/CURRENT",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Extension Rules/LOCK",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Extension Rules/LOG",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Extension Rules/LOG.old",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Extension Rules/MANIFEST-000001",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Extension Scripts/000003.log",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Extension Scripts/CURRENT",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Extension Scripts/LOCK",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Extension Scripts/LOG",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Extension Scripts/LOG.old",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Extension Scripts/MANIFEST-000001",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Extension State/000003.log",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Extension State/CURRENT",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Extension State/LOCK",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Extension State/LOG",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Extension State/LOG.old",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Extension State/MANIFEST-000001",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/GCM Store/000003.log",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/GCM Store/CURRENT",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/GCM Store/LOCK",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/GCM Store/LOG",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/GCM Store/MANIFEST-000001",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Network/Cookies",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Network/Cookies-journal",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Network/Device Bound Sessions",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Network/Device Bound Sessions-journal",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Network/Network Persistent State",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Network/NetworkDataMigrated",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Network/Reporting and NEL",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Network/Reporting and NEL-journal",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Network/TransportSecurity",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Network/Trust Tokens",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Network/Trust Tokens-journal",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/optimization_guide_hint_cache_store/LOCK",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/optimization_guide_hint_cache_store/LOG",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/optimization_guide_hint_cache_store/LOG.old",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/parcel_tracking_db/LOCK",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/parcel_tracking_db/LOG",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/parcel_tracking_db/LOG.old",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/PersistentOriginTrials/LOCK",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/PersistentOriginTrials/LOG",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/PersistentOriginTrials/LOG.old",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Safe Browsing Network/NetworkDataMigrated",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Session Storage/000003.log",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Session Storage/CURRENT",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Session Storage/LOCK",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Session Storage/LOG",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Session Storage/MANIFEST-000001",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Sessions/Session_13435557897215919",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Sessions/Session_13435563765355662",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Sessions/Session_13435598999490731",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Sessions/Session_13435599119216217",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Sessions/Session_13435610177651424",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Sessions/Session_13435641180658052",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Sessions/Session_13435648439688906",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Sessions/Session_13435656899043422",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Sessions/Session_13435688329548092",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Sessions/Session_13435864271570429",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Sessions/Session_13435865260156222",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Sessions/Session_13436808282868389",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Sessions/Session_13436808330884883",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Sessions/Session_13436892940273108",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Sessions/Tabs_13435559741889360",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Sessions/Tabs_13435563765449971",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Sessions/Tabs_13435598999600715",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Sessions/Tabs_13435599119312748",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Sessions/Tabs_13435610177754580",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Sessions/Tabs_13435641180749864",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Sessions/Tabs_13435648439792650",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Sessions/Tabs_13435656899148731",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Sessions/Tabs_13435688329643311",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Sessions/Tabs_13435864271658090",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Sessions/Tabs_13435865260249757",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Sessions/Tabs_13436773492407385",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Sessions/Tabs_13436892940364801",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Shared Dictionary/db",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Shared Dictionary/db-journal",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/shared_proto_db/CURRENT",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/shared_proto_db/LOCK",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/shared_proto_db/LOG",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/shared_proto_db/LOG.old",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/shared_proto_db/MANIFEST-000001",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Site Characteristics Database/000003.log",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Site Characteristics Database/CURRENT",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Site Characteristics Database/LOCK",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Site Characteristics Database/LOG",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Site Characteristics Database/LOG.old",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Site Characteristics Database/MANIFEST-000001",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/WebStorage/QuotaManager",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/WebStorage/QuotaManager-journal",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Download Service/EntryDB/LOCK",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Download Service/EntryDB/LOG",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Download Service/EntryDB/LOG.old",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Feature Engagement Tracker/AvailabilityDB/LOCK",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Feature Engagement Tracker/AvailabilityDB/LOG",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Feature Engagement Tracker/AvailabilityDB/LOG.old",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Feature Engagement Tracker/EventDB/LOCK",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Feature Engagement Tracker/EventDB/LOG",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Feature Engagement Tracker/EventDB/LOG.old",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/GCM Store/Encryption/000003.log",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/GCM Store/Encryption/CURRENT",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/GCM Store/Encryption/LOCK",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/GCM Store/Encryption/LOG",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/GCM Store/Encryption/LOG.old",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/GCM Store/Encryption/MANIFEST-000001",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/IndexedDB/https_www.google.com_0.indexeddb.leveldb/000004.log",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/IndexedDB/https_www.google.com_0.indexeddb.leveldb/000005.ldb",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/IndexedDB/https_www.google.com_0.indexeddb.leveldb/CURRENT",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/IndexedDB/https_www.google.com_0.indexeddb.leveldb/LOCK",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/IndexedDB/https_www.google.com_0.indexeddb.leveldb/LOG",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/IndexedDB/https_www.google.com_0.indexeddb.leveldb/LOG.old",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/IndexedDB/https_www.google.com_0.indexeddb.leveldb/MANIFEST-000001",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Local Storage/leveldb/000003.log",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Local Storage/leveldb/CURRENT",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Local Storage/leveldb/LOCK",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Local Storage/leveldb/LOG",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Local Storage/leveldb/LOG.old",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Local Storage/leveldb/MANIFEST-000001",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Segmentation Platform/SegmentInfoDB/LOCK",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Segmentation Platform/SegmentInfoDB/LOG",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Segmentation Platform/SegmentInfoDB/LOG.old",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Segmentation Platform/SignalDB/LOCK",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Segmentation Platform/SignalDB/LOG",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Segmentation Platform/SignalDB/LOG.old",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Segmentation Platform/SignalStorageConfigDB/LOCK",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Segmentation Platform/SignalStorageConfigDB/LOG",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Segmentation Platform/SignalStorageConfigDB/LOG.old",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Service Worker/Database/000003.log",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Service Worker/Database/CURRENT",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Service Worker/Database/LOCK",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Service Worker/Database/LOG",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Service Worker/Database/LOG.old",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Service Worker/Database/MANIFEST-000001",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Service Worker/CacheStorage/28da9c56fde4021055a681112c092453f74d8dd8/index.txt",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Service Worker/CacheStorage/28da9c56fde4021055a681112c092453f74d8dd8/44160121-eac6-4d2b-99e5-f7ca15552540/a72c3c820fc65346_0",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Service Worker/CacheStorage/28da9c56fde4021055a681112c092453f74d8dd8/44160121-eac6-4d2b-99e5-f7ca15552540/index",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Service Worker/CacheStorage/28da9c56fde4021055a681112c092453f74d8dd8/44160121-eac6-4d2b-99e5-f7ca15552540/index-dir/the-real-index",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Shared Dictionary/cache/index",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Shared Dictionary/cache/index-dir/the-real-index",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/shared_proto_db/metadata/000003.log",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/shared_proto_db/metadata/CURRENT",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/shared_proto_db/metadata/LOCK",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/shared_proto_db/metadata/LOG",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/shared_proto_db/metadata/LOG.old",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/shared_proto_db/metadata/MANIFEST-000001",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Sync Data/LevelDB/000003.log",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Sync Data/LevelDB/CURRENT",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Sync Data/LevelDB/LOCK",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Sync Data/LevelDB/LOG",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Sync Data/LevelDB/LOG.old",
+      "reason": "browser-profile-credential-store"
+    },
+    {
+      "path": "A5front/.dart_tool/chrome-device/Default/Sync Data/LevelDB/MANIFEST-000001",
+      "reason": "browser-profile-credential-store"
+    }
+  ],
+  "sqlite_snapshots": [
+    "TravelPlanner_Backend/data/hike-access.sqlite",
+    "TravelPlanner_Backend/data/hotel-search-cache.sqlite",
+    "TravelPlanner_Backend/data/hotel-web-prices.sqlite",
+    "TravelPlanner_Backend/data/transit-catalog.sqlite"
+  ]
+}

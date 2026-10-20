@@ -1,0 +1,3 @@
+spring.datasource.url=jdbc:mariadb://127.0.0.1:3306/test_planner_20261019_update
+spring.datasource.username=YOUR_DB_USER
+spring.datasource.password=YOUR_DB_PASSWORD

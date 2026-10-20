@@ -1,0 +1,131 @@
+package com.travel.planner.entity;
+
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.ArrayList;
+
+@Entity
+@EntityListeners(com.travel.planner.service.PlanPeriodListener.class)
+@Getter
+@Setter
+public class Plan {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    // 어떤 유저의 일정인지 연결 (다대일 관계)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    @org.hibernate.annotations.OnDelete(action = org.hibernate.annotations.OnDeleteAction.CASCADE)
+    private User user;
+
+    @Column(nullable = false)
+    private String title;
+
+    @Column(nullable = false)
+    private LocalDate startDate;
+
+    @Column(nullable = false)
+    private LocalDate endDate;
+
+    // 날짜를 정하지 않고 "몇 박 며칠"만 정한 일정이면 여행 일수(3박 4일 = 4). 날짜를 정한 일정은 null.
+    // 이 값이 있으면 위의 startDate·endDate 는 실제 날짜가 아니라 자리 표시(UNDATED_BASE 부터 일수만큼)다.
+    // (두 칸이 DB 에서 NOT NULL 이라 비워 둘 수 없어서 이렇게 둔다. 화면에 보여 줄 때는 반드시 undated() 를 먼저 본다)
+    // Supplied planner schema stays intact; optional days live in the auxiliary database.
+    @Transient
+    private Integer tripDays;
+
+    /** 날짜가 정해지지 않은 일정의 1일차 자리에 넣는 날짜. 실제 날짜가 아니다. */
+    public static final LocalDate UNDATED_BASE = LocalDate.of(1970, 1, 1);
+
+    /** 날짜를 정하지 않은 일정인가 */
+    public boolean undated() {
+        return tripDays != null;
+    }
+
+    /** 여행 일수 */
+    public int totalDays() {
+        if (tripDays != null) return tripDays;
+        return (int) java.time.temporal.ChronoUnit.DAYS.between(startDate, endDate) + 1;
+    }
+
+    /** N일차의 실제 날짜. 날짜를 정하지 않은 일정이면 null */
+    public LocalDate dateOfDay(int dayNumber) {
+        return undated() || startDate == null ? null : startDate.plusDays(dayNumber - 1L);
+    }
+
+    // 테마 (힐링, 액티비티 등)
+    private String theme;
+
+    @Column(columnDefinition = "TEXT")
+    private String aiReason;
+
+    @Column
+    private String inCity;
+
+    @Column
+    private String outCity;
+
+    @Column
+    private String inTime; // 입국 시간 (오전/오후/저녁/미정)
+
+    @Column
+    private String outTime; // 출국 시간 (오전/오후/저녁/미정)
+
+    // ---- 재탐색(reroute) 때 원래 요청 조건을 복원하기 위한 값들 ----
+    @Column(length = 500)
+    private String cities;              // "오사카, 교토"
+
+    @Column
+    private String companion;
+
+    @Column
+    private String transportation;
+
+    @Column
+    private java.time.LocalTime preferredStartTime;
+
+    @Column
+    private java.time.LocalTime preferredEndTime;
+
+    @Column(length = 500)
+    private String excludedThemes;
+
+    // 사용자가 "다른 곳으로 바꿔 달라"고 했던 장소들의 placeId (쉼표 구분). 같은 계획에서 다시 추천하지 않는다.
+    @Column(columnDefinition = "TEXT")
+    private String rejectedPlaceIds;
+
+    @Column(columnDefinition = "TEXT")
+    private String fixedSchedulesJson;  // 고정 일정 목록(JSON)
+
+    @Column(length = 10)
+    private String language;
+
+    @Column
+    private Integer mealCount;          // 하루 식사 추천 횟수 (null = 기본 2)
+
+    @Column
+    private Boolean excludeCafe;        // 카페 추천 받지 않기
+
+    @OneToMany(mappedBy = "plan", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("dayNumber ASC, sequence ASC")
+    private List<Itinerary> itineraries = new ArrayList<>();
+
+    public void addItinerary(Itinerary itinerary) {
+        itineraries.add(itinerary);
+        itinerary.setPlan(this);
+    }
+
+    @OneToMany(mappedBy = "plan", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Accommodation> accommodations = new ArrayList<>();
+
+    // 숙소를 여행 계획에 담아주는 편의 메서드
+    public void addAccommodation(Accommodation accommodation) {
+        accommodations.add(accommodation);
+        accommodation.setPlan(this);
+    }
+}

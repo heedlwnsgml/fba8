@@ -1,0 +1,20 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.aiplanner.ai_travel_planner.app-mergeDebugResources-4:/values-v16/values-v16.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\USER\\Documents\\Codex\\2026-10-04\\sork\\work\\gradle-cache\\caches\\8.14.3\\transforms\\aad043b556613d0de0646041fc00dbb1\\transformed\\appcompat-1.7.1\\res\\values-v16\\values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "5",
+                        "endColumns": "12",
+                        "endOffsets": "223"
+                    }
+                }
+            ]
+        }
+    ]
+}

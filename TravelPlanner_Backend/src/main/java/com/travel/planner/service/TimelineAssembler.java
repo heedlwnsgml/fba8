@@ -1,0 +1,142 @@
+package com.travel.planner.service;
+
+import com.travel.planner.dto.AiRouteResponse;
+import com.travel.planner.dto.TransitLegDto;
+import com.travel.planner.entity.Place;
+import com.travel.planner.repository.PlaceRepository;
+import com.travel.planner.service.PlanService.SimulatedItinerary;
+import com.travel.planner.util.OpeningHours;
+import com.travel.planner.util.PlaceDescriber;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * 엔진 결과(SimulatedItinerary) → 응답 DTO(TimelineItem) 변환.
+ *
+ * 주소·전화·영업시간은 DB 에 저장된 값을 쓴다. 이전에는 타임라인 항목마다 Place Details 를 실시간으로
+ * 불러서(4일 일정이면 30회 이상) 응답이 느리고 과금이 컸다. 예전에 수집해 주소가 비어 있는 장소만
+ * 요청당 정해진 횟수 안에서 한 번 조회해 DB 에 채워 넣는다.
+ */
+@Component
+@RequiredArgsConstructor
+public class TimelineAssembler {
+    @org.springframework.beans.factory.annotation.Autowired
+    private KoreanPlaceDescriptions koreanDescriptions;
+    @org.springframework.beans.factory.annotation.Autowired
+    private HotelBudgetService hotelBudget;
+
+    private static final int MAX_DETAIL_CALLS_PER_REQUEST = 12;
+
+    private final GoogleMapsService googleMapsService;
+    private final PlaceRepository placeRepository;
+    private final RailRouteService railRouteService;
+
+    /** @param transportation 사용자가 고른 이동수단 (구간별 교통 정보를 붙일 때 쓴다) */
+    public List<AiRouteResponse.TimelineItem> toTimeline(List<PlanService.DayPlan> days, String lang, String transportation) {
+        int[] budget = {MAX_DETAIL_CALLS_PER_REQUEST};
+        List<AiRouteResponse.TimelineItem> timeline = new ArrayList<>();
+        for (PlanService.DayPlan day : days) {
+            timeline.addAll(toTimeline(day.getDayNumber(), day.getDate(), day.getItems(), lang, transportation, budget));
+        }
+        return timeline;
+    }
+
+    public List<AiRouteResponse.TimelineItem> toTimeline(int dayNumber, LocalDate date, List<SimulatedItinerary> items, String lang,
+                                                         String transportation) {
+        return toTimeline(dayNumber, date, items, lang, transportation, new int[]{MAX_DETAIL_CALLS_PER_REQUEST});
+    }
+
+    private List<AiRouteResponse.TimelineItem> toTimeline(int dayNumber, LocalDate date, List<SimulatedItinerary> items,
+                                                          String lang, String transportation, int[] budget) {
+        boolean korean = lang == null || lang.isBlank() || lang.toLowerCase().startsWith("ko");
+        List<AiRouteResponse.TimelineItem> timeline = new ArrayList<>();
+        // 줄마다 "직전 장소에서 여기까지" 가는 방법과 요금 (철도망·버스 노선 기준 추정. 그 날의 요일에 맞는 운행 횟수를 쓴다)
+        List<TransitLegDto> legs = railRouteService.legsFor(items, transportation, date);
+
+        for (int index = 0; index < items.size(); index++) {
+            SimulatedItinerary sim = items.get(index);
+            AiRouteResponse.TimelineItem item = new AiRouteResponse.TimelineItem();
+            item.setTransit(legs.get(index));
+            item.setDay(dayNumber);
+            item.setTime(sim.getTime());
+            item.setEndTime(sim.getEndTime());
+            item.setTravelMinutes(sim.getTravelMinutes());
+            // 한국어 화면에는 한국어로 옮긴 이름을, 그 밖의 언어에는 원래 이름을 보여 준다. 옮긴 경우 원래 이름도 함께 준다(현지 간판·지도 검색용)
+            item.setPlaceName(korean ? sim.getDisplayName() : sim.getOriginalName());
+            if (korean && sim.getPlace() != null && !sim.getDisplayName().equals(sim.getOriginalName())) {
+                item.setPlaceNameOriginal(sim.getOriginalName());
+            }
+            item.setCategory(sim.getCategory());
+            item.setDescription(koreanDescriptions!=null && PlanService.isLodging(sim.getPlace()) ? koreanDescriptions.summary(sim.getPlace()) : describe(sim));
+            item.setLatitude(sim.getLatitude());
+            item.setLongitude(sim.getLongitude());
+            item.setFormattedAddress("주소 정보 없음");
+            item.setPhoneNumber("전화번호 정보 없음");
+            item.setOpeningHours(OpeningHours.LEGACY_DEFAULT);
+
+            Place place = sim.getPlace();
+            if (place != null) {
+                item.setPlaceId(place.getPlaceId());
+                item.setOpeningDays("");item.setWeeklyOpeningHours(place.getOpeningHours());
+                item.setDiningType(DiningInformation.type(place));item.setDiningGuide(DiningInformation.guide(place));
+                if(hotelBudget!=null)item.setAverageHotelPriceYen(hotelBudget.price(place));
+                Place source = place;
+
+                if (!korean && budget[0] > 0) {
+                    // 한국어 외 언어는 저장된 값(한국어)을 쓸 수 없으므로 그 언어로 조회한다 (DB 에는 저장하지 않음)
+                    budget[0]--;
+                    Place localized = googleMapsService.getPlaceDetailsById(place.getPlaceId(), lang);
+                    if (localized != null) source = localized;
+                } else if (korean && !SupplementalFoodService.supplemental(place) && place.getAddress() == null && budget[0] > 0) {
+                    budget[0]--;
+                    if (googleMapsService.refreshPlace(place, "ko") && place.getId() != null) {
+                        placeRepository.save(place);
+                    }
+                }
+
+                // 어떤 곳인지: 세부 유형·한 줄 소개·테마·평점 (DB 값, 없으면 이름·분류로 만든 기본 문구)
+                item.setSubType(PlaceDescriber.subTypeOf(place));
+                item.setSummary(koreanDescriptions==null?PlaceDescriber.summaryOf(place):koreanDescriptions.summary(place));
+                if (sim.getType() == SimulatedItinerary.Type.VISIT) {
+                    item.setThemes(PlaceDescriber.themeListOf(place));
+                    item.setRating(place.getRating());
+                    item.setUserRatingCount(place.getUserRatingCount());
+                }
+
+                if (source.getAddress() != null) item.setFormattedAddress(source.getAddress());
+                if (source.getPhone() != null) item.setPhoneNumber(source.getPhone());
+                item.setOpeningHours(koreanDescriptions==null?OpeningHours.describe(source,date):koreanDescriptions.hours(source,date));
+            }
+            if(PlanService.isAirport(place)){item.setDescription("");item.setSummary("");}
+            timeline.add(item);
+        }
+        return timeline;
+    }
+
+    public static String describe(SimulatedItinerary sim) {
+        Place place = sim.getPlace();
+        switch (sim.getType()) {
+            case START:
+                return PlanService.isAirport(place) ? "입국 수속 후 이동 시작" : "숙소 출발";
+            case END:
+                return PlanService.isAirport(place) ? "출국 수속 (출국편 2시간 전까지 도착)" : "숙소 도착 및 휴식";
+            case FREE:
+                return "자유 시간";
+            case MEAL:
+                return "근처에서 자유롭게 식사";
+            case FIXED:
+                return "사용자 고정 일정";
+            default: {
+                // 방문지는 "무엇을 하는 곳인지"를 적는다. (이전에는 "힐링,자연 일정"처럼 테마만 적혀 목록만 봐서는 어떤 곳인지 알 수 없었다)
+                String summary = PlaceDescriber.summaryOf(place);
+                if (summary != null && !summary.isBlank()) return summary;
+                return place != null && place.getTheme() != null && !place.getTheme().isBlank()
+                        ? place.getTheme() + " 일정" : "추천 일정";
+            }
+        }
+    }
+}

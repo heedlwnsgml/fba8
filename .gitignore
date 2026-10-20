@@ -1,0 +1,14 @@
+# Keep credentials and browser encryption stores out of future commits.
+**/application-secret.yml
+**/database-local.properties
+**/.env
+**/.env.local
+**/key.properties
+**/*.jks
+**/*.keystore
+**/*.p12
+**/*.pfx
+**/*.pem
+**/chrome-device/
+**/*.sqlite-wal
+**/*.sqlite-shm

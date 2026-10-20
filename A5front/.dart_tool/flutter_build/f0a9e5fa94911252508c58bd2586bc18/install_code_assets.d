@@ -1,0 +1,1 @@
+ C:\\Users\\USER\\Desktop\\TravelPlanner_GitHub_refresh\\A5front\\.dart_tool\\flutter_build\\f0a9e5fa94911252508c58bd2586bc18\\native_assets.json: 
