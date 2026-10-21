@@ -292,7 +292,7 @@ class _ItineraryResultPageState extends State<ItineraryResultPage> {
   }
 
   String _placeDescription(Map<String, dynamic> place) =>
-      shown(itineraryDescription(place));
+      shown(itineraryDescription(place, admin: _api.showAdminInformation));
 
   @override
   void initState() {
@@ -486,9 +486,10 @@ class _ItineraryResultPageState extends State<ItineraryResultPage> {
                   driving: itineraryDriving(
                     (e['transportFromPrevious'] as Map?)?['mode'],
                   ),
-                  airborne:
-                      (e['transportFromPrevious'] as Map?)?['source'] ==
-                      'domestic-flight-fare',
+                  airborne: [
+                    'domestic-flight-fare',
+                    'distance-flight',
+                  ].contains((e['transportFromPrevious'] as Map?)?['source']),
                   walking:
                       (e['transportFromPrevious'] as Map?)?['mode'] == '도보',
                   airportAccessUrl: e['_airportAccessUrl'] as Uri?,
@@ -507,7 +508,7 @@ class _ItineraryResultPageState extends State<ItineraryResultPage> {
                       ? shown(
                           itineraryDescription({
                             'transportFromPrevious': e['transportFromPrevious'],
-                          }),
+                          }, admin: _api.showAdminInformation),
                         )
                       : '',
                   category: itineraryCategory(e),

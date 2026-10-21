@@ -68,7 +68,7 @@ public final class PlanSummarizer {
         summary.setBadWeather(badWeather);
 
         List<SimulatedItinerary> visits = items.stream()
-                .filter(i -> i.getType() == SimulatedItinerary.Type.VISIT && i.getPlace() != null)
+                .filter(i -> i.getType() == SimulatedItinerary.Type.VISIT && i.getPlace() != null && !PlanService.isAirport(i.getPlace()))
                 .collect(Collectors.toList());
         List<SimulatedItinerary> sights = visits.stream().filter(i -> !PlaceKind.of(i.getPlace()).isFood()).collect(Collectors.toList());
         long foodVisits = visits.size() - sights.size();
@@ -192,7 +192,7 @@ public final class PlanSummarizer {
 
         // 2. 무엇을 (테마와 방문 수)
         List<SimulatedItinerary> visits = days.stream().flatMap(d -> d.getItems().stream())
-                .filter(i -> i.getType() == SimulatedItinerary.Type.VISIT && i.getPlace() != null)
+                .filter(i -> i.getType() == SimulatedItinerary.Type.VISIT && i.getPlace() != null && !PlanService.isAirport(i.getPlace()))
                 .collect(Collectors.toList());
         Map<String, Integer> counts = new LinkedHashMap<>();
         for (String label : new String[]{"관광지", "식당", "카페", "쇼핑"}) counts.put(label, 0);

@@ -303,6 +303,8 @@ class TripDraft {
     'hotelBudgetMode': hotelBudgetMode,
     'accommodations': accommodations,
     'fixedSchedules': fixedSchedules,
+    'restDaysEnabled': restDaysEnabled,
+    'interIslandTransport': interIslandTransport,
     'companions': companions,
     'ageGroups': ageGroups,
     'themes': themes,
@@ -331,19 +333,48 @@ class TripDraft {
       'dailyEnd',
       'mealsPerDay',
       'includeSnacks',
+      'restDaysEnabled',
+      'interIslandTransport',
     ],
+    7: ['themes', 'excludedThemes'],
+    8: ['transport', 'interIslandTransport'],
+    9: ['pace', 'dailyStart', 'dailyEnd', 'mealsPerDay', 'includeSnacks'],
   };
   Future<void> saveDefaults(int step) async {
     final snapshot = _snapshot();
-    _defaults['$step'] = jsonDecode(
+    final saved = Map<String, dynamic>.from(_defaults);
+    saved['$step'] = jsonDecode(
       jsonEncode({
         for (final k in _stepKeys[step] ?? <String>[]) k: snapshot[k],
       }),
     );
     await (await SharedPreferences.getInstance()).setString(
       'trip.parameter.defaults.v1',
-      jsonEncode(_defaults),
+      jsonEncode(saved),
     );
+    _defaults
+      ..clear()
+      ..addAll(saved);
+  }
+
+  /// Refresh pinned sections before submission, including requests that later fail.
+  Future<void> persistPinnedInputs() async {
+    if (_defaults.isEmpty) return;
+    final snapshot = _snapshot();
+    final saved = Map<String, dynamic>.from(_defaults);
+    for (final step in _stepKeys.keys) {
+      if (!hasDefaults(step)) continue;
+      saved['$step'] = jsonDecode(
+        jsonEncode({for (final key in _stepKeys[step]!) key: snapshot[key]}),
+      );
+    }
+    await (await SharedPreferences.getInstance()).setString(
+      'trip.parameter.defaults.v1',
+      jsonEncode(saved),
+    );
+    _defaults
+      ..clear()
+      ..addAll(saved);
   }
 
   Future<void> clearDefaults(int step) async {
@@ -400,5 +431,7 @@ class TripDraft {
     dailyEnd = clock(m['dailyEnd']) ?? dailyEnd;
     mealsPerDay = (m['mealsPerDay'] ?? mealsPerDay).clamp(1, maxMealsPerDay);
     includeSnacks = m['includeSnacks'] ?? includeSnacks;
+    restDaysEnabled = m['restDaysEnabled'] ?? restDaysEnabled;
+    interIslandTransport = m['interIslandTransport'] ?? interIslandTransport;
   }
 }

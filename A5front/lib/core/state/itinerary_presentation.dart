@@ -389,7 +389,11 @@ bool _themeOnly(String text) {
 }
 
 bool itineraryUnverifiedTransport(Map leg) {
-  if (leg['source'] == 'domestic-flight-fare' || leg['source'] == 'taxi')
+  if ([
+    'domestic-flight-fare',
+    'distance-flight',
+    'taxi',
+  ].contains(leg['source']))
     return false;
   final mode = leg['mode']?.toString() ?? '';
   if (mode == '도보' || mode == '자동차') return false;
@@ -435,6 +439,7 @@ String itineraryKoreanTransport(String text) {
 String itineraryTransportSummary(Map leg) {
   final minutes = (leg['durationMinutes'] as num?)?.toInt() ?? 0;
   if (leg['source'] == 'domestic-flight-fare') return '이동: 국내선 약 $minutes분';
+  if (leg['source'] == 'distance-flight') return '이동: 비행기 약 $minutes분';
   if (leg['source'] == 'taxi') return '이동: 택시 약 $minutes분';
   final steps = (leg['steps'] as List? ?? []).whereType<Map>().toList();
   final rides = steps
@@ -504,7 +509,7 @@ Uri? itineraryDirectionsUrl(
   });
 }
 
-String itineraryDescription(Map<String, dynamic> place) {
+String itineraryDescription(Map<String, dynamic> place, {bool admin = false}) {
   final lines = <String>[];
   final leg = itineraryNormalizePlace(place)['transportFromPrevious'];
   if (leg is Map &&
@@ -607,6 +612,11 @@ String itineraryDescription(Map<String, dynamic> place) {
     if (place['_visitWeekday'] is! int)
       lines.add('휴무일: ${itineraryBusinessClosures(place)}');
   }
+  if (admin &&
+      leg is Map &&
+      (leg['estimated'] == true ||
+          ['estimate', 'mixed'].contains(leg['fareSource'])))
+    lines.add('추후 데이터 적재 필요');
   return lines.join('\n');
 }
 
@@ -866,7 +876,7 @@ void itineraryIncludeStayBuffer(List<Map<String, dynamic>> timeline) {
 }
 
 bool itineraryMissingInformation(String text) => RegExp(
-  r'미확인|이동 경로가 확인되지|일정 시각은 임시|자료\s*없|자료가\s*없|정보\s*없|정보가\s*없|확인\s*필요|확인할\s*수\s*없|미산정|알\s*수\s*없|계산\s*미완료|비교.*완료.*못|비교가.*완료되지',
+  r'추후 데이터 적재 필요|미확인|이동 경로가 확인되지|일정 시각은 임시|자료\s*없|자료가\s*없|정보\s*없|정보가\s*없|확인\s*필요|확인할\s*수\s*없|미산정|알\s*수\s*없|계산\s*미완료|비교.*완료.*못|비교가.*완료되지',
 ).hasMatch(text);
 
 String itineraryVisibleText(String text, {required bool admin}) => admin

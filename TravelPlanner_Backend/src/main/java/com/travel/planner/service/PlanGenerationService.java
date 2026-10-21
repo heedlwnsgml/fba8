@@ -66,6 +66,8 @@ public class PlanGenerationService {
     @org.springframework.beans.factory.annotation.Autowired
     private AirportAccessService airportAccess;
     @org.springframework.beans.factory.annotation.Autowired
+    private FlightTransferService flightTransfers;
+    @org.springframework.beans.factory.annotation.Autowired
     private LodgingCostService lodgingCostService;
     @org.springframework.beans.factory.annotation.Value("${app.lodging-cost.enabled:true}")
     private boolean lodgingCostEnabled;
@@ -186,6 +188,7 @@ public class PlanGenerationService {
         // 식사 시간에 갈 식당이 없어 "자유 식사"가 된 자리가 있으면, 그 주변 식당을 찾아 넣고 한 번 더 짠다
         tripPlan = fillMealGaps(input, tripPlan, dayCities, mainCity);
         if(airportAccess!=null)airportAccess.add(tripPlan.getDays(),request.getTransportation(),warnings);
+        if(flightTransfers!=null)flightTransfers.add(tripPlan.getDays());
         TimelineConsistency.repair(tripPlan.getDays(),railRouteService,request,warnings);
         validateOvernightAnchors(tripPlan);
         warnings.addAll(tripPlan.getWarnings());
@@ -351,6 +354,7 @@ public class PlanGenerationService {
                 : request.getCities().stream().filter(c -> c != null && !c.isBlank()).map(String::trim).distinct().collect(Collectors.toList());
         if (cities.isEmpty()) throw new IllegalArgumentException("여행 도시를 1개 이상 선택해주세요.");
         request.setCities(cities);
+
 
         if (request.getMealCount() != null) {
             int max = PlanService.maxMealCount(request);

@@ -212,7 +212,7 @@ public class PlanService {
 
     /** 타임라인 한 줄 */
     public static class SimulatedItinerary {
-        public enum Type { START, VISIT, FREE, MEAL, FIXED, END }
+        public enum Type { START, VISIT, FREE, MEAL, FIXED, TRANSFER, END }
 
         private final Type type;
         private final Place place;       // FREE / MEAL / FIXED 는 null
@@ -255,6 +255,7 @@ public class PlanService {
                 case FREE: return CATEGORY_FREE;
                 case MEAL: return CATEGORY_MEAL;
                 case FIXED: return CATEGORY_FIXED;
+                case TRANSFER: return "비행기";
                 default: return place != null ? place.getCategory() : null;
             }
         }

@@ -12,9 +12,12 @@ public final class MobilePassCosts {
         Map<Integer,LocalDate> dates=new HashMap<>();TreeSet<Integer> days=new TreeSet<>();
         if(response.getDays()!=null)for(var d:response.getDays()) {days.add(d.getDay());try{dates.put(d.getDay(),LocalDate.parse(d.getDate()));}catch(Exception ignored){}}
         Map<Integer,Integer> regular=new HashMap<>(),covered=new HashMap<>(),purchase=new HashMap<>(),unknown=new HashMap<>();
-        int estimated=0;
+        int estimated=0,flightCount=0,unknownFlights=0,flightFare=0;
         for(var item:response.getTimeline()) {
             int day=item.getDay();days.add(day);var leg=item.getTransit();if(leg==null)continue;
+            if("distance-flight".equals(leg.getSource()) || (leg.getMode()!=null && leg.getMode().contains("비행기"))){
+                flightCount++;if(leg.getFareYen()==null)unknownFlights++;else flightFare+=leg.getFareYen();continue;
+            }
             if(leg.getFareYen()==null)unknown.merge(day,1,Integer::sum);
             else regular.merge(day,leg.getFareYen(),Integer::sum);
             if(leg.getFareRides()!=null && leg.getFareRides().stream().anyMatch(r->r.estimated))estimated++;
@@ -40,7 +43,7 @@ public final class MobilePassCosts {
         }
         Map<String,Object> costs=new LinkedHashMap<>();costs.put("knownFareYen",total);costs.put("totalFareYen",total);costs.put("knownOptimalFareYen",optimal);
         costs.put("unknownLegCount",missing);costs.put("estimatedLegCount",estimated);costs.put("dailyCosts",daily);
-        costs.put("recommendations",recommendations);costs.put("passComparisons",recommendations);costs.put("flightLegCount",0);
+        costs.put("recommendations",recommendations);costs.put("passComparisons",recommendations);costs.put("flightLegCount",flightCount);costs.put("unknownFlightLegCount",unknownFlights);costs.put("knownFlightFareYen",flightFare);costs.put("flightFareYen",unknownFlights>0?null:flightFare);
         response.setTransportCosts(costs);
     }
     private MobilePassCosts(){}

@@ -29,6 +29,10 @@
       "reason": "credential-pattern"
     },
     {
+      "path": "A5front/build/29551db73101a19a9f2a54da23e4dfd9.cache.dill.track.dill",
+      "reason": "configured-credential"
+    },
+    {
       "path": "A5front/build/2a5a5b6aad691fd5a93a8a62aa8ddb6c.cache.dill.track.dill",
       "reason": "configured-credential"
     },
@@ -125,6 +129,14 @@
       "reason": "credential-pattern"
     },
     {
+      "path": "A5front/build/app/intermediates/merged_native_libs/debug/mergeDebugNativeLibs/out/lib/armeabi-v7a/libflutter.so",
+      "reason": "credential-pattern"
+    },
+    {
+      "path": "A5front/build/app/intermediates/merged_native_libs/debug/mergeDebugNativeLibs/out/lib/x86_64/libflutter.so",
+      "reason": "credential-pattern"
+    },
+    {
       "path": "A5front/build/app/intermediates/packaged_manifests/debug/processDebugManifestForPackage/AndroidManifest.xml",
       "reason": "credential-pattern"
     },
@@ -163,22 +175,6 @@
     {
       "path": "TravelPlanner_Backend/config/database-local.properties",
       "reason": "secret-configuration"
-    },
-    {
-      "path": "TravelPlanner_Backend/.gradle/buildOutputCleanup/buildOutputCleanup.lock",
-      "reason": "cannot-verify"
-    },
-    {
-      "path": "TravelPlanner_Backend/.gradle/9.7.1/checksums/checksums.lock",
-      "reason": "cannot-verify"
-    },
-    {
-      "path": "TravelPlanner_Backend/.gradle/9.7.1/executionHistory/executionHistory.lock",
-      "reason": "cannot-verify"
-    },
-    {
-      "path": "TravelPlanner_Backend/.gradle/9.7.1/fileHashes/fileHashes.lock",
-      "reason": "cannot-verify"
     },
     {
       "path": "TravelPlanner_Backend/build/libs/planner-0.0.1-SNAPSHOT.jar",

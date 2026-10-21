@@ -13,16 +13,21 @@ import java.util.function.Supplier;
 /** Owner-scoped background jobs with cancellation and an atomic save boundary. */
 @Service
 public class PlanGenerationJobs {
- public record Result(String jobId,String status,AiRouteResponse response,String error,String message,boolean cancellationPending) {
-  public Result(String jobId,String status,AiRouteResponse response,String error){this(jobId,status,response,error,null,false);}
+ public record EndTimeApproval(String decisionId,int day,String date,String plannedEndTime,String expectedEndTime,int overtimeMinutes,String from,String to) {}
+ public record Result(String jobId,String status,AiRouteResponse response,String error,String message,boolean cancellationPending,EndTimeApproval approval) {
+  public Result(String jobId,String status,AiRouteResponse response,String error){this(jobId,status,response,error,null,false,null);}
+  public Result(String jobId,String status,AiRouteResponse response,String error,String message,boolean cancellationPending){this(jobId,status,response,error,message,cancellationPending,null);}
  }
  private record Key(String owner,String id) {}
  private static final class Job {
   final String id,fingerprint;volatile String status="QUEUED",error,message="생성 순서를 기다리고 있습니다.";volatile AiRouteResponse response;
   volatile Instant finished;volatile Thread worker;volatile boolean cancelled,committing;
   final Map<Object,Object> cache=new HashMap<>();long started=System.nanoTime();int displayLookups;long stageStarted=System.nanoTime();
+  volatile EndTimeApproval approval;Boolean approvalAnswer;
+  final Map<Integer,Boolean> dayDecisions=new HashMap<>();
+  final Map<String,Boolean> answeredDecisions=new HashMap<>();
   Job(String id,String fingerprint){this.id=id;this.fingerprint=fingerprint;}
-  Result result(){return new Result(id,status,response,error,message,cancelled&&finished==null);}
+  synchronized Result result(){return new Result(id,status,response,error,message,cancelled&&finished==null,approval);}
  }
  private static final ThreadLocal<Job> CURRENT=new ThreadLocal<>();
  private final ConcurrentHashMap<Key,Job> jobs=new ConcurrentHashMap<>();
@@ -36,6 +41,33 @@ public class PlanGenerationJobs {
   if(job.cache.containsKey(key)){@SuppressWarnings("unchecked") T result=(T)job.cache.get(key);return result;}
   T result=work.get();checkCancellation();if(job.cache.size()<4096)job.cache.put(key,result);return result;
  }
+ /** Wait inside the owner-scoped background task; polling HTTP requests stay nonblocking. */
+ public static boolean requestEndTimeExtension(int day,java.time.LocalDate date,int deadline,int finish,String from,String to) {
+  var job=CURRENT.get();if(job==null)return false;
+  synchronized(job){
+   checkCancellation();if(job.dayDecisions.containsKey(day))return job.dayDecisions.get(day);
+   String expected=(finish>=1440?"다음날 ":"")+com.travel.planner.util.TimeUtil.format(finish);
+   job.approval=new EndTimeApproval(UUID.randomUUID().toString(),day,date==null?null:date.toString(),com.travel.planner.util.TimeUtil.format(deadline),expected,finish-deadline,from,to);
+   job.approvalAnswer=null;job.status="WAITING_APPROVAL";job.message=day+"일차 종료 시각 초과 허용 여부를 선택해주세요.";
+   try{
+    while(job.approvalAnswer==null){checkCancellation();try{job.wait();}catch(InterruptedException e){Thread.currentThread().interrupt();checkCancellation();}}
+    checkCancellation();boolean answer=job.approvalAnswer;job.dayDecisions.put(day,answer);return answer;
+   }finally{
+    job.approval=null;job.approvalAnswer=null;
+    if(!job.cancelled){job.status="RUNNING";job.message=day+"일차 "+(Boolean.TRUE.equals(job.dayDecisions.get(day))?"종료 시각 초과를 반영하고 있습니다.":"종료 시각 안에 맞는 대안을 찾고 있습니다.");}
+   }
+  }
+ }
+ public Result decideEndTime(String owner,String id,String decisionId,boolean allow) {
+  var job=jobs.get(new Key(owner,id));if(job==null)throw new ResponseStatusException(HttpStatus.NOT_FOUND,"생성 작업을 찾을 수 없습니다.");
+  synchronized(job){
+   var answered=job.answeredDecisions.get(decisionId);
+   if(answered!=null){if(answered!=allow)throw new ResponseStatusException(HttpStatus.CONFLICT,"이미 다른 선택이 반영된 요청입니다.");return job.result();}
+   if(job.cancelled || !"WAITING_APPROVAL".equals(job.status) || job.approval==null || !job.approval.decisionId().equals(decisionId))throw new ResponseStatusException(HttpStatus.CONFLICT,"현재 선택을 기다리는 요청이 아닙니다.");
+   job.answeredDecisions.put(decisionId,allow);job.approvalAnswer=allow;job.notifyAll();return job.result();
+  }
+ }
+ public String originalRequest(String owner,String id){var job=jobs.get(new Key(owner,id));if(job==null)throw new ResponseStatusException(HttpStatus.NOT_FOUND,"생성 작업을 찾을 수 없습니다.");return job.fingerprint;}
  public synchronized Result submit(String owner,String id,String fingerprint,Supplier<AiRouteResponse> generate){
   jobs.entrySet().removeIf(e->e.getValue().finished!=null&&e.getValue().finished.isBefore(Instant.now().minusSeconds(3600)));
   var key=new Key(owner,id);var old=jobs.get(key);
@@ -64,7 +96,7 @@ public class PlanGenerationJobs {
   if(job.finished!=null||job.committing||job.status.equals("SUCCEEDED")||job.status.equals("FAILED"))return;
   job.cancelled=true;job.status="CANCELLED";
   job.error=null;
-  if(job.worker!=null)job.worker.interrupt();
+  job.notifyAll();if(job.worker!=null)job.worker.interrupt();
  }}
  public Result cancel(String owner,String id){var job=jobs.get(new Key(owner,id));if(job==null)throw new ResponseStatusException(HttpStatus.NOT_FOUND,"생성 작업을 찾을 수 없습니다.");
   synchronized(job){if(job.committing&&job.finished==null)throw new ResponseStatusException(HttpStatus.CONFLICT,"저장 마무리 중입니다. 잠시 후 완료된 일정에서 삭제할 수 있습니다.");stop(job);return job.result();}}

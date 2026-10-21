@@ -47,7 +47,7 @@ public final class TransitTotals {
         int railTable = 0;
         for (AiRouteResponse.TimelineItem item : response.getTimeline()) {
             TransitLegDto leg = item.getTransit();
-            if (leg == null) continue;
+            if (leg == null || "distance-flight".equals(leg.getSource())) continue;
             if (leg.getFareYen() != null) {
                 total += leg.getFareYen();
                 if (leg.getFareYen() > 0) priced++;

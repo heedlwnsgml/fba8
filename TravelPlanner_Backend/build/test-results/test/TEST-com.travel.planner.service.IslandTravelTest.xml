@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.travel.planner.service.IslandTravelTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-10-21T05:11:02.929Z" hostname="DESKTOP-L0O1S4Q" time="0.911">
+  <properties/>
+  <testcase name="airportAccessFlightAndArrivalAreRepairedWithinTheDay()" classname="com.travel.planner.service.IslandTravelTest" time="0.892"/>
+  <testcase name="sapporoMiyakoUsesAirSpeedNotMillionYenTaxi()" classname="com.travel.planner.service.IslandTravelTest" time="0.002"/>
+  <testcase name="connectedMainIslandsAreNotMarkedAsFlights()" classname="com.travel.planner.service.IslandTravelTest" time="0.001"/>
+  <testcase name="ordinaryWalkingOnMiyakoStillWorks()" classname="com.travel.planner.service.IslandTravelTest" time="0.0"/>
+  <testcase name="flightFareIsNotCountedAsFreeTransitOrEligibleForPass()" classname="com.travel.planner.service.IslandTravelTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+WARNING: A Java agent has been loaded dynamically (C:\Users\USER\Documents\Codex\2026-10-04\sork\work\gradle-cache\caches\modules-2\files-2.1\net.bytebuddy\byte-buddy-agent\1.18.10\9426d28828bdcdf42666bb7a68c468279ea78f59\byte-buddy-agent-1.18.10.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+10월 21, 2026 2:11:03 오후 com.travel.planner.service.PlanGenerationJobs progress
+INFO: Generation stage [생성 순서를 기다리고 있습니다.] took 1 ms
+10월 21, 2026 2:11:03 오후 com.travel.planner.service.PlanGenerationJobs lambda$submit$2
+INFO: Generation finished status=SUCCEEDED, elapsed=9 ms, stage=15/1일차 이동 시간과 도착 시각을 확인하고 있습니다.
+]]></system-err>
+</testsuite>

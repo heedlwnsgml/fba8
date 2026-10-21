@@ -97,6 +97,16 @@ public class SavedPlanQueryService {
                 item.put("transit",transit);
             }
             // Stored Traffic summaries omit ride steps. Resolve them against the user's transit DB.
+            if(place!=null && "비행기".equals(place.getCategory())){
+                Itinerary prev=previousByDay.get(i.getDayNumber());
+                Itinerary next=items.stream().filter(n->n.getDayNumber().equals(i.getDayNumber()) && n.getSequence()>i.getSequence() && validLocation(n.getPlace())).findFirst().orElse(null);
+                if(prev!=null && next!=null){
+                    var from=displayed.getOrDefault(prev.getId(),prev.getPlace());var to=next.getPlace();
+                    var route=routes.leg(from,to,p.getTransportation(),0,p.dateOfDay(i.getDayNumber()),parseMinute(prev.getEndTime()));
+                    if(route!=null){item.put("transit",route);item.put("travelMinutes",route.getMinutes());}
+                    previousByDay.put(i.getDayNumber(),next);
+                }
+            }
             if(validLocation(place)) {
                 Itinerary previous=previousByDay.put(i.getDayNumber(),i);
                 if(previous!=null && validLocation(displayed.getOrDefault(previous.getId(),previous.getPlace()))) {
@@ -109,7 +119,10 @@ public class SavedPlanQueryService {
                     }
                     var route=routes.leg(from,place,p.getTransportation(),schedule,
                             p.dateOfDay(i.getDayNumber()),depart);
-                    if(route!=null) item.put("transit",route);
+                    if(route!=null) {
+                        item.put("transit",route);
+                        item.put("travelMinutes",route.getMinutes());
+                    }
                     if(route!=null && airportAccess!=null && PlanService.isAirport(from)) {
                         for(var prior:timeline)if(java.util.Objects.equals(prior.get("id"),previous.getId()))prior.put("airportAccess",airportAccess.details(from.getName(),from.getLatitude(),from.getLongitude(),route));
                     }
@@ -165,6 +178,8 @@ public class SavedPlanQueryService {
                 summaries.add(PlanSummarizer.summarizeDay(day,date,city,simulated,null,null));
             }
             computed.setTimeline(costItems);computed.setDays(summaries);TransitTotals.apply(computed,true);passAdvisor.apply(computed);
+            if(computed.getTransitFareYen()!=null && response.get("reason") instanceof String reason)
+                response.put("reason",reason.replaceAll("교통비는 합계 약 [0-9,]+엔\\(성인 1인, 추정\\)입니다\\.", "교통비는 합계 약 "+TransitTotals.yen(computed.getTransitFareYen())+"(성인 1인, 추정)입니다."));
             response.put("days",computed.getDays());response.put("passes",computed.getPasses());response.put("transportCosts",computed.getTransportCosts());
             response.put("transitFareYen",computed.getTransitFareYen());response.put("transitFareWithPassesYen",computed.getTransitFareWithPassesYen());
         }

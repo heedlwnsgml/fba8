@@ -35,6 +35,7 @@ class GenerationNotificationService : Service() {
     }
     private val jobs = linkedMapOf<String, JSONObject>()
     private val delivered = mutableSetOf<String>()
+    private val approvalNotices = mutableSetOf<String>()
     private var token = ""
     private val main = Handler(Looper.getMainLooper())
     private val executor = Executors.newSingleThreadScheduledExecutor()
@@ -89,6 +90,20 @@ class GenerationNotificationService : Service() {
     private fun terminal(data: JSONObject, session: String) {
         if (token != session) return
         val status = data.optString("status")
+        if (status == "WAITING_APPROVAL") {
+            val id=data.optString("id");val approval=data.optJSONObject("approval") ?: return
+            if (!jobs.containsKey(id) || !approvalNotices.add(id+":"+approval.optString("decisionId"))) return
+            val allowed=Build.VERSION.SDK_INT<33 || checkSelfPermission("android.permission.POST_NOTIFICATIONS")==PackageManager.PERMISSION_GRANTED
+            if(allowed) {
+                val notificationId=8400+(id.hashCode() and 0x00ffffff)
+                val intent=Intent(this,MainActivity::class.java).putExtra("generationJobId",id).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                val pending=PendingIntent.getActivity(this,notificationId,intent,PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+                getSystemService(NotificationManager::class.java).notify("generation",notificationId,Notification.Builder(this,COMPLETE)
+                    .setSmallIcon(android.R.drawable.ic_menu_compass).setContentTitle("일정 생성 확인 필요")
+                    .setContentText("${approval.optInt("day")}일차 종료 시각 초과 허용 여부를 선택해주세요.").setAutoCancel(true).setContentIntent(pending).build())
+            }
+            return
+        }
         if (status !in listOf("SUCCEEDED", "FAILED", "CANCELLED")) return
         if (status == "CANCELLED" && data.optBoolean("cancellationPending")) return
         val id = data.getString("id")

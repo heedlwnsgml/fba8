@@ -194,6 +194,7 @@ public class PlanPersistenceService {
         switch (sim.getType()) {
             case MEAL: id = DUMMY_MEAL; name = "[자유 식사]"; break;
             case FIXED: id = DUMMY_FIXED; name = "[고정 일정]"; break;
+            case TRANSFER: id = "DUMMY_FLIGHT_TRANSFER"; name = "[비행기 이동 필요]"; break;
             default: id = DUMMY_FREE; name = "[자유 시간 및 로컬 탐방]"; break;
         }
         return placeRepository.findByPlaceId(id).orElseGet(() -> {

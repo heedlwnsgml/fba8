@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.travel.planner.transit.TransitSearchCacheTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-10-20T15:27:52.072Z" hostname="DESKTOP-L0O1S4Q" time="0.067">
-  <properties/>
-  <testcase name="spatialTransferJoinMatchesExhaustiveSearchIncludingTies()" classname="com.travel.planner.transit.TransitSearchCacheTest" time="0.065"/>
-  <testcase name="routeWalkingBudgetCannotMutateCachedBoardingStops()" classname="com.travel.planner.transit.TransitSearchCacheTest" time="0.002"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

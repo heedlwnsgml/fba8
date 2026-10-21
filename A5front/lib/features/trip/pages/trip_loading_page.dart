@@ -29,6 +29,8 @@ class _TripLoadingPageState extends State<TripLoadingPage> {
       _error = null;
     });
     try {
+      await TripDraft.instance.persistPinnedInputs();
+      if (!mounted) return;
       final request = TripDraft.instance.toRequest();
       final validation = await api.validatePlan(request);
       if (!mounted) return;

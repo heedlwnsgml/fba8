@@ -34,6 +34,14 @@ public class PlanGenerationController {
         var result=jobs.find(auth.getName(),id);
         return result==null ? Map.of("id",id,"status","NOT_FOUND") : result;
     }
+    public record EndTimeDecision(String decisionId,Boolean allow) {}
+    @PostMapping("/{id}/end-time-decision")
+    public PlanGenerationJobs.Result decideEndTime(Authentication auth,@PathVariable String id,@RequestBody EndTimeDecision choice) {
+        if(choice==null || choice.allow()==null || choice.decisionId()==null || choice.decisionId().isBlank())throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"종료 시각 허용 여부를 선택해주세요.");
+        return jobs.decideEndTime(auth.getName(),id,choice.decisionId(),choice.allow());
+    }
+    @GetMapping("/{id}/request")
+    public PlanRequest originalRequest(Authentication auth,@PathVariable String id){return mapper.readValue(jobs.originalRequest(auth.getName(),id),PlanRequest.class);}
     @GetMapping
     public List<PlanGenerationJobs.Result> list(Authentication auth) { return jobs.list(auth.getName()); }
     @DeleteMapping("/{id}")

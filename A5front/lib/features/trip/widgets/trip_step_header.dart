@@ -125,6 +125,11 @@ class _DefaultsPinState extends State<_DefaultsPin> {
           if (mounted) messenger.hideCurrentMaterialBanner();
         });
       }
+    } catch (error) {
+      if (mounted)
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('기본값을 저장하지 못했습니다. 다시 눌러주세요.')),
+        );
     } finally {
       if (mounted) setState(() => busy = false);
     }

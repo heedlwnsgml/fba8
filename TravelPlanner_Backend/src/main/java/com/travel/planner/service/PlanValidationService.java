@@ -33,6 +33,7 @@ public class PlanValidationService {
      */
     public ValidationResult validateMultiCityPlan(List<String> selectedCities, String inCity, String outCity, int nights) {
 
+
         // Known selectable cities/airports are resolved locally; custom names use geocoding.
         Set<Region> regions = selectedCities.stream()
                 .map(this::getRegionFromCityName)

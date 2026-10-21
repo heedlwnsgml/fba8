@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.travel.planner.service.AirportAccessRoutesTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-10-20T15:27:34.654Z" hostname="DESKTOP-L0O1S4Q" time="0.003">
-  <properties/>
-  <testcase name="hanedaGenericAirportUsesInternationalTerminalInsteadOfApron()" classname="com.travel.planner.service.AirportAccessRoutesTest" time="0.0"/>
-  <testcase name="accessUrlUsesLobbyAndUnambiguousCoordinatesOfActualBoardingStation()" classname="com.travel.planner.service.AirportAccessRoutesTest" time="0.002"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

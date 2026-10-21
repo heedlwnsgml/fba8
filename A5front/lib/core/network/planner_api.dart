@@ -32,8 +32,12 @@ class GenerationTask {
   String message = '생성 요청을 보내고 있습니다.';
   String? error;
   Map<String, dynamic>? result;
+  Map<String, dynamic>? endTimeApproval;
   bool get active =>
-      status == 'QUEUED' || status == 'RUNNING' || status == 'CANCELLING';
+      status == 'QUEUED' ||
+      status == 'RUNNING' ||
+      status == 'CANCELLING' ||
+      status == 'WAITING_APPROVAL';
   String get title => request['title']?.toString() ?? '여행 일정';
 }
 
@@ -505,9 +509,20 @@ class PlannerApi extends ChangeNotifier {
         onSubmitted: () {
           if (!task.submitted.isCompleted) task.submitted.complete();
         },
+        onApproval: (approval) {
+          if (task.revision != _sessionRevision || task.status == 'CANCELLED')
+            return;
+          task.endTimeApproval = approval;
+          if (approval != null && task.status != 'CANCELLING')
+            task.status = 'WAITING_APPROVAL';
+          notifyListeners();
+        },
         onProgress: (message) {
           if (task.status == 'CANCELLED') return;
-          if (task.status != 'CANCELLING') task.status = 'RUNNING';
+          if (task.status != 'CANCELLING')
+            task.status = task.endTimeApproval == null
+                ? 'RUNNING'
+                : 'WAITING_APPROVAL';
           task.message = plannerUserMessage(message);
           notifyListeners();
         },
@@ -539,6 +554,60 @@ class PlannerApi extends ChangeNotifier {
     }
   }
 
+  Future<void> decideGenerationEndTime(
+    String id,
+    String decisionId,
+    bool allow,
+  ) async {
+    _requireLogin();
+    final task = _tasks[id];
+    final revision = _sessionRevision;
+    if (task == null || task.revision != revision || !task.active)
+      throw const PlannerApiException('현재 선택을 기다리는 생성 작업이 아닙니다.');
+    await _request(
+      'POST',
+      '/api/v1/plans/generation-jobs/$id/end-time-decision',
+      data: {'decisionId': decisionId, 'allow': allow},
+      authenticated: true,
+      requestTimeout: const Duration(seconds: 15),
+    );
+    if (revision != _sessionRevision) return;
+    task.endTimeApproval = null;
+    if (task.active) {
+      task.status = 'RUNNING';
+      task.message = allow
+          ? '해당 일차의 종료 시각 초과를 반영하고 있습니다.'
+          : '종료 시각 안에 맞는 대안을 찾고 있습니다.';
+    }
+    notifyListeners();
+  }
+
+  Future<GenerationTask> resumeGenerationJob(String id) async {
+    _requireLogin();
+    final existing = _tasks[id];
+    if (existing != null && existing.revision == _sessionRevision)
+      return existing;
+    final revision = _sessionRevision;
+    final request = _asMap(
+      await _request(
+        'GET',
+        '/api/v1/plans/generation-jobs/$id/request',
+        authenticated: true,
+      ),
+    );
+    if (revision != _sessionRevision)
+      throw const PlannerApiException('로그인 계정이 변경되었습니다.');
+    final attached = _tasks[id];
+    if (attached != null && attached.revision == revision) return attached;
+    if (generationTasks.where((t) => t.active).length >= 2)
+      throw const PlannerApiException('일정은 한 번에 최대 2개까지 생성할 수 있습니다.');
+    final task = GenerationTask(id, request, revision);
+    _tasks[id] = task;
+    notifyListeners();
+    unawaited(_runGeneration(task));
+    return task;
+  }
+
   Future<void> cancelGeneration(String id) async {
     _requireLogin();
     final task = _tasks[id];
@@ -566,6 +635,7 @@ class PlannerApi extends ChangeNotifier {
   Future<Map<String, dynamic>> createPlan(
     Map<String, dynamic> plan, {
     void Function(String)? onProgress,
+    void Function(Map<String, dynamic>?)? onApproval,
     String? requestId,
     void Function()? onSubmitted,
     String? submissionPath,
@@ -606,6 +676,11 @@ class PlannerApi extends ChangeNotifier {
           throw const PlannerApiException('생성을 취소했습니다.');
         submitted = true;
         onSubmitted?.call();
+        onApproval?.call(
+          job['status'] == 'WAITING_APPROVAL' && job['approval'] is Map
+              ? _asMap(job['approval'])
+              : null,
+        );
         switch (job['status']) {
           case 'SUCCEEDED':
             final response = _asMap(job['response']);
@@ -634,6 +709,10 @@ class PlannerApi extends ChangeNotifier {
             onProgress?.call('서버가 다시 시작되어 같은 생성 요청을 확인하고 있습니다.');
           case 'QUEUED':
             onProgress?.call('일정 생성 순서를 기다리고 있습니다.');
+          case 'WAITING_APPROVAL':
+            onProgress?.call(
+              job['message']?.toString() ?? '종료 시각 초과 허용 여부를 선택해주세요.',
+            );
           case 'RUNNING':
             onProgress?.call(
               job['message']?.toString() ?? '서버에서 동선과 이동 정보를 계산하고 있습니다.',

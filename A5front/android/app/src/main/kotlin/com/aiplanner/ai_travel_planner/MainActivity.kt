@@ -30,6 +30,7 @@ class MainActivity : FlutterActivity() {
                     "watch" -> { GenerationNotificationService.watch(this, org.json.JSONObject(call.arguments as Map<*,*>)); result.success(null) }
                     "finish" -> { GenerationNotificationService.finish(this, org.json.JSONObject(call.arguments as Map<*,*>)); result.success(null) }
                     "clear" -> { GenerationNotificationService.clear(this); result.success(null) }
+                    "takeTappedJob" -> { val job=intent.getStringExtra("generationJobId");intent.removeExtra("generationJobId");result.success(job) }
                     "takeTappedPlan" -> { val plan=intent.getLongExtra("generationPlanId",-1);intent.removeExtra("generationPlanId");result.success(if(plan>0)plan else null) }
                     else -> result.notImplemented()
                 }

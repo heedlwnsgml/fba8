@@ -290,7 +290,7 @@ public class RailRouteService {
         Integer carriedDepart = null;
         for (SimulatedItinerary item : items) {
             TransitLegDto leg = null;
-            boolean fixedWithPlace = item.getType() == SimulatedItinerary.Type.FIXED && item.getTravelMinutes() > 0;
+            boolean fixedWithPlace = (item.getType() == SimulatedItinerary.Type.FIXED && item.getTravelMinutes() > 0) || item.getType() == SimulatedItinerary.Type.TRANSFER;
             boolean located = (item.getPlace() != null || fixedWithPlace) && valid(item.getLatitude(), item.getLongitude());
             if (located) {
                 if(hikeAccessStore!=null && item.getPlace()!=null)hikeAccessStore.restore(item.getPlace());

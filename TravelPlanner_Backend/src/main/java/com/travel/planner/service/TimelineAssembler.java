@@ -130,6 +130,8 @@ public class TimelineAssembler {
                 return "근처에서 자유롭게 식사";
             case FIXED:
                 return "사용자 고정 일정";
+            case TRANSFER:
+                return "비행기 이동이 필요한 구간입니다. 항공편·운항 시각은 별도 확인해주세요.";
             default: {
                 // 방문지는 "무엇을 하는 곳인지"를 적는다. (이전에는 "힐링,자연 일정"처럼 테마만 적혀 목록만 봐서는 어떤 곳인지 알 수 없었다)
                 String summary = PlaceDescriber.summaryOf(place);

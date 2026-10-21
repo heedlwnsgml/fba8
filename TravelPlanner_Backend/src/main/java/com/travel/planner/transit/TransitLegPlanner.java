@@ -286,6 +286,16 @@ public final class TransitLegPlanner {
                                      LocalDate date, Integer departMinute) {
         double km = DistanceUtil.calculateDistance(fromLat, fromLng, toLat, toLng);
         if (km < 0.001) return null;
+        if(com.travel.planner.util.IslandTravel.crossesSea(fromLat,fromLng,toLat,toLng)) {
+            var flight=new TransitLegDto();flight.setMode("비행기 이동 필요");
+            flight.setSource("distance-flight");flight.setEstimated(true);
+            flight.setMinutes(com.travel.planner.service.FlightTransferService.minutes(km));flight.setDistanceKm(km);
+            flight.setSummary("비행기 이동 필요 · 약 "+flight.getMinutes()+"분");
+            flight.setNote("직선거리와 평균 비행 속도로 계산했습니다. 항공편·운항 시각은 별도 확인해주세요.");
+            var step=new TransitLegDto.Step();step.setType("승차");step.setCategory("비행기");
+            step.setFrom(fromName);step.setTo(toName);step.setMinutes(flight.getMinutes());step.setKm(km);
+            flight.getSteps().add(step);return flight;
+        }
 
         String mode = transportation == null ? "" : transportation;
         boolean car = mode.contains("렌트") || mode.contains("자동차") || mode.contains("택시") || mode.toLowerCase().contains("car");

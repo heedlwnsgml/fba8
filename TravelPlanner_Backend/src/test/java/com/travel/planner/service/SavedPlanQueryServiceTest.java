@@ -60,4 +60,19 @@ class SavedPlanQueryServiceTest {
         verifyNoMoreInteractions(routes);verify(traffic,never()).save(any());verify(plans,never()).save(any());
     }
 
+    @Test void savedFlightPlaceholderRetainsAirportRouteWithoutTaxiFare() {
+        Plan p=plan(9,"me");p.setTransportation("대중교통");
+        Place from=new Place();from.setName("신치토세 공항");from.setPlaceId("AIRPORT_CTS");from.setCategory("교통");from.setLatitude(42.7753);from.setLongitude(141.6925);
+        Place flight=new Place();flight.setName("[비행기 이동 필요]");flight.setCategory("비행기");flight.setLatitude(0.0);flight.setLongitude(0.0);
+        Place to=new Place();to.setName("미야코 공항");to.setPlaceId("AIRPORT_MMY");to.setCategory("교통");to.setLatitude(24.7828);to.setLongitude(125.295);
+        var places=List.of(from,flight,to);String[] starts={"09:00","14:00","14:00"};
+        for(int k=0;k<3;k++){var row=new Itinerary();row.setId(100L+k);row.setDayNumber(1);row.setSequence(k+1);row.setTime(starts[k]);if(k==0)row.setEndTime("10:00");row.setPlace(places.get(k));if(k==1)row.setCustomTitle("비행기 이동 필요");p.getItineraries().add(row);}
+        var leg=new com.travel.planner.dto.TransitLegDto();leg.setSource("distance-flight");leg.setMode("비행기 이동 필요");leg.setEstimated(true);leg.setMinutes(240);
+        when(plans.findDetailById(9L)).thenReturn(Optional.of(p));when(traffic.findByItineraryIn(p.getItineraries())).thenReturn(List.of());
+        when(routes.leg(from,to,"대중교통",0,p.getStartDate(),600)).thenReturn(leg);
+        var detail=service.detail("me",9L);var rows=(List<?>)((Map<?,?>)detail.get("response")).get("timeline");
+        var row=(Map<?,?>)rows.get(1);assertEquals("비행기 이동 필요",row.get("placeName"));assertSame(leg,row.get("transit"));assertEquals(240,row.get("travelMinutes"));assertNull(leg.getFareYen());
+        verify(traffic,never()).save(any());verify(plans,never()).save(any());
+    }
+
 }

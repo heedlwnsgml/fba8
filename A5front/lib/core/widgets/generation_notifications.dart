@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'app_dialog_actions.dart';
+import 'end_time_approval_dialog.dart';
 import '../services/generation_background.dart';
 import 'package:flutter/material.dart';
 import '../network/planner_api.dart';
@@ -18,6 +19,7 @@ class _GenerationNotificationsState extends State<GenerationNotifications>
     with WidgetsBindingObserver {
   PlannerApi get api => widget.api ?? PlannerApi.instance;
   final _notified = <String>{};
+  final _approvalShown = <String>{};
   final _hidden = <String>{};
   final _expiry = <Timer>[];
   bool _showing = false, _resumed = true;
@@ -51,6 +53,14 @@ class _GenerationNotificationsState extends State<GenerationNotifications>
   Future<void> _openSystemNotification() async {
     if (!GenerationBackground.enabled) return;
     try {
+      final job = await GenerationBackground.channel.invokeMethod<String>(
+        'takeTappedJob',
+      );
+      if (job != null && api.isLoggedIn) {
+        await api.resumeGenerationJob(job);
+        _changed();
+        return;
+      }
       final plan = await GenerationBackground.channel.invokeMethod<int>(
         'takeTappedPlan',
       );
@@ -76,6 +86,18 @@ class _GenerationNotificationsState extends State<GenerationNotifications>
 
   Future<void> _announce() async {
     if (!mounted || _showing || !_resumed) return;
+    final waiting = api.generationTasks.where(
+      (t) =>
+          t.status == 'WAITING_APPROVAL' &&
+          t.endTimeApproval != null &&
+          !_approvalShown.contains(
+            '${t.revision}:${t.id}:${t.endTimeApproval!['decisionId']}',
+          ),
+    );
+    if (waiting.isNotEmpty) {
+      await _showEndTimeApproval(waiting.first);
+      return;
+    }
     final ready = api.generationTasks.where(
       (t) =>
           (t.status == 'SUCCEEDED' || t.status == 'FAILED') &&
@@ -133,6 +155,28 @@ class _GenerationNotificationsState extends State<GenerationNotifications>
     _changed();
   }
 
+  Future<void> _showEndTimeApproval(GenerationTask task) async {
+    final context = generationNavigatorKey.currentContext;
+    final approval = task.endTimeApproval;
+    if (!mounted || _showing || context == null || approval == null) return;
+    _approvalShown.add('${task.revision}:${task.id}:${approval['decisionId']}');
+    _showing = true;
+    try {
+      await showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) => EndTimeApprovalDialog(
+          api: api,
+          task: task,
+          approval: Map<String, dynamic>.from(approval),
+        ),
+      );
+    } finally {
+      _showing = false;
+      if (mounted) _changed();
+    }
+  }
+
   Future<void> _jobs() async {
     final context = generationNavigatorKey.currentContext;
     if (context == null) return;
@@ -172,6 +216,15 @@ class _GenerationNotificationsState extends State<GenerationNotifications>
                                 ? '취소됨'
                                 : task.error ?? '실패',
                           ),
+                          if (task.status == 'WAITING_APPROVAL' &&
+                              task.endTimeApproval != null)
+                            FilledButton.tonal(
+                              onPressed: () {
+                                Navigator.pop(c);
+                                _showEndTimeApproval(task);
+                              },
+                              child: const Text('종료 시간 선택'),
+                            ),
                           if (task.active && task.status != 'CANCELLING')
                             TextButton(
                               onPressed: () async {
@@ -215,6 +268,7 @@ class _GenerationNotificationsState extends State<GenerationNotifications>
         .where((t) => t.active || !_hidden.contains(t.id))
         .toList();
     final active = jobs.where((t) => t.active).length;
+    final waiting = jobs.where((t) => t.status == 'WAITING_APPROVAL').length;
     return Stack(
       children: [
         widget.child,
@@ -231,7 +285,13 @@ class _GenerationNotificationsState extends State<GenerationNotifications>
                 active > 0 ? Icons.hourglass_top : Icons.task_alt,
                 size: 18,
               ),
-              label: Text(active > 0 ? '생성 중 $active/2' : '생성 결과'),
+              label: Text(
+                waiting > 0
+                    ? '확인 필요 $waiting'
+                    : active > 0
+                    ? '생성 중 $active/2'
+                    : '생성 결과',
+              ),
             ),
           ),
       ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import '../../../core/state/city_coordinates.dart';
+import '../../../core/state/island_travel_labels.dart';
 import '../../../core/theme/app_colors.dart';
 
 class CitySelectionMap extends StatefulWidget {
@@ -129,10 +130,10 @@ class _CitySelectionMapState extends State<CitySelectionMap> {
                             button: true,
                             selected: widget.selected.contains(city),
                             label:
-                                '$city · ${widget.selected.contains(city) ? '선택됨' : '미선택'}',
+                                '${islandCityLabel(city)} · ${widget.selected.contains(city) ? '선택됨' : '미선택'}',
                             child: Tooltip(
                               message:
-                                  '$city · ${widget.selected.contains(city) ? '선택됨' : '미선택'}',
+                                  '${islandCityLabel(city)} · ${widget.selected.contains(city) ? '선택됨' : '미선택'}',
                               child: GestureDetector(
                                 key: ValueKey('city-pin-$city'),
                                 onTap: () {
@@ -220,7 +221,7 @@ class _CitySelectionMapState extends State<CitySelectionMap> {
               if (focused != null) ...[
                 const SizedBox(height: 8),
                 Text(
-                  '$focused · ${widget.selected.contains(focused) ? '선택됨' : '선택 해제됨'}',
+                  '${islandCityLabel(focused!)} · ${widget.selected.contains(focused) ? '선택됨' : '선택 해제됨'}',
                   style: const TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: 13,
