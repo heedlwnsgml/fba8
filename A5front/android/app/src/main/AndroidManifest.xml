@@ -15,7 +15,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
 
     <application
-        android:label="AI 여행 플래너"
+        android:label="여행 플래너"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 

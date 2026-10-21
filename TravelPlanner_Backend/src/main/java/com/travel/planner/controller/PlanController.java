@@ -28,6 +28,14 @@ public class PlanController {
 
     private final com.travel.planner.service.SavedPlanQueryService savedPlanQueryService;
 
+    private final com.travel.planner.service.PlanPersistenceService planPersistenceService;
+
+    @DeleteMapping("/{planId}")
+    @ResponseStatus(org.springframework.http.HttpStatus.NO_CONTENT)
+    public void deleteSavedPlan(Authentication authentication, @PathVariable Long planId) {
+        planPersistenceService.deletePlan(authentication.getName(), planId);
+    }
+
     @GetMapping
     @Operation(summary = "내 여행 일정 목록", description = "로그인한 회원의 저장된 일정만 조회합니다. DB를 변경하지 않습니다.")
     public java.util.List<java.util.Map<String, Object>> listSavedPlans(Authentication authentication) {

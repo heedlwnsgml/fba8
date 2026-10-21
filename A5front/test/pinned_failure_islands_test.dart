@@ -8,6 +8,7 @@ import 'package:ai_travel_planner/core/state/itinerary_presentation.dart';
 import 'package:ai_travel_planner/core/state/island_travel_labels.dart';
 import 'package:ai_travel_planner/core/network/planner_api.dart';
 import 'package:ai_travel_planner/features/trip/pages/trip_loading_page.dart';
+import 'package:ai_travel_planner/features/trip/pages/trip_preferences_page.dart';
 
 class FailedValidation implements HttpClientAdapter {
   @override
@@ -82,10 +83,13 @@ void main() {
     expect(d.themes, isEmpty);
   });
   test('섬 안내는 표시만 바꾸고 요청의 도시명은 유지한다', () {
-    expect(islandCityLabel('미야코지마'), contains('섬'));
-    expect(islandCityLabel('이시가키'), contains('비행기'));
-    expect(islandCityLabel('도쿄'), '도쿄');
-    expect(islandCityLabel('삿포로'), '삿포로');
+    expect(islandCityLabel('미야코지마', admin: true), '미야코지마 (섬)');
+    expect(islandCityLabel('이시가키', admin: true), '이시가키 (섬)');
+    expect(islandCityLabel('미야코지마'), '미야코지마');
+    expect(islandCityLabel('도쿄', admin: true), '도쿄');
+    expect(islandCityLabel('삿포로', admin: true), '삿포로');
+    expect(islandCityLabel('다카마쓰', admin: true), '다카마쓰');
+    expect(islandCityLabel('후쿠오카', admin: true), '후쿠오카');
     final d = TripDraft()
       ..periodMode = 'nightsOnly'
       ..nights = 2
@@ -130,5 +134,29 @@ void main() {
       ),
       contains('비행기 약 240분'),
     );
+  });
+  testWidgets('실제 테마 화면의 핀으로 선택 테마를 저장하고 다시 해제한다', (t) async {
+    final draft = TripDraft.instance;
+    await t.pumpWidget(const MaterialApp(home: TripPreferencesPage()));
+    await t.pumpAndSettle();
+    await Scrollable.ensureVisible(
+      t.element(find.text('관광').first),
+      alignment: 0.3,
+    );
+    await t.pumpAndSettle();
+    await t.tap(find.text('관광').first);
+    await t.pumpAndSettle();
+    expect(draft.themes, contains('관광'));
+    final pin = find.byTooltip('눌러 기본값 고정 · 다시 눌러 해제');
+    await t.tap(pin);
+    await t.pumpAndSettle();
+    expect(draft.hasDefaults(6), isTrue);
+    final restored = TripDraft();
+    await restored.loadDefaults();
+    expect(restored.themes, contains('관광'));
+    await t.tap(pin);
+    await t.pumpAndSettle();
+    expect(draft.hasDefaults(6), isFalse);
+    await t.pumpWidget(const SizedBox());
   });
 }

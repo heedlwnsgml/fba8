@@ -66,7 +66,7 @@ class _SplashPageState extends State<SplashPage> {
                     const SizedBox(height: 20),
 
                     const Text(
-                      'AI Travel Planner',
+                      'Travel Planner',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white,
@@ -78,7 +78,7 @@ class _SplashPageState extends State<SplashPage> {
                     const SizedBox(height: 10),
 
                     Text(
-                      'AI가 만드는 가장 똑똑한 일본 여행',
+                      '나에게 맞는 일본 여행',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white.withOpacity(0.85),
@@ -95,7 +95,7 @@ class _SplashPageState extends State<SplashPage> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 28),
                 child: Text(
-                  'Powered by AI',
+                  'Travel Planner',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white.withOpacity(0.75),

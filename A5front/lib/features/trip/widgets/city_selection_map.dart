@@ -13,12 +13,14 @@ class CitySelectionMap extends StatefulWidget {
     required this.onToggle,
     this.anchorCity,
     this.loadTiles = true,
+    this.showIslandLabels = false,
   });
   final List<String> cities;
   final Set<String> selected;
   final ValueChanged<String> onToggle;
   final String? anchorCity;
   final bool loadTiles;
+  final bool showIslandLabels;
   @override
   State<CitySelectionMap> createState() => _CitySelectionMapState();
 }
@@ -130,10 +132,10 @@ class _CitySelectionMapState extends State<CitySelectionMap> {
                             button: true,
                             selected: widget.selected.contains(city),
                             label:
-                                '${islandCityLabel(city)} · ${widget.selected.contains(city) ? '선택됨' : '미선택'}',
+                                '${islandCityLabel(city, admin: widget.showIslandLabels)} · ${widget.selected.contains(city) ? '선택됨' : '미선택'}',
                             child: Tooltip(
                               message:
-                                  '${islandCityLabel(city)} · ${widget.selected.contains(city) ? '선택됨' : '미선택'}',
+                                  '${islandCityLabel(city, admin: widget.showIslandLabels)} · ${widget.selected.contains(city) ? '선택됨' : '미선택'}',
                               child: GestureDetector(
                                 key: ValueKey('city-pin-$city'),
                                 onTap: () {
@@ -221,7 +223,7 @@ class _CitySelectionMapState extends State<CitySelectionMap> {
               if (focused != null) ...[
                 const SizedBox(height: 8),
                 Text(
-                  '${islandCityLabel(focused!)} · ${widget.selected.contains(focused) ? '선택됨' : '선택 해제됨'}',
+                  '${islandCityLabel(focused!, admin: widget.showIslandLabels)} · ${widget.selected.contains(focused) ? '선택됨' : '선택 해제됨'}',
                   style: const TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: 13,

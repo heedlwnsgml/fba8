@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -44,7 +45,8 @@ class _DirectionsWebViewState extends State<_DirectionsWebView> {
       await controller.setNavigationDelegate(
         NavigationDelegate(
           onNavigationRequest: (request) =>
-              Uri.tryParse(request.url)?.scheme == 'https'
+              (request.url == 'about:blank' ||
+                  Uri.tryParse(request.url)?.scheme == 'https')
               ? NavigationDecision.navigate
               : NavigationDecision.prevent,
           onPageFinished: (_) {
@@ -83,11 +85,23 @@ class _DirectionsWebViewState extends State<_DirectionsWebView> {
           loading = false;
         });
     });
-    controller.loadRequest(
-      widget.route.replace(
-        queryParameters: {...widget.route.queryParameters, 'hl': 'ko'},
-      ),
+    final embedded = widget.route.replace(
+      queryParameters: {...widget.route.queryParameters, 'hl': 'ko'},
     );
+    // Google embeds must be child frames, including inside a native WebView.
+    // Opening the embed URL as the top-level document produces an iframe error.
+    final source = const HtmlEscape(
+      HtmlEscapeMode.attribute,
+    ).convert(embedded.toString());
+    controller.loadHtmlString('''<!doctype html>
+<html lang="ko"><head>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>html,body{margin:0;width:100%;height:100%;overflow:hidden}iframe{display:block;border:0;width:100%;height:100%}</style>
+</head><body>
+<iframe title="Google 지도 이동 경로" src="$source"
+ referrerpolicy="no-referrer-when-downgrade"
+ sandbox="allow-scripts allow-same-origin allow-forms" allowfullscreen></iframe>
+</body></html>''');
   }
 
   @override

@@ -15,7 +15,9 @@ public final class MobilePassCosts {
         int estimated=0,flightCount=0,unknownFlights=0,flightFare=0;
         for(var item:response.getTimeline()) {
             int day=item.getDay();days.add(day);var leg=item.getTransit();if(leg==null)continue;
-            if("distance-flight".equals(leg.getSource()) || (leg.getMode()!=null && leg.getMode().contains("비행기"))){
+            boolean seaFlight="sea".equals(leg.getSource()) && leg.getMode()!=null && leg.getMode().contains("비행기");
+            if(seaFlight){flightCount++;unknownFlights++;} // Sea-route fare contains ground/ship access, never airfare.
+            if(!seaFlight && ("distance-flight".equals(leg.getSource()) || (leg.getMode()!=null && leg.getMode().contains("비행기")))){
                 flightCount++;if(leg.getFareYen()==null)unknownFlights++;else flightFare+=leg.getFareYen();continue;
             }
             if(leg.getFareYen()==null)unknown.merge(day,1,Integer::sum);

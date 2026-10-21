@@ -95,6 +95,8 @@ void main() {
       await t.pumpAndSettle();
       expect(find.byKey(const ValueKey('city-route-overview')), findsNothing);
       expect(find.byKey(const ValueKey('map-pin-button-2')), findsNothing);
+      await t.tap(find.byKey(const ValueKey('toggle-fixed-map')));
+      await t.pumpAndSettle();
       await t.tap(find.byKey(const ValueKey('toggle-map-places')));
       await t.pumpAndSettle();
       final pin = find.byKey(const ValueKey('map-pin-button-2'));
@@ -102,6 +104,8 @@ void main() {
       await t.pumpAndSettle();
       expect(t.widget<ChoiceChip>(pin).selected, true);
       expect(find.byKey(const ValueKey('timeline-card-0-1')), findsOneWidget);
+      await t.tap(find.byKey(const ValueKey('toggle-fixed-map')));
+      await t.pumpAndSettle();
       await t.tap(find.byKey(const ValueKey('show-city-route')));
       await t.pumpAndSettle();
       expect(find.text('전체 도시 경로'), findsOneWidget);

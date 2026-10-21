@@ -1,3 +1,4 @@
+import '../../../core/network/planner_api.dart';
 import '../../../core/widgets/app_dialog_actions.dart';
 import 'dart:convert';
 import '../../../core/state/island_travel_labels.dart';
@@ -417,7 +418,12 @@ class _TripRegionPageState extends State<TripRegionPage>
                   children: cities
                       .map(
                         (city) => InputChip(
-                          label: Text(islandCityLabel(city)),
+                          label: Text(
+                            islandCityLabel(
+                              city,
+                              admin: PlannerApi.instance.showAdminInformation,
+                            ),
+                          ),
                           onDeleted: () {
                             _removeCity(city);
                             Navigator.pop(dialogContext, false);
@@ -499,6 +505,8 @@ class _TripRegionPageState extends State<TripRegionPage>
                     CitySelectionMap(
                       cities: [...presetCities, ...customCities],
                       selected: {...selectedCities, ...customCities},
+                      showIslandLabels:
+                          PlannerApi.instance.showAdminInformation,
                       anchorCity: itineraryAnchorCity(
                         TripDraft.instance.title,
                         presetCities,
@@ -513,17 +521,18 @@ class _TripRegionPageState extends State<TripRegionPage>
                     ),
                     const SizedBox(height: 24),
 
-                    const Padding(
-                      padding: EdgeInsets.only(bottom: 14),
-                      child: Text(
-                        islandTravelNotice,
-                        style: TextStyle(
-                          fontSize: 12,
-                          height: 1.5,
-                          color: AppColors.textSecondary,
+                    if (PlannerApi.instance.showAdminInformation)
+                      const Padding(
+                        padding: EdgeInsets.only(bottom: 14),
+                        child: Text(
+                          islandTravelNotice,
+                          style: TextStyle(
+                            fontSize: 12,
+                            height: 1.5,
+                            color: AppColors.textSecondary,
+                          ),
                         ),
                       ),
-                    ),
                     Text(
                       '어느 도시로\n떠나시나요?',
                       style: Theme.of(context).textTheme.headlineMedium
@@ -927,7 +936,10 @@ class _RegionExpansionCard extends StatelessWidget {
                 activeColor: AppColors.primary,
                 controlAffinity: ListTileControlAffinity.leading,
                 title: Text(
-                  islandCityLabel(city),
+                  islandCityLabel(
+                    city,
+                    admin: PlannerApi.instance.showAdminInformation,
+                  ),
                   style: TextStyle(
                     fontWeight: selected ? FontWeight.w900 : FontWeight.w700,
                     color: selected ? AppColors.primary : AppColors.textPrimary,

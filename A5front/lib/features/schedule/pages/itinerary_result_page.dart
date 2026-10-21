@@ -68,7 +68,7 @@ class _ItineraryResultPageState extends State<ItineraryResultPage> {
   int _selectionRevision = 0;
   bool _showActions = true;
   bool _showPinNavigation = false;
-  bool _isMapPinned = true;
+  bool _isMapPinned = false;
   final Map<int, GlobalKey> _dayMapKeys = {};
   final Map<String, GlobalKey> _itemKeys = {};
   final GlobalKey _scrollViewportKey = GlobalKey();
@@ -218,19 +218,6 @@ class _ItineraryResultPageState extends State<ItineraryResultPage> {
     ),
   );
 
-  String get _airfareText {
-    final cost = _costs;
-    final flights = (cost?['flightLegCount'] as num?)?.toInt() ?? 0;
-    final unknown = (cost?['unknownFlightLegCount'] as num?)?.toInt() ?? 0;
-    if (flights == 0) return '';
-    final domestic = flights == 0
-        ? ''
-        : unknown > 0
-        ? '국내선 항공료: 확인된 소계 ¥${cost?['knownFlightFareYen'] ?? 0} · 미확인 $unknown구간'
-        : '일정 내 예상 국내선 항공료 ¥${cost?['flightFareYen'] ?? 0}';
-    return '$domestic\n공항까지의 철도·버스 요금은 대중교통비에 포함';
-  }
-
   String get _costText => shown(_rawCostText);
   String get _rawCostText {
     final cost = _costs;
@@ -238,11 +225,11 @@ class _ItineraryResultPageState extends State<ItineraryResultPage> {
     final unknown = (cost['unknownLegCount'] as num?)?.toInt() ?? 0;
     const routingNotice = '';
     if (unknown > 0) {
-      return '${routingNotice}대중교통비 계산 미완료\n성인 1인 · 확인된 대중교통 소계 ¥${cost['knownFareYen'] ?? 0}\n요금 미확인 이동 $unknown개 · 이 금액은 전체 여행 교통비가 아닙니다.\n$_airfareText';
+      return '${routingNotice}대중교통비 계산 미완료\n성인 1인 · 확인된 대중교통 소계 ¥${cost['knownFareYen'] ?? 0}\n요금 미확인 이동 $unknown개 · 이 금액은 전체 여행 교통비가 아닙니다.';
     }
     final estimated = (cost['estimatedLegCount'] as num? ?? 0).toInt();
     final estimateNotice = estimated > 0 ? '예상 요금 포함: $estimated개 구간\n' : '';
-    return '$routingNotice${estimateNotice}성인 1인 · ${estimated > 0 ? '예상 ' : ''}대중교통비 ¥${cost['totalFareYen'] ?? cost['knownFareYen']}\n패스 적용 대중교통비 ¥${cost['knownOptimalFareYen']}\n$_airfareText';
+    return '$routingNotice${estimateNotice}성인 1인 · ${estimated > 0 ? '예상 ' : ''}대중교통비 ¥${cost['totalFareYen'] ?? cost['knownFareYen']}\n패스 적용 대중교통비 ¥${cost['knownOptimalFareYen']}';
   }
 
   // =========================================================
@@ -326,8 +313,11 @@ class _ItineraryResultPageState extends State<ItineraryResultPage> {
     }
   }
 
+  double get _mapHeight =>
+      (MediaQuery.sizeOf(context).height * .42).clamp(225.0, 375.0) * .75;
+
   double get _mapSectionHeight =>
-      (MediaQuery.sizeOf(context).height * .42).clamp(225.0, 375.0) +
+      _mapHeight +
       44 +
       (_showPinNavigation &&
               currentDay.items.any((item) => item.mapNumber != null)
@@ -1316,121 +1306,123 @@ class _ItineraryResultPageState extends State<ItineraryResultPage> {
               // 기존 PDF / 저장 여부 UI 유지
               // =================================================
 
-              Padding(
-                padding: const EdgeInsets.fromLTRB(18, 16, 18, 12),
-                child: Row(
-                  children: [
-                    Material(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(14),
-                      child: InkWell(
-                        onTap: _handleBack,
-                        borderRadius: BorderRadius.circular(14),
-                        child: Container(
-                          width: 44,
-                          height: 44,
-                          alignment: Alignment.center,
-                          child: const Icon(
-                            Icons.arrow_back_ios_new_rounded,
-                            size: 20,
-                            color: AppColors.textPrimary,
-                          ),
-                        ),
-                      ),
-                    ),
-
-                    const SizedBox(width: 12),
-
-                    Expanded(
-                      child: Text(
-                        displaySummary.title,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.w900,
-                        ),
-                      ),
-                    ),
-
-                    Tooltip(
-                      message: isSaved ? 'PDF 저장 및 공유' : '일정을 저장하면 사용할 수 있습니다.',
-                      child: Material(
+              if (!_isMapPinned)
+                Padding(
+                  key: const ValueKey('itinerary-title-toolbar'),
+                  padding: const EdgeInsets.fromLTRB(18, 16, 18, 12),
+                  child: Row(
+                    children: [
+                      Material(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(14),
                         child: InkWell(
-                          onTap:
-                              isSaved &&
-                                  !_isSaving &&
-                                  !_isProcessingPdf &&
-                                  _moneyReady &&
-                                  !_moneyLoading
-                              ? _showPdfActions
-                              : null,
+                          onTap: _handleBack,
                           borderRadius: BorderRadius.circular(14),
-                          child: SizedBox(
-                            width: 42,
-                            height: 42,
-                            child: Center(
-                              child: _isProcessingPdf
-                                  ? const SizedBox(
-                                      width: 18,
-                                      height: 18,
-                                      child: CircularProgressIndicator(
-                                        strokeWidth: 2.2,
-                                        color: AppColors.primary,
-                                      ),
-                                    )
-                                  : Icon(
-                                      Icons.download_rounded,
-                                      size: 22,
-                                      color: isSaved
-                                          ? AppColors.primary
-                                          : AppColors.textSecondary.withOpacity(
-                                              0.35,
-                                            ),
-                                    ),
+                          child: Container(
+                            width: 44,
+                            height: 44,
+                            alignment: Alignment.center,
+                            child: const Icon(
+                              Icons.arrow_back_ios_new_rounded,
+                              size: 20,
+                              color: AppColors.textPrimary,
                             ),
                           ),
                         ),
                       ),
-                    ),
 
-                    IconButton(
-                      key: const ValueKey('show-city-route'),
-                      tooltip: '도시 경로 다시보기',
-                      onPressed: _showCityRoute,
-                      icon: const Icon(
-                        Icons.route_rounded,
-                        color: AppColors.primary,
-                      ),
-                    ),
-                    const SizedBox(width: 8),
+                      const SizedBox(width: 12),
 
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 7,
-                      ),
-                      decoration: BoxDecoration(
-                        color: isSaved
-                            ? AppColors.success.withOpacity(0.1)
-                            : AppColors.warning.withOpacity(0.18),
-                        borderRadius: BorderRadius.circular(999),
-                      ),
-                      child: Text(
-                        isSaved ? (_isSaving ? '저장 중…' : '자동 저장됨') : '저장 전',
-                        style: TextStyle(
-                          color: isSaved
-                              ? AppColors.success
-                              : const Color(0xFF9A6B00),
-                          fontSize: 12,
-                          fontWeight: FontWeight.w900,
+                      Expanded(
+                        child: Text(
+                          displaySummary.title,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.titleLarge
+                              ?.copyWith(fontWeight: FontWeight.w900),
                         ),
                       ),
-                    ),
-                  ],
+
+                      Tooltip(
+                        message: isSaved
+                            ? 'PDF 저장 및 공유'
+                            : '일정을 저장하면 사용할 수 있습니다.',
+                        child: Material(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(14),
+                          child: InkWell(
+                            onTap:
+                                isSaved &&
+                                    !_isSaving &&
+                                    !_isProcessingPdf &&
+                                    _moneyReady &&
+                                    !_moneyLoading
+                                ? _showPdfActions
+                                : null,
+                            borderRadius: BorderRadius.circular(14),
+                            child: SizedBox(
+                              width: 42,
+                              height: 42,
+                              child: Center(
+                                child: _isProcessingPdf
+                                    ? const SizedBox(
+                                        width: 18,
+                                        height: 18,
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 2.2,
+                                          color: AppColors.primary,
+                                        ),
+                                      )
+                                    : Icon(
+                                        Icons.download_rounded,
+                                        size: 22,
+                                        color: isSaved
+                                            ? AppColors.primary
+                                            : AppColors.textSecondary
+                                                  .withOpacity(0.35),
+                                      ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      IconButton(
+                        key: const ValueKey('show-city-route'),
+                        tooltip: '도시 경로 다시보기',
+                        onPressed: _showCityRoute,
+                        icon: const Icon(
+                          Icons.route_rounded,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 7,
+                        ),
+                        decoration: BoxDecoration(
+                          color: isSaved
+                              ? AppColors.success.withOpacity(0.1)
+                              : AppColors.warning.withOpacity(0.18),
+                          borderRadius: BorderRadius.circular(999),
+                        ),
+                        child: Text(
+                          isSaved ? (_isSaving ? '저장 중…' : '자동 저장됨') : '저장 전',
+                          style: TextStyle(
+                            color: isSaved
+                                ? AppColors.success
+                                : const Color(0xFF9A6B00),
+                            fontSize: 12,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
 
               Expanded(
                 child: NotificationListener<UserScrollNotification>(
@@ -1448,6 +1440,36 @@ class _ItineraryResultPageState extends State<ItineraryResultPage> {
                             color: Theme.of(context).scaffoldBackgroundColor,
                             child: Column(
                               children: [
+                                SizedBox(
+                                  height: 44,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 16,
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        TextButton.icon(
+                                          key: const ValueKey(
+                                            'toggle-fixed-map',
+                                          ),
+                                          onPressed: () => setState(
+                                            () => _isMapPinned = !_isMapPinned,
+                                          ),
+                                          icon: Icon(
+                                            _isMapPinned
+                                                ? Icons.lock_open_rounded
+                                                : Icons.lock_outline_rounded,
+                                            size: 18,
+                                          ),
+                                          label: Text(
+                                            _isMapPinned ? '지도 고정 해제' : '지도 고정',
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 16,
@@ -1468,10 +1490,7 @@ class _ItineraryResultPageState extends State<ItineraryResultPage> {
                                           () => _showPinNavigation =
                                               !_showPinNavigation,
                                         ),
-                                        height:
-                                            (MediaQuery.sizeOf(context).height *
-                                                    .42)
-                                                .clamp(225.0, 375.0),
+                                        height: _mapHeight,
                                         selectionRevision: _selectionRevision,
                                         selectedItemIndex: _selectedItemIndex,
                                         onItemSelected: (index) =>
@@ -1511,36 +1530,6 @@ class _ItineraryResultPageState extends State<ItineraryResultPage> {
                                           _updateMapCamera();
                                         },
                                       ),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 44,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 16,
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        TextButton.icon(
-                                          key: const ValueKey(
-                                            'toggle-fixed-map',
-                                          ),
-                                          onPressed: () => setState(
-                                            () => _isMapPinned = !_isMapPinned,
-                                          ),
-                                          icon: Icon(
-                                            _isMapPinned
-                                                ? Icons.lock_open_rounded
-                                                : Icons.lock_outline_rounded,
-                                            size: 18,
-                                          ),
-                                          label: Text(
-                                            _isMapPinned ? '지도 고정 해제' : '지도 고정',
-                                          ),
-                                        ),
-                                      ],
                                     ),
                                   ),
                                 ),

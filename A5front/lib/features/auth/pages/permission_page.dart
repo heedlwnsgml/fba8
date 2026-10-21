@@ -168,7 +168,7 @@ class _PermissionPageState extends State<PermissionPage> {
       return '앱 기능 사용을 위해 필요한 권한을 확인하고 설정할 수 있습니다.';
     }
 
-    return '더 정확한 AI 여행 일정을 위해\n아래 권한을 허용해주세요.';
+    return '더 정확한 여행 일정을 위해\n아래 권한을 허용해주세요.';
   }
 
   List<String> get _noticeItems {

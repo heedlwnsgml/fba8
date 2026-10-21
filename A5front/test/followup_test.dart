@@ -57,11 +57,11 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('맛집'));
     await tester.pumpAndSettle();
-    expect(TripDraft.instance.themes, isEmpty);
-    expect(TripDraft.instance.excludedThemes, ['맛집']);
+    expect(TripDraft.instance.themes, ['맛집']);
+    expect(TripDraft.instance.excludedThemes, isEmpty);
     await tester.tap(find.text('선호 테마'));
     await tester.pumpAndSettle();
-    expect(find.textContaining('0 / 3'), findsOneWidget);
+    expect(find.textContaining('1 / 3'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
   testWidgets('동행자는 기존 여섯 개이며 배우자도 보인다', (tester) async {

@@ -249,7 +249,7 @@ class UndatedPlanTest {
     }
 
     @Test
-    void randomUndatedTripsKeepEveryInvariant() {
+    void randomUndatedTripsKeepEveryInvariantOrRejectImpossibleMorningFlights() {
         Random random = new Random(20261011);
         String[] pool = {"맛집", "쇼핑", "관광", "힐링", "사진", "서브컬쳐", "문화", "자연", "야경", "온천", "액티비티", "카페"};
         String[] flights = {"오전", "오후", "저녁", "미정", "08:10", "11:40", "15:25", "20:30"};
@@ -275,7 +275,12 @@ class UndatedPlanTest {
                 fixed.setDayNumber(2);
                 in.request.setFixedSchedules(new ArrayList<>(List.of(fixed)));
             }
-            TripPlan plan = planService.planTrip(in);
+            TripPlan plan;
+            try {plan=planService.planTrip(in);}
+            catch(PlanGenerationException error){
+                assertTrue(days>1);assertTrue(error.getMessage().contains("오전 9시 숙소 출발"),error.getMessage());
+                planned++;continue;
+            }
             scenarios.checkInvariants(plan, in);
             assertEquals(days, plan.getDays().size());
             for (DayPlan day : plan.getDays()) assertNull(day.getDate());

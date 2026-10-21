@@ -194,7 +194,7 @@ class _LoginPageState extends State<LoginPage> {
                   const SizedBox(height: 14),
 
                   const Text(
-                    'AI Travel Planner',
+                    'Travel Planner',
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w800,
@@ -222,7 +222,7 @@ class _LoginPageState extends State<LoginPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'AI 여행 플래너에\n오신 것을 환영합니다.',
+                          '여행 플래너에\n오신 것을 환영합니다.',
                           style: Theme.of(context).textTheme.titleLarge
                               ?.copyWith(
                                 fontWeight: FontWeight.w900,

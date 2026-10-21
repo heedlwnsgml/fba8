@@ -102,7 +102,7 @@ public class SavedPlanQueryService {
                 Itinerary next=items.stream().filter(n->n.getDayNumber().equals(i.getDayNumber()) && n.getSequence()>i.getSequence() && validLocation(n.getPlace())).findFirst().orElse(null);
                 if(prev!=null && next!=null){
                     var from=displayed.getOrDefault(prev.getId(),prev.getPlace());var to=next.getPlace();
-                    var route=routes.leg(from,to,p.getTransportation(),0,p.dateOfDay(i.getDayNumber()),parseMinute(prev.getEndTime()));
+                    var route=routes.leg(from,to,p.legTransport(),0,p.dateOfDay(i.getDayNumber()),parseMinute(prev.getEndTime()));
                     if(route!=null){item.put("transit",route);item.put("travelMinutes",route.getMinutes());}
                     previousByDay.put(i.getDayNumber(),next);
                 }
@@ -117,7 +117,7 @@ public class SavedPlanQueryService {
                         Integer arrival=parseMinute(i.getTime());
                         if(arrival!=null) depart=Math.max(0,arrival-schedule);
                     }
-                    var route=routes.leg(from,place,p.getTransportation(),schedule,
+                    var route=routes.leg(from,place,p.legTransport(),schedule,
                             p.dateOfDay(i.getDayNumber()),depart);
                     if(route!=null) {
                         item.put("transit",route);
@@ -138,7 +138,8 @@ public class SavedPlanQueryService {
         request.put("cities",p.getCities()==null ? List.of() : Arrays.stream(p.getCities().split(",")).map(String::trim).filter(x -> !x.isEmpty()).toList());
         request.put("inCity",p.getInCity()); request.put("outCity",p.getOutCity());
         request.put("inTime",p.getInTime()); request.put("outTime",p.getOutTime());
-        request.put("transportation",p.getTransportation());
+        request.put("transportation",com.travel.planner.transit.SeaRoutes.untag(p.getTransportation()));
+        request.put("islandTransport",p.getIslandTransport());
         if(hotelBudget!=null)request.putAll(hotelBudget.settings(p.getId()));
         request.put("themes",p.getTheme()==null?List.of():Arrays.stream(p.getTheme().split(",")).map(String::trim).toList());
         request.put("preferredStartTime",p.getPreferredStartTime());request.put("preferredEndTime",p.getPreferredEndTime());

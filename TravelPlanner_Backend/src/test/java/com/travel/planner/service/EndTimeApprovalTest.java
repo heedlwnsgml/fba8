@@ -23,6 +23,10 @@ class EndTimeApprovalTest {
         d.getItems().add(new PlanService.SimulatedItinerary(PlanService.SimulatedItinerary.Type.END,end,null,1320,null,10,35.62,139.7));return d;}
     AiRouteResponse response(){var r=new AiRouteResponse();r.setTimeline(List.of(new AiRouteResponse.TimelineItem()));return r;}
     PlanService.DayPlan unavoidableDay(int number,int start){var d=day(number);d.getItems().remove(1);var old=d.getItems().getFirst();d.getItems().set(0,new PlanService.SimulatedItinerary(old.getType(),old.getPlace(),old.getTitle(),start,null,0,old.getLatitude(),old.getLongitude()));return d;}
+    PlanService.DayPlan lateFixedDay(int number){
+        var d=unavoidableDay(number,630);
+        d.getItems().add(1,new PlanService.SimulatedItinerary(PlanService.SimulatedItinerary.Type.FIXED,null,"필수 일정",1260,1260,0,35.61,139.7));return d;
+    }
     void routeMinutes(int minutes){when(routes.leg(anyDouble(),anyDouble(),anyString(),anyDouble(),anyDouble(),anyString(),any(),anyInt(),any(),any())).thenAnswer(call->{var leg=new TransitLegDto();leg.setMinutes(minutes);return leg;});}
     @Test void repairableDayFinishesWithinLimitWithoutAsking() throws Exception {
         var jobs=new PlanGenerationJobs();try{
@@ -36,7 +40,7 @@ class EndTimeApprovalTest {
     @Test void firstDayConsentDoesNotSkipThirdDayAndDecliningDoesNotSave() throws Exception {
         var jobs=new PlanGenerationJobs();try {
             routeMinutes(90);
-            var days=List.of(unavoidableDay(1,1260),unavoidableDay(2,540),unavoidableDay(3,1260));
+            var days=List.of(unavoidableDay(1,1260),unavoidableDay(2,540),lateFixedDay(3));
             var req=request();var warnings=new ArrayList<String>();var committed=new AtomicBoolean();
             jobs.submit("owner","job","fingerprint",()->{TimelineConsistency.repair(days,routes,req,warnings);committed.set(true);return response();});
             await(()->jobs.find("owner","job").approval()!=null);
@@ -54,16 +58,25 @@ class EndTimeApprovalTest {
             assertEquals(409,assertThrows(ResponseStatusException.class,()->jobs.decideEndTime("owner","job",first.decisionId(),false)).getStatusCode().value());
         }finally{jobs.close();}
     }
-    @Test void arrivalAfterNextDepartureStillAsksAndRecalculatesNextDay() throws Exception {
+    @Test void approvedLateFinishNeverDelaysTheNextMorning() throws Exception {
         var jobs=new PlanGenerationJobs();try{
-            routeMinutes(600);var days=List.of(unavoidableDay(1,1380),unavoidableDay(2,60));
+            routeMinutes(150);var days=List.of(unavoidableDay(1,1380),unavoidableDay(2,795));
             jobs.submit("owner","job","f",()->{TimelineConsistency.repair(days,routes,request(),new ArrayList<>());return response();});
             await(()->jobs.find("owner","job").approval()!=null);
-            var approval=jobs.find("owner","job").approval();assertEquals(1,approval.day());assertEquals("다음날 09:00",approval.expectedEndTime());
+            var approval=jobs.find("owner","job").approval();assertEquals(1,approval.day());assertEquals("다음날 01:30",approval.expectedEndTime());
             jobs.decideEndTime("owner","job",approval.decisionId(),true);
             await(()->"SUCCEEDED".equals(jobs.find("owner","job").status()));
-            assertEquals(1980,days.get(0).getItems().getLast().getStartMin());assertEquals(540,days.get(1).getItems().getFirst().getStartMin());
-            assertEquals(1140,days.get(1).getItems().getLast().getStartMin());
+            assertEquals(1530,days.get(0).getItems().getLast().getStartMin());
+            assertEquals(540,days.get(1).getItems().getFirst().getStartMin());assertEquals(690,days.get(1).getItems().getLast().getStartMin());
+        }finally{jobs.close();}
+    }
+    @Test void transferOverlappingNextNineAmCannotBeApprovedOrCommitted() throws Exception {
+        var jobs=new PlanGenerationJobs();try{
+            routeMinutes(601);var days=List.of(unavoidableDay(1,1380),unavoidableDay(2,540));var committed=new AtomicBoolean();
+            jobs.submit("owner","job","f",()->{TimelineConsistency.repair(days,routes,request(),new ArrayList<>());committed.set(true);return response();});
+            await(()->"FAILED".equals(jobs.find("owner","job").status()));
+            var result=jobs.find("owner","job");assertNull(result.approval());assertFalse(committed.get());assertTrue(result.error().contains("다음 날 오전 9시"));
+            assertEquals(540,days.get(1).getItems().getFirst().getStartMin());
         }finally{jobs.close();}
     }
     @Test void decliningAnImpossibleTransferFailsAfterAttemptAndDoesNotSave() throws Exception {

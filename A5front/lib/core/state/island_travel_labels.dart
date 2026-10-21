@@ -12,11 +12,8 @@ const islandCityNames = <String, String>{
   '오가사와라': '오가사와라 제도',
 };
 
-String islandCityLabel(String city) {
-  final island = islandCityNames[city];
-  final mode = {'미야코지마', '이시가키'}.contains(city) ? '비행기' : '비행기·배';
-  return island == null ? city : '$city ($island · $mode 이동)';
-}
+String islandCityLabel(String city, {bool admin = false}) =>
+    admin && islandCityNames.containsKey(city) ? '$city (섬)' : city;
 
 const islandTravelNotice =
     '섬 표시는 다른 섬이나 본토에서 갈 때 비행기·배 이동이 필요한 지역입니다. '

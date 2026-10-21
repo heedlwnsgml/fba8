@@ -83,7 +83,7 @@ class _EmailLoginPageState extends State<EmailLoginPage> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
-                      'AI 여행 플래너',
+                      '여행 플래너',
                       style: Theme.of(context).textTheme.headlineMedium,
                     ),
                     const SizedBox(height: 12),

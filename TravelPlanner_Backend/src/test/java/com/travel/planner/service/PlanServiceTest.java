@@ -57,17 +57,10 @@ class PlanServiceTest {
     }
 
     @Test
-    void morningDeparture_goesStraightToAirport() {
+    void morningDepartureCannotProduceABackwardsNineAmDeparture() {
         TripInput in = osakaTrip(3, "오후", "오전", "관광", "맛집");
-        TripPlan plan = planService.planTrip(in);
-        checkInvariants(plan, in);
-
-        DayPlan lastDay = plan.getDays().get(2);
-        assertEquals(0, visits(lastDay).size(), "오전 출국일에는 방문이 없어야 한다");
-        SimulatedItinerary airport = lastItem(plan, 3);
-        assertTrue(airport.getStartMin() <= 8 * 60, "10:00 출국 → 08:00 까지 공항 도착, 실제 " + airport.getTime());
-        // 숙소 출발 시각이 공항 도착보다 앞서야 한다 (이전에는 09:00 숙소 출발이 그대로 출력됐다)
-        assertTrue(lastDay.getItems().get(0).getStartMin() < airport.getStartMin());
+        var error=org.junit.jupiter.api.Assertions.assertThrows(PlanGenerationException.class,()->planService.planTrip(in));
+        assertTrue(error.getMessage().contains("오전 9시 숙소 출발"));
     }
 
     @Test

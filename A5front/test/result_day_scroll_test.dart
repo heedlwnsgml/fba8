@@ -75,7 +75,7 @@ void main() {
     await tester.tap(find.text('패스 상세보기'));
     await tester.pumpAndSettle();
     expect(find.textContaining('대중교통비 25,500원'), findsWidgets);
-    expect(find.textContaining('예상 국내선 항공료 206,600원'), findsWidgets);
+    expect(find.textContaining('예상 국내선 항공료'), findsNothing);
     expect(find.textContaining('한국↔일본 국제선'), findsNothing);
     expect(find.textContaining('도쿄 지하철 48시간권'), findsWidgets);
     expect(find.textContaining('JR 이용 가정'), findsNothing);

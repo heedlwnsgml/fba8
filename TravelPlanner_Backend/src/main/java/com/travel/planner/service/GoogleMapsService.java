@@ -588,14 +588,30 @@ public class GoogleMapsService {
      * 등산하는 곳(산 정상)에 차로 갈 수 있는 입구를 찾는 데 쓴다.
      */
     public List<Place> findNearbyRestaurants(String city,double lat,double lng){
+        return searchRestaurantsNear(lat,lng,1500,city);
+    }
+
+    public List<Place> searchAttractionsNear(double lat,double lng,double radius,String city){return searchNearbyKind(lat,lng,radius,city,false);}
+    public List<Place> searchHotelsNear(double lat,double lng,double radius,String city){return searchNearbyKind(lat,lng,radius,city,true);}
+    private List<Place> searchNearbyKind(double lat,double lng,double radius,String city,boolean lodging){
         List<Place> found=new ArrayList<>();
-        try {
-            var body=Map.<String,Object>of("includedTypes",List.of("restaurant"),"maxResultCount",20,"rankPreference","DISTANCE","languageCode","ko",
-                "locationRestriction",Map.of("circle",Map.of("center",Map.of("latitude",lat,"longitude",lng),"radius",1500)));
-            var request=new HttpEntity<>(body,placesHeaders(COLLECT_FIELD_MASK.replace(",nextPageToken","")));
-            String response=restTemplate.postForObject("https://places.googleapis.com/v1/places:searchNearby",request,String.class);
-            parsePlacesFromNode(objectMapper.readTree(response),found,city,city,true);
-        }catch(Exception e){System.out.println("[식당 검색] 주변 식당을 조회하지 못했습니다: "+e.getClass().getSimpleName());}
+        try{
+            var body=Map.<String,Object>of("includedTypes",lodging?List.of("lodging"):List.of("tourist_attraction","museum","park"),"maxResultCount",20,"rankPreference","DISTANCE","languageCode","ko",
+                "locationRestriction",Map.of("circle",Map.of("center",Map.of("latitude",lat,"longitude",lng),"radius",radius)));
+            String response=restTemplate.postForObject("https://places.googleapis.com/v1/places:searchNearby",new HttpEntity<>(body,placesHeaders(COLLECT_FIELD_MASK.replace(",nextPageToken",""))),String.class);
+            for(var node:objectMapper.readTree(response).path("places")){
+                if(node.path("id").asText().isBlank() || node.path("location").isMissingNode())continue;
+                double a=node.path("location").path("latitude").asDouble(),o=node.path("location").path("longitude").asDouble();
+                if(a<20 || a>46 || o<122 || o>154 || com.travel.planner.util.DistanceUtil.calculateDistance(lat,lng,a,o)>radius/1000)continue;
+                if(node.has("rating") && node.path("rating").asDouble()<3.3)continue;
+                String category=lodging?"숙소":determineCategory(node.path("primaryType").asText(),node.path("types"));
+                if(!lodging && ("숙소".equals(category)||"식음".equals(category)||"교통".equals(category)))continue;
+                Place p=new Place();p.setPlaceId(node.path("id").asText());p.setName(node.path("displayName").path("text").asText());p.setCity(city);p.setCategory(category==null?"관광지":category);
+                p.setLatitude(a);p.setLongitude(o);p.setAddress(node.path("formattedAddress").asText(null));p.setPhone(node.path("nationalPhoneNumber").asText(null));
+                if(node.has("rating"))p.setRating(node.path("rating").asDouble());if(node.has("userRatingCount"))p.setUserRatingCount(node.path("userRatingCount").asInt());
+                applyOpeningHours(node.path("regularOpeningHours"),p);p.setLastUpdated(LocalDateTime.now());found.add(p);
+            }
+        }catch(java.util.concurrent.CancellationException e){throw e;}catch(Exception e){System.out.println("[주변 장소] "+city+" 검색 실패: "+e.getClass().getSimpleName());}
         return found;
     }
 

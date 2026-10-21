@@ -114,6 +114,7 @@ class _TripPreferencesPageState extends State<TripPreferencesPage> {
     }
   });
   void chooseTheme(String name, {bool excluded = false}) {
+    if ((excluded ? d.themes : d.excludedThemes).contains(name)) return;
     if (!excluded && !d.themes.contains(name) && d.themes.length >= 3) {
       message('여행 테마는 최대 3개까지 선택할 수 있습니다.');
       return;
@@ -121,8 +122,6 @@ class _TripPreferencesPageState extends State<TripPreferencesPage> {
     setState(() {
       final target = excluded ? d.excludedThemes : d.themes;
       target.contains(name) ? target.remove(name) : target.add(name);
-      if (target.contains(name))
-        (excluded ? d.themes : d.excludedThemes).remove(name);
       if (d.themes.contains('카페')) d.includeSnacks = true;
       d.mealsPerDay = d.mealsPerDay.clamp(1, d.maxMealsPerDay);
     });
@@ -133,6 +132,7 @@ class _TripPreferencesPageState extends State<TripPreferencesPage> {
     String description,
     List<Widget> children, {
     String? trailing,
+    Widget? trailingContent,
   }) => Padding(
     padding: const EdgeInsets.only(bottom: 20),
     child: Material(
@@ -158,7 +158,8 @@ class _TripPreferencesPageState extends State<TripPreferencesPage> {
                     ),
                   ),
                 ),
-                if (trailing != null)
+                if (trailingContent != null) trailingContent,
+                if (trailingContent == null && trailing != null)
                   Text(
                     trailing,
                     style: const TextStyle(
@@ -190,6 +191,7 @@ class _TripPreferencesPageState extends State<TripPreferencesPage> {
     bool selected,
     VoidCallback choose, {
     bool enabled = true,
+    bool forbidden = false,
   }) => Semantics(
     button: true,
     selected: selected,
@@ -198,12 +200,14 @@ class _TripPreferencesPageState extends State<TripPreferencesPage> {
       color: !enabled
           ? const Color(0xFFF7F8FA)
           : selected
-          ? const Color(0xFFEFF6FF)
+          ? (forbidden ? const Color(0xFFFFEBEE) : const Color(0xFFEFF6FF))
           : Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
         side: BorderSide(
-          color: selected ? AppColors.primary : AppColors.border,
+          color: selected
+              ? (forbidden ? const Color(0xFFC62828) : AppColors.primary)
+              : AppColors.border,
           width: selected ? 1.5 : 1,
         ),
       ),
@@ -223,7 +227,9 @@ class _TripPreferencesPageState extends State<TripPreferencesPage> {
                       item.icon,
                       size: 23,
                       color: selected
-                          ? AppColors.primary
+                          ? (forbidden
+                                ? const Color(0xFFC62828)
+                                : AppColors.primary)
                           : AppColors.textSecondary,
                     ),
                     const Spacer(),
@@ -233,7 +239,9 @@ class _TripPreferencesPageState extends State<TripPreferencesPage> {
                           : Icons.radio_button_unchecked,
                       size: 19,
                       color: selected
-                          ? AppColors.primary
+                          ? (forbidden
+                                ? const Color(0xFFC62828)
+                                : AppColors.primary)
                           : const Color(0xFFCBD5E1),
                     ),
                   ],
@@ -244,7 +252,11 @@ class _TripPreferencesPageState extends State<TripPreferencesPage> {
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w800,
-                    color: selected ? AppColors.primary : AppColors.textPrimary,
+                    color: selected
+                        ? (forbidden
+                              ? const Color(0xFFC62828)
+                              : AppColors.primary)
+                        : AppColors.textPrimary,
                   ),
                 ),
                 const SizedBox(height: 5),
@@ -268,6 +280,7 @@ class _TripPreferencesPageState extends State<TripPreferencesPage> {
     List<String> selected,
     void Function(String) choose, {
     bool Function(String)? enabled,
+    bool forbidden = false,
   }) => LayoutBuilder(
     builder: (context, constraints) {
       final single =
@@ -278,6 +291,7 @@ class _TripPreferencesPageState extends State<TripPreferencesPage> {
         selected.contains(o.key),
         () => choose(o.key),
         enabled: enabled?.call(o.key) ?? true,
+        forbidden: forbidden,
       );
       if (single)
         return Column(
@@ -432,6 +446,20 @@ class _TripPreferencesPageState extends State<TripPreferencesPage> {
                   icon: Icon(Icons.block_outlined),
                 ),
               ],
+              style: excludedMode
+                  ? ButtonStyle(
+                      backgroundColor: WidgetStateProperty.resolveWith(
+                        (states) => states.contains(WidgetState.selected)
+                            ? const Color(0xFFFFEBEE)
+                            : null,
+                      ),
+                      foregroundColor: WidgetStateProperty.resolveWith(
+                        (states) => states.contains(WidgetState.selected)
+                            ? const Color(0xFFC62828)
+                            : null,
+                      ),
+                    )
+                  : null,
               selected: {excludedMode},
               onSelectionChanged: (values) =>
                   setState(() => excludedMode = values.first),
@@ -442,10 +470,13 @@ class _TripPreferencesPageState extends State<TripPreferencesPage> {
               themes,
               excludedMode ? d.excludedThemes : d.themes,
               (name) => chooseTheme(name, excluded: excludedMode),
+              enabled: (name) =>
+                  !(excludedMode ? d.themes : d.excludedThemes).contains(name),
+              forbidden: excludedMode,
             ),
             Text(
               excludedMode
-                  ? '제외한 테마는 선호 테마에서 빠집니다.'
+                  ? '선호 테마로 선택한 항목은 금지 테마에서 선택할 수 없습니다.'
                   : '선호 테마와 제외 테마는 중복해서 선택할 수 없습니다.',
               style: const TextStyle(
                 fontSize: 12,
@@ -454,10 +485,50 @@ class _TripPreferencesPageState extends State<TripPreferencesPage> {
               ),
             ),
           ],
-          trailing: excludedMode
-              ? '${d.excludedThemes.length}개 제외'
-              : '${d.themes.length} / 3 · 필수',
+          trailingContent: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              _themeCount('${d.themes.length} / 3', '필수', AppColors.primary),
+              const SizedBox(height: 3),
+              _themeCount(
+                '${d.excludedThemes.length}',
+                '제외',
+                const Color(0xFFC62828),
+              ),
+            ],
+          ),
         ),
+    ],
+  );
+
+  Widget _themeCount(String count, String label, Color color) => Row(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      SizedBox(
+        width: 36,
+        child: Text(
+          count,
+          textAlign: TextAlign.right,
+          style: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w700,
+            color: color,
+          ),
+        ),
+      ),
+      const SizedBox(width: 6),
+      SizedBox(
+        width: 24,
+        child: Text(
+          label,
+          style: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w700,
+            color: color,
+          ),
+        ),
+      ),
     ],
   );
 

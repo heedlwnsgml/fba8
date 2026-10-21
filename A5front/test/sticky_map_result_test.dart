@@ -93,6 +93,9 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
+      expect(find.text('지도 고정'), findsOneWidget);
+      await tester.tap(find.byKey(const ValueKey('toggle-fixed-map')));
+      await tester.pumpAndSettle();
       final map = find.byType(ItineraryRouteMap);
       final scroll = find.byKey(const ValueKey('itinerary-day-scroll'));
       final top = tester.getTopLeft(map);

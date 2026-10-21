@@ -19,9 +19,11 @@ class IslandTravelTest {
  }
  @Test void sapporoMiyakoUsesAirSpeedNotMillionYenTaxi(){
   var leg=TransitLegPlanner.plan(null,null,names,43.05,141.35,"삿포로",24.8,125.28,"미야코지마","대중교통",5877,null,null);
-  assertEquals("distance-flight",leg.getSource());assertNull(leg.getFareYen());assertTrue(leg.getMinutes()>150 && leg.getMinutes()<500);
-  assertEquals(FlightTransferService.minutes(leg.getDistanceKm()),leg.getMinutes());assertTrue(leg.isEstimated());
-  assertTrue(leg.getFareRides().isEmpty());assertEquals("비행기",leg.getSteps().getFirst().getCategory());
+  assertEquals("sea",leg.getSource());assertTrue(leg.getMode().contains("비행기"));
+  assertTrue(leg.getMinutes()>150 && leg.getMinutes()<900);assertTrue(leg.isEstimated());
+  assertTrue(leg.getFareYen()==null || leg.getFareYen()<100000);
+  assertTrue(leg.getSteps().stream().anyMatch(step->"비행기".equals(step.getCategory())));
+  assertTrue(leg.getNote().contains("항공권 요금"));
  }
  @Test void ordinaryWalkingOnMiyakoStillWorks(){
   var leg=TransitLegPlanner.plan(null,null,names,24.8,125.28,"A",24.801,125.281,"B","대중교통",5,null,null);

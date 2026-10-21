@@ -1,5 +1,5 @@
 {
-  "created": "2026-10-21",
+  "created": "2026-10-22",
   "files": [
     {
       "path": ".gitattributes",
@@ -19,12 +19,12 @@
     {
       "path": "A5front/.dart_tool/flutter_build/251c46dd09c4748c250f2b5b88a45ac3/.filecache",
       "bytes": 516945,
-      "sha256": "853d335ad868331b24ebe524c182bacc296c31b9518a990c30c7252e94b84c91"
+      "sha256": "c835722dc7f4004dbf8c6e9869860de531727b5f010c755d7b17d5c4c200df6c"
     },
     {
       "path": "A5front/.dart_tool/flutter_build/251c46dd09c4748c250f2b5b88a45ac3/app.dill.deps",
-      "bytes": 343255,
-      "sha256": "708ae9f7f6d64ab98787712bdbc07c9dceb40c9f983a38247441fdf22d2d9d04"
+      "bytes": 343968,
+      "sha256": "6a07edcbf2394772432027632e18cf3c92122d61ed9113856c91ec6163fc6c29"
     },
     {
       "path": "A5front/.dart_tool/flutter_build/251c46dd09c4748c250f2b5b88a45ac3/build_hooks.d",
@@ -43,13 +43,13 @@
     },
     {
       "path": "A5front/.dart_tool/flutter_build/251c46dd09c4748c250f2b5b88a45ac3/dart2js.d",
-      "bytes": 329592,
-      "sha256": "ce5fb069f1b9ed7c14d5547b6a8f567d4433ceb5e9de73ae1e75839db05ec452"
+      "bytes": 330314,
+      "sha256": "ec601acbfb5d5288c5ac9a74e4da0ecec20a02a82a247a05f17dd53ef054b111"
     },
     {
       "path": "A5front/.dart_tool/flutter_build/251c46dd09c4748c250f2b5b88a45ac3/dart2js.stamp",
-      "bytes": 336443,
-      "sha256": "18fea961d3e2866a28847543e38455ad906448885cea39189953602c44da02c4"
+      "bytes": 337177,
+      "sha256": "ce3a932ad5ab7f2d956a1cdb2131c1cc4578f63594b99fade7e86d6415290694"
     },
     {
       "path": "A5front/.dart_tool/flutter_build/251c46dd09c4748c250f2b5b88a45ac3/dart2wasm.stamp",
@@ -88,13 +88,13 @@
     },
     {
       "path": "A5front/.dart_tool/flutter_build/251c46dd09c4748c250f2b5b88a45ac3/main.dart.js",
-      "bytes": 5243764,
-      "sha256": "a25cc42f2fc6773c8aff931a0713ffde532ec8885339071b4b7195ea8f18dd7f"
+      "bytes": 5319374,
+      "sha256": "9d73ed49e016444a786c14f021d9e75ca9c5b2d8908a2e4649498e6586a110ff"
     },
     {
       "path": "A5front/.dart_tool/flutter_build/251c46dd09c4748c250f2b5b88a45ac3/main.dart.js.deps",
-      "bytes": 343223,
-      "sha256": "fd5166cd1895db900c54729d2e5169afd5257937b2e6e948b38af0e500d70ddc"
+      "bytes": 343936,
+      "sha256": "38c06d5b6562555d85be9279ad1fc63a8a64c2d0d3f3a284ecd0a46da7f671d7"
     },
     {
       "path": "A5front/.dart_tool/flutter_build/251c46dd09c4748c250f2b5b88a45ac3/outputs.json",
@@ -373,8 +373,8 @@
     },
     {
       "path": "A5front/.dart_tool/flutter_build/f0a9e5fa94911252508c58bd2586bc18/.filecache",
-      "bytes": 503183,
-      "sha256": "d0f681bfd374f1a3cf07e15eca5df5946951d0b55e01acb5cd1ba38001d934d1"
+      "bytes": 503679,
+      "sha256": "52e556147b96eb28dadf2621d633afec6d214e1aa9e51d6df6b6b8863dfed89a"
     },
     {
       "path": "A5front/.dart_tool/flutter_build/f0a9e5fa94911252508c58bd2586bc18/build_hooks.d",
@@ -423,13 +423,13 @@
     },
     {
       "path": "A5front/.dart_tool/flutter_build/f0a9e5fa94911252508c58bd2586bc18/kernel_snapshot_program.d",
-      "bytes": 322469,
-      "sha256": "fc750fdd5e109ed666a6fc434ae1e07f6fe2a5bd686cea7d4d1a7cb07b3480fb"
+      "bytes": 322693,
+      "sha256": "012d85833ededca6b0399450cf3fa71f210bf348b1d9504493d92f6c12680fd2"
     },
     {
       "path": "A5front/.dart_tool/flutter_build/f0a9e5fa94911252508c58bd2586bc18/kernel_snapshot_program.stamp",
-      "bytes": 329097,
-      "sha256": "d7efe85915437df867003d7e0e5747061405b0bf74c554ff331b690b47e689b9"
+      "bytes": 329325,
+      "sha256": "b8ea58830728368015999a033761712198a444dfa1c69850a8bdf5992982ed57"
     },
     {
       "path": "A5front/.dart_tool/flutter_build/f0a9e5fa94911252508c58bd2586bc18/link_hooks.d",
@@ -644,7 +644,7 @@
     {
       "path": "A5front/android/.gradle/8.14.3/executionHistory/executionHistory.lock",
       "bytes": 17,
-      "sha256": "425df8151b3a4d4fea856d81436e6dc0c2f3f326b13f0d0050949bc08249ab60"
+      "sha256": "90ebecb5e84d5f96e02b753dba836b9c9fa4fd3f285b883bdcd078308f48e291"
     },
     {
       "path": "A5front/android/.gradle/8.14.3/fileChanges/last-build.bin",
@@ -653,13 +653,13 @@
     },
     {
       "path": "A5front/android/.gradle/8.14.3/fileHashes/fileHashes.bin",
-      "bytes": 648627,
-      "sha256": "3d098bb297351d86036ba29af429eb37480872f1be5937989024fd83fdedfc5c"
+      "bytes": 649477,
+      "sha256": "2e7e70278bb37126454b41744d93e630a216248c17bc4e3580a6d1603074a1db"
     },
     {
       "path": "A5front/android/.gradle/8.14.3/fileHashes/fileHashes.lock",
       "bytes": 17,
-      "sha256": "c360a773497ff1f048ac15e16606386251b0975003650aea982ff0779587c4d0"
+      "sha256": "acafa1cb5561146bf7fd849894357c278a66cfa59ea26e4ae2084d8be9b470fd"
     },
     {
       "path": "A5front/android/.gradle/8.14.3/fileHashes/resourceHashesCache.bin",
@@ -674,7 +674,7 @@
     {
       "path": "A5front/android/.gradle/buildOutputCleanup/buildOutputCleanup.lock",
       "bytes": 17,
-      "sha256": "f7bced7a62e4b6a7cdc98dd60a9d11331c7759a7549761c654bdaa8b6faa875e"
+      "sha256": "1ebbd8817f9faf525e61389f42341fccaf7574d6a3ae7b423b2c8d8010f7406d"
     },
     {
       "path": "A5front/android/.gradle/buildOutputCleanup/cache.properties",
@@ -689,7 +689,7 @@
     {
       "path": "A5front/android/.gradle/file-system.probe",
       "bytes": 8,
-      "sha256": "20087f35438f5ee9e25bd5a9fccc8a7c47b0f109f668c31d229872ab3e1a6170"
+      "sha256": "956b1ef7e881c9bb1797814bee96a4c9651cb208fc31e2f95624724a433eb264"
     },
     {
       "path": "A5front/android/.gradle/noVersion/buildLogic.lock",
@@ -718,8 +718,8 @@
     },
     {
       "path": "A5front/android/app/src/main/AndroidManifest.xml",
-      "bytes": 2640,
-      "sha256": "0ea5cb12ca9f4bd6bcc394489974534bdcbeb85f035785c9ba3b1e38b49bd804"
+      "bytes": 2637,
+      "sha256": "d6cb5ddcae8f1f52d2be16456dd255083c0607498ab1d8a7513f312620043f53"
     },
     {
       "path": "A5front/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java",
@@ -1839,7 +1839,7 @@
     {
       "path": "A5front/build/app/intermediates/flutter/debug/.last_build_id",
       "bytes": 32,
-      "sha256": "10699318bc29b08fed397dd85a200cf63190120b1406dfab850fcee74825d9d5"
+      "sha256": "1e5a061a30868afdd6374e0d69d3038e3e77c4664f24ee47aa3a2a469fab234c"
     },
     {
       "path": "A5front/build/app/intermediates/flutter/debug/flutter_assets/AssetManifest.bin",
@@ -1898,8 +1898,8 @@
     },
     {
       "path": "A5front/build/app/intermediates/flutter/debug/flutter_build.d",
-      "bytes": 337354,
-      "sha256": "461d172b181a2b0009b27a65b500e932f9f54e3501d5a1fabf06f29fc10b9d57"
+      "bytes": 337463,
+      "sha256": "a9ca5c743a992f31e940df62343d782e45a8eaa07f1fb04a2906a03572f9d67b"
     },
     {
       "path": "A5front/build/app/intermediates/incremental/debug/mergeDebugResources/compile-file-map.properties",
@@ -2473,8 +2473,8 @@
     },
     {
       "path": "A5front/build/app/intermediates/incremental/debug-mergeJavaRes/merge-state",
-      "bytes": 21831,
-      "sha256": "002c6dbce44c1c13f8324df08a05ebabd28115da339499eaef33631329e2597f"
+      "bytes": 21529,
+      "sha256": "edb3e8ee056fdcb9a1c313fdd4c3e9c1e795b2177ac8ddcbd708fcf664859694"
     },
     {
       "path": "A5front/build/app/intermediates/incremental/debug-mergeJavaRes/zip-cache/++1YFWuHZqxzoDV4aNk++g==",
@@ -3419,12 +3419,12 @@
     {
       "path": "A5front/build/app/intermediates/incremental/packageDebug/tmp/debug/dex-renamer-state.txt",
       "bytes": 2743,
-      "sha256": "2b66a2834e3b40adedcf64f23a5e9215e1bed6a9eacab97cb06b8e520b4626e7"
+      "sha256": "7bc94bc828c1d057e4949a862c99110a6df88b53a31b945e4a91d051ab9fefbb"
     },
     {
       "path": "A5front/build/app/intermediates/incremental/packageDebug/tmp/debug/zip-cache/androidResources",
-      "bytes": 64415,
-      "sha256": "9a6cb94ac30d576881c159bf9c16bee91e425a90a6ac8fc5ea6b9d64280947fc"
+      "bytes": 64417,
+      "sha256": "0f988a03f4dc4c35a019d89e95a4345dd079d1a07a79dbbdbbba6df7ba20585a"
     },
     {
       "path": "A5front/build/app/intermediates/incremental/packageDebug/tmp/debug/zip-cache/javaResources0",
@@ -4882,11 +4882,6 @@
       "sha256": "716c5d8d2cac8ca0edf65da8f139c7886b726ac79d542a14edeb94994ba6d3dc"
     },
     {
-      "path": "A5front/build/app/intermediates/stripped_native_libs/debug/stripDebugDebugSymbols/out/lib/armeabi-v7a/libflutter.so",
-      "bytes": 33150308,
-      "sha256": "f8ca66ba19acfff70eba80bcd07a11f0d9bfe89bb3bfc056ea5e1c0e99ecfa5e"
-    },
-    {
       "path": "A5front/build/app/intermediates/stripped_native_libs/debug/stripDebugDebugSymbols/out/lib/x86/libdartjni.so",
       "bytes": 101140,
       "sha256": "c04ad9c49aeb1a75f16c9f0d50af67ccea293d59043c39662cf3c538f95a34dc"
@@ -4905,11 +4900,6 @@
       "path": "A5front/build/app/intermediates/stripped_native_libs/debug/stripDebugDebugSymbols/out/lib/x86_64/libdatastore_shared_counter.so",
       "bytes": 6224,
       "sha256": "fb6c9208988c49ae94943bc3236fa763ba584722e044fa4ea9a12d2941027105"
-    },
-    {
-      "path": "A5front/build/app/intermediates/stripped_native_libs/debug/stripDebugDebugSymbols/out/lib/x86_64/libflutter.so",
-      "bytes": 40083280,
-      "sha256": "802dd02ad5fb23a47124f1f560791bcd58b2c7164d12c9ad43ca84ac9fa0edbf"
     },
     {
       "path": "A5front/build/app/intermediates/symbol_list_with_package_name/debug/processDebugResources/package-aware-r.txt",
@@ -5824,7 +5814,7 @@
     {
       "path": "A5front/build/app/kotlin/compileDebugKotlin/cacheable/last-build.bin",
       "bytes": 18,
-      "sha256": "0b07d03ac72c717ad87c138b2e36b4474c523b931816aff0a8cf450d8793318c"
+      "sha256": "62de3a73da281a178313c98f7ff15c4c1c25c4e7d1466f83e6760b668f3aa90b"
     },
     {
       "path": "A5front/build/app/kotlin/compileDebugKotlin/classpath-snapshot/shrunk-classpath-snapshot.bin",
@@ -5849,12 +5839,12 @@
     {
       "path": "A5front/build/app/outputs/flutter-apk/app-debug.apk.sha1",
       "bytes": 40,
-      "sha256": "9caa8fb7b62db33dcd77013eb0b04b0eed7602187f2ed2f928c6b2f138c69efa"
+      "sha256": "5ecdec0f46e2b86eee544bdd2739f546a301391a4c88f251e2c01a84aa46e817"
     },
     {
       "path": "A5front/build/app/outputs/logs/manifest-merger-debug-report.txt",
       "bytes": 89864,
-      "sha256": "4f2dd2ddb6ab74874bc3c0f09e9bc111d6ea09638cada3e37da21009388a7619"
+      "sha256": "05998c495b2b1e3dbf2ac022d99fd56f3e136eeda10520dc5ca70bf7ff7e2518"
     },
     {
       "path": "A5front/build/app/tmp/compileDebugJavaWithJavac/previous-compilation-data.bin",
@@ -12677,6 +12667,11 @@
       "sha256": "4b10fd09b85e5eea47955e37070148a1ac927233eeeae1ddadc70c519d8e50ef"
     },
     {
+      "path": "A5front/build/jni/intermediates/cxx/Debug/1j4c6i3b/logs/arm64-v8a/generate_cxx_metadata_361_timing.txt",
+      "bytes": 57,
+      "sha256": "ce6feafeb9ab5d4dbc257e984f1f28c9f6350af4c6ad1e452fc756d20b6cfb87"
+    },
+    {
       "path": "A5front/build/jni/intermediates/cxx/Debug/1j4c6i3b/logs/arm64-v8a/generate_cxx_metadata_3659_timing.txt",
       "bytes": 57,
       "sha256": "c9f80adc8bb2c67b6d90d5fe901188905e16473fd5abcf44e4e2730a9ab3e0e1"
@@ -12752,6 +12747,11 @@
       "sha256": "c00c73b7c103e5c0b002f38058e2e616ccbde0716631e3fedb3e1aa12acf2c42"
     },
     {
+      "path": "A5front/build/jni/intermediates/cxx/Debug/1j4c6i3b/logs/arm64-v8a/generate_cxx_metadata_599_timing.txt",
+      "bytes": 57,
+      "sha256": "a462d2e3cbd93a060fc1cca2b0eba71f1f0a63a65bf0750086e903c39e684da4"
+    },
+    {
       "path": "A5front/build/jni/intermediates/cxx/Debug/1j4c6i3b/logs/arm64-v8a/generate_cxx_metadata_600_timing.txt",
       "bytes": 141,
       "sha256": "c3a617a531df6c14bdece5699e1552404a50f14f5284edec533009d091e3441f"
@@ -12782,6 +12782,11 @@
       "sha256": "77bb58e8646bd0f5065319cf205d5c4ecb5e1bebff4620d1f518a0145808acfd"
     },
     {
+      "path": "A5front/build/jni/intermediates/cxx/Debug/1j4c6i3b/logs/arm64-v8a/generate_cxx_metadata_804_timing.txt",
+      "bytes": 57,
+      "sha256": "77bb58e8646bd0f5065319cf205d5c4ecb5e1bebff4620d1f518a0145808acfd"
+    },
+    {
       "path": "A5front/build/jni/intermediates/cxx/Debug/1j4c6i3b/logs/arm64-v8a/generate_cxx_metadata_857_timing.txt",
       "bytes": 57,
       "sha256": "a462d2e3cbd93a060fc1cca2b0eba71f1f0a63a65bf0750086e903c39e684da4"
@@ -12795,6 +12800,11 @@
       "path": "A5front/build/jni/intermediates/cxx/Debug/1j4c6i3b/logs/arm64-v8a/generate_cxx_metadata_96_timing.txt",
       "bytes": 157,
       "sha256": "3bbf93f8dec136daa344776739bd353789178f097c7691dfedeaca7cc6209a29"
+    },
+    {
+      "path": "A5front/build/jni/intermediates/cxx/Debug/1j4c6i3b/logs/arm64-v8a/generate_cxx_metadata_97_timing.txt",
+      "bytes": 157,
+      "sha256": "569d74282761657882871ecbcbcd393602cf4b69f51000ee6a644aa447f8db6c"
     },
     {
       "path": "A5front/build/jni/intermediates/cxx/Debug/1j4c6i3b/logs/arm64-v8a/generate_cxx_metadata_990_timing.txt",
@@ -13077,6 +13087,11 @@
       "sha256": "77bb58e8646bd0f5065319cf205d5c4ecb5e1bebff4620d1f518a0145808acfd"
     },
     {
+      "path": "A5front/build/jni/intermediates/cxx/Debug/1j4c6i3b/logs/armeabi-v7a/generate_cxx_metadata_371_timing.txt",
+      "bytes": 125,
+      "sha256": "ecb739931a7b46188395f9f184ef555681bb6cb9f17eb773ce34af53d78d5b0f"
+    },
+    {
       "path": "A5front/build/jni/intermediates/cxx/Debug/1j4c6i3b/logs/armeabi-v7a/generate_cxx_metadata_3814_timing.txt",
       "bytes": 57,
       "sha256": "77bb58e8646bd0f5065319cf205d5c4ecb5e1bebff4620d1f518a0145808acfd"
@@ -13147,6 +13162,11 @@
       "sha256": "6307177eaa271a60578be0264b815a3d23e82258982b4092eaabce4ac51e12b0"
     },
     {
+      "path": "A5front/build/jni/intermediates/cxx/Debug/1j4c6i3b/logs/armeabi-v7a/generate_cxx_metadata_584_timing.txt",
+      "bytes": 57,
+      "sha256": "4b2225ff2e7aff3b86a5e55fb0b80df6decedb7d8a46444b7c51ccfe408e7d7f"
+    },
+    {
       "path": "A5front/build/jni/intermediates/cxx/Debug/1j4c6i3b/logs/armeabi-v7a/generate_cxx_metadata_597_timing.txt",
       "bytes": 125,
       "sha256": "7206d8e624912109d000ffda11c85ef920afca2eaacd860deee0bf1fc0a11dd6"
@@ -13168,6 +13188,11 @@
     },
     {
       "path": "A5front/build/jni/intermediates/cxx/Debug/1j4c6i3b/logs/armeabi-v7a/generate_cxx_metadata_785_timing.txt",
+      "bytes": 57,
+      "sha256": "4b2225ff2e7aff3b86a5e55fb0b80df6decedb7d8a46444b7c51ccfe408e7d7f"
+    },
+    {
+      "path": "A5front/build/jni/intermediates/cxx/Debug/1j4c6i3b/logs/armeabi-v7a/generate_cxx_metadata_805_timing.txt",
       "bytes": 57,
       "sha256": "4b2225ff2e7aff3b86a5e55fb0b80df6decedb7d8a46444b7c51ccfe408e7d7f"
     },
@@ -13195,6 +13220,11 @@
       "path": "A5front/build/jni/intermediates/cxx/Debug/1j4c6i3b/logs/armeabi-v7a/generate_cxx_metadata_96_timing.txt",
       "bytes": 141,
       "sha256": "144c76b41a828f2028c040dec0511f23162463efa85f426cffd6ef2dc584c5db"
+    },
+    {
+      "path": "A5front/build/jni/intermediates/cxx/Debug/1j4c6i3b/logs/armeabi-v7a/generate_cxx_metadata_97_timing.txt",
+      "bytes": 57,
+      "sha256": "ce6feafeb9ab5d4dbc257e984f1f28c9f6350af4c6ad1e452fc756d20b6cfb87"
     },
     {
       "path": "A5front/build/jni/intermediates/cxx/Debug/1j4c6i3b/logs/armeabi-v7a/generate_cxx_metadata_990_timing.txt",
@@ -13477,6 +13507,11 @@
       "sha256": "4b2225ff2e7aff3b86a5e55fb0b80df6decedb7d8a46444b7c51ccfe408e7d7f"
     },
     {
+      "path": "A5front/build/jni/intermediates/cxx/Debug/1j4c6i3b/logs/x86/generate_cxx_metadata_367_timing.txt",
+      "bytes": 57,
+      "sha256": "4c27509d18ce9094014af47ceebb6fd302bba098722f43ca58de0a283aa06ab2"
+    },
+    {
       "path": "A5front/build/jni/intermediates/cxx/Debug/1j4c6i3b/logs/x86/generate_cxx_metadata_3828_timing.txt",
       "bytes": 57,
       "sha256": "4b2225ff2e7aff3b86a5e55fb0b80df6decedb7d8a46444b7c51ccfe408e7d7f"
@@ -13547,6 +13582,11 @@
       "sha256": "585b3dc4239c70eb73812d4320250b0160750f7274f8d32f68034fd6a6daec60"
     },
     {
+      "path": "A5front/build/jni/intermediates/cxx/Debug/1j4c6i3b/logs/x86/generate_cxx_metadata_597_timing.txt",
+      "bytes": 57,
+      "sha256": "6307177eaa271a60578be0264b815a3d23e82258982b4092eaabce4ac51e12b0"
+    },
+    {
       "path": "A5front/build/jni/intermediates/cxx/Debug/1j4c6i3b/logs/x86/generate_cxx_metadata_601_timing.txt",
       "bytes": 57,
       "sha256": "c00c73b7c103e5c0b002f38058e2e616ccbde0716631e3fedb3e1aa12acf2c42"
@@ -13577,6 +13617,11 @@
       "sha256": "4b10fd09b85e5eea47955e37070148a1ac927233eeeae1ddadc70c519d8e50ef"
     },
     {
+      "path": "A5front/build/jni/intermediates/cxx/Debug/1j4c6i3b/logs/x86/generate_cxx_metadata_819_timing.txt",
+      "bytes": 57,
+      "sha256": "77bb58e8646bd0f5065319cf205d5c4ecb5e1bebff4620d1f518a0145808acfd"
+    },
+    {
       "path": "A5front/build/jni/intermediates/cxx/Debug/1j4c6i3b/logs/x86/generate_cxx_metadata_865_timing.txt",
       "bytes": 57,
       "sha256": "6307177eaa271a60578be0264b815a3d23e82258982b4092eaabce4ac51e12b0"
@@ -13598,8 +13643,8 @@
     },
     {
       "path": "A5front/build/jni/intermediates/cxx/Debug/1j4c6i3b/logs/x86/generate_cxx_metadata_97_timing.txt",
-      "bytes": 141,
-      "sha256": "f20e64a8542e2fb6ebe4256e77cba19037a51b6c66fda6c640ed607ca726eceb"
+      "bytes": 266,
+      "sha256": "167ce5b278fa7b7afc349d5cf53da302ac0d0f73afaef85f847688d6d0f98dc1"
     },
     {
       "path": "A5front/build/jni/intermediates/cxx/Debug/1j4c6i3b/logs/x86/generate_cxx_metadata_99_timing.txt",
@@ -13887,6 +13932,11 @@
       "sha256": "4b2225ff2e7aff3b86a5e55fb0b80df6decedb7d8a46444b7c51ccfe408e7d7f"
     },
     {
+      "path": "A5front/build/jni/intermediates/cxx/Debug/1j4c6i3b/logs/x86_64/generate_cxx_metadata_371_timing.txt",
+      "bytes": 57,
+      "sha256": "4b10fd09b85e5eea47955e37070148a1ac927233eeeae1ddadc70c519d8e50ef"
+    },
+    {
       "path": "A5front/build/jni/intermediates/cxx/Debug/1j4c6i3b/logs/x86_64/generate_cxx_metadata_3828_timing.txt",
       "bytes": 57,
       "sha256": "77bb58e8646bd0f5065319cf205d5c4ecb5e1bebff4620d1f518a0145808acfd"
@@ -13962,6 +14012,11 @@
       "sha256": "4c27509d18ce9094014af47ceebb6fd302bba098722f43ca58de0a283aa06ab2"
     },
     {
+      "path": "A5front/build/jni/intermediates/cxx/Debug/1j4c6i3b/logs/x86_64/generate_cxx_metadata_598_timing.txt",
+      "bytes": 57,
+      "sha256": "a462d2e3cbd93a060fc1cca2b0eba71f1f0a63a65bf0750086e903c39e684da4"
+    },
+    {
       "path": "A5front/build/jni/intermediates/cxx/Debug/1j4c6i3b/logs/x86_64/generate_cxx_metadata_726_timing.txt",
       "bytes": 125,
       "sha256": "fcfab7ef02552855509542c43a24c978b427105da98ccc344afb1df2f2fa55ee"
@@ -13987,6 +14042,11 @@
       "sha256": "a462d2e3cbd93a060fc1cca2b0eba71f1f0a63a65bf0750086e903c39e684da4"
     },
     {
+      "path": "A5front/build/jni/intermediates/cxx/Debug/1j4c6i3b/logs/x86_64/generate_cxx_metadata_811_timing.txt",
+      "bytes": 57,
+      "sha256": "c9f80adc8bb2c67b6d90d5fe901188905e16473fd5abcf44e4e2730a9ab3e0e1"
+    },
+    {
       "path": "A5front/build/jni/intermediates/cxx/Debug/1j4c6i3b/logs/x86_64/generate_cxx_metadata_853_timing.txt",
       "bytes": 125,
       "sha256": "7206d8e624912109d000ffda11c85ef920afca2eaacd860deee0bf1fc0a11dd6"
@@ -14000,6 +14060,11 @@
       "path": "A5front/build/jni/intermediates/cxx/Debug/1j4c6i3b/logs/x86_64/generate_cxx_metadata_970_timing.txt",
       "bytes": 125,
       "sha256": "e879592da5c491c08e74344c4d5dfc8538a39308784d685c08fe47c115b5e4f7"
+    },
+    {
+      "path": "A5front/build/jni/intermediates/cxx/Debug/1j4c6i3b/logs/x86_64/generate_cxx_metadata_97_timing.txt",
+      "bytes": 57,
+      "sha256": "4c27509d18ce9094014af47ceebb6fd302bba098722f43ca58de0a283aa06ab2"
     },
     {
       "path": "A5front/build/jni/intermediates/cxx/Debug/1j4c6i3b/logs/x86_64/generate_cxx_metadata_99_timing.txt",
@@ -19328,8 +19393,8 @@
     },
     {
       "path": "A5front/build/web/assets/fonts/MaterialIcons-Regular.otf",
-      "bytes": 23460,
-      "sha256": "da5d9d3b3ed52133229fb08d75f58beca2738e1582a99df0f7f4926c3f3db1b5"
+      "bytes": 24112,
+      "sha256": "569297f91d9ef5f368947c30d5fe3ca0787af69b95cb4a08bbaa2946f63e64fa"
     },
     {
       "path": "A5front/build/web/assets/NOTICES",
@@ -19459,7 +19524,7 @@
     {
       "path": "A5front/build/web/flutter_bootstrap.js",
       "bytes": 13093,
-      "sha256": "39f9ac079b564f22a1559b225ae4c896863bc34db43af834105a50395e4955d8"
+      "sha256": "0890a4709fd4bac2e37ab8f3aea3b1364ce310d96a395b5d20cf9ff1bcb7c98a"
     },
     {
       "path": "A5front/build/web/flutter_service_worker.js",
@@ -19493,8 +19558,8 @@
     },
     {
       "path": "A5front/build/web/main.dart.js",
-      "bytes": 5243764,
-      "sha256": "a25cc42f2fc6773c8aff931a0713ffde532ec8885339071b4b7195ea8f18dd7f"
+      "bytes": 5319374,
+      "sha256": "9d73ed49e016444a786c14f021d9e75ca9c5b2d8908a2e4649498e6586a110ff"
     },
     {
       "path": "A5front/build/web/manifest.json",
@@ -23038,8 +23103,8 @@
     },
     {
       "path": "A5front/lib/core/state/island_travel_labels.dart",
-      "bytes": 1022,
-      "sha256": "f941d9ab983704330161adca5649291ad69b9d245b2fe26348e773de1d88e7f5"
+      "bytes": 903,
+      "sha256": "ffd561aaedf5a2976d158f96653ad00f950a9fdf8886e2e7f9e2e8e1dfacd66d"
     },
     {
       "path": "A5front/lib/core/state/itinerary_presentation.dart",
@@ -23133,18 +23198,18 @@
     },
     {
       "path": "A5front/lib/features/auth/pages/email_login_page.dart",
-      "bytes": 6658,
-      "sha256": "483cb5214eb7c6cae9851ec8911e973ddb3fd3cf56ff2cf6652fd9939f039594"
+      "bytes": 6655,
+      "sha256": "29429c20bde80c74cc906fe118c71bc66fabadf41b9d6533c318fdbb996eca03"
     },
     {
       "path": "A5front/lib/features/auth/pages/login_page.dart",
-      "bytes": 12343,
-      "sha256": "7ce0a869bb7626ede9cd2b7ee0cc782b66e18087fcb041fea95dbac093a7bb98"
+      "bytes": 12337,
+      "sha256": "a8c4e80530eb6b18c2024f3e9f7fc04d655f723a9f79e3d16efb7a66bcd97b39"
     },
     {
       "path": "A5front/lib/features/auth/pages/permission_page.dart",
-      "bytes": 15918,
-      "sha256": "df97ff91301bd92a5285616bf124dd9e14d398f411159533097966eacedcf6ef"
+      "bytes": 15915,
+      "sha256": "5c78b36339b9a01f4413fd3b2b2af4677d9a1522c338cb29ad1ccb362c3fa7bd"
     },
     {
       "path": "A5front/lib/features/emergency/pages/emergency_page.dart",
@@ -23188,8 +23253,8 @@
     },
     {
       "path": "A5front/lib/features/schedule/pages/itinerary_result_page.dart",
-      "bytes": 94721,
-      "sha256": "1b529b3d2f6fe2ff8217cf04140eac768a2cacec99d7759e42222d52a7357fb3"
+      "bytes": 94243,
+      "sha256": "aa3cb6a41c928a89d651a36a68779fb53b8b598f2a5c0982226567531713d3b2"
     },
     {
       "path": "A5front/lib/features/schedule/pages/saved_plans_page.dart",
@@ -23213,8 +23278,8 @@
     },
     {
       "path": "A5front/lib/features/schedule/widgets/directions_surface_native.dart",
-      "bytes": 3501,
-      "sha256": "8e715f61c2b48631c1e35331ed8b822cf68796028d6a8182d6958e5fba25e333"
+      "bytes": 4315,
+      "sha256": "0cf45039e35c450ec9909c147b1144e758773b083def35f621a3eba32c7d86c3"
     },
     {
       "path": "A5front/lib/features/schedule/widgets/directions_surface_stub.dart",
@@ -23273,8 +23338,8 @@
     },
     {
       "path": "A5front/lib/features/splash/pages/splash_page.dart",
-      "bytes": 3485,
-      "sha256": "4e999f884809d2cb8f88b041f11d6ecab62ab4dfbeeaaeead97f6238f143d3da"
+      "bytes": 3467,
+      "sha256": "56108371b9ae831fc56911c8bc5957424aaf084da034a4df158c4a2f9f3e81d8"
     },
     {
       "path": "A5front/lib/features/trip/pages/trip_accommodation_page.dart",
@@ -23308,13 +23373,13 @@
     },
     {
       "path": "A5front/lib/features/trip/pages/trip_preferences_page.dart",
-      "bytes": 25872,
-      "sha256": "97435431d0b0d599b1dfb2110e9de5cfdd0ad4a009eee9133a58e45cdbffd1bc"
+      "bytes": 28394,
+      "sha256": "b5335c60ea362727852e38789972d7603f317c249676646aa08f834e8e4db928"
     },
     {
       "path": "A5front/lib/features/trip/pages/trip_region_page.dart",
-      "bytes": 32821,
-      "sha256": "4585c41f5910a9e198b0b9cae42e181a43b9e51962649e1e204f58f19b8b793d"
+      "bytes": 33385,
+      "sha256": "f3ead0864859f6fb382a7392c6ee82ba9781fb09a3dca56e90169fcd1d89d36d"
     },
     {
       "path": "A5front/lib/features/trip/pages/trip_schedule_settings_page.dart",
@@ -23333,8 +23398,8 @@
     },
     {
       "path": "A5front/lib/features/trip/widgets/city_selection_map.dart",
-      "bytes": 9131,
-      "sha256": "ac93d29cca9c97f61f70730edc0e4794acfc25c946369ba8b5bf652d99f9a67c"
+      "bytes": 9295,
+      "sha256": "74547c8ea823bce341b7538158694899aed3d3e5ea589237c0587024aab9a3eb"
     },
     {
       "path": "A5front/lib/features/trip/widgets/lodging_budget_fields.dart",
@@ -23358,8 +23423,8 @@
     },
     {
       "path": "A5front/lib/main.dart",
-      "bytes": 1283,
-      "sha256": "924dcc8a49103fe62f292beaf5f71ebce6ab6e6490f590c355e88de1ef888698"
+      "bytes": 1280,
+      "sha256": "3ddf94c1f5dbca0f266530f94fbbc62fe22ab32783f1d659c8a508402cfa66f8"
     },
     {
       "path": "A5front/lib/main_integration.dart",
@@ -23383,8 +23448,8 @@
     },
     {
       "path": "A5front/logs/usb-backend-bridge.log",
-      "bytes": 1453,
-      "sha256": "5a7468ba2238f4a32b20b29a5456e4682f0fc22c20f52bb277d7143fcfe6c9e9"
+      "bytes": 1581,
+      "sha256": "1171506da7ebfae39e39013429e9ddccd09eb181e1cce33d87789cac4b9373f2"
     },
     {
       "path": "A5front/pubspec.lock",
@@ -23428,8 +23493,8 @@
     },
     {
       "path": "A5front/test/city_airport_pdf_revision_test.dart",
-      "bytes": 11853,
-      "sha256": "40f5125fb7f765577154c5aad7283f77debc75cdfabfb90b2095f51a82173e32"
+      "bytes": 11830,
+      "sha256": "509ee21b94af8e14d077dd5559f158a7e6fa4eb242aaa6d3dae3a81921151ae9"
     },
     {
       "path": "A5front/test/city_airports_test.dart",
@@ -23443,8 +23508,8 @@
     },
     {
       "path": "A5front/test/city_route_overview_test.dart",
-      "bytes": 3953,
-      "sha256": "65d0663dd635b2d9bbf05dcc3b8dec9c4d9bb40c08f8c9f54414910adf9fbc27"
+      "bytes": 4149,
+      "sha256": "ed5351146161b82d2fe3cad5948b0cb9d270fa4d9e0de8efad6e0c17681c1515"
     },
     {
       "path": "A5front/test/completion_notifications_test.dart",
@@ -23488,8 +23553,8 @@
     },
     {
       "path": "A5front/test/followup_test.dart",
-      "bytes": 4248,
-      "sha256": "01a9503f037a02d746d38fa9c00222e3247c28cb2ecb86ef438f0d07e5091d9d"
+      "bytes": 4352,
+      "sha256": "51e28182e5e2bee3a45a8a92cb302f22d83df0d940626f237fb34046ffc16453"
     },
     {
       "path": "A5front/test/generation_warning_navigation_test.dart",
@@ -23523,8 +23588,8 @@
     },
     {
       "path": "A5front/test/list_only_native_directions_test.dart",
-      "bytes": 6735,
-      "sha256": "aba1846ddec557b9b08d40a678966f9b1b877fbc7d13b3109cd1b60402465652"
+      "bytes": 8319,
+      "sha256": "981970c6872a0d5ebbd925dcf05e22d14221ed3885459564dfa8146323e3fb0c"
     },
     {
       "path": "A5front/test/long_trip_settings_test.dart",
@@ -23578,8 +23643,8 @@
     },
     {
       "path": "A5front/test/pinned_failure_islands_test.dart",
-      "bytes": 5014,
-      "sha256": "ea9a3093dc8b91354a08f857b3a3bd0c1b0c4eade20be68472b333078a2a7f4f"
+      "bytes": 6344,
+      "sha256": "60700252dfb5273887f51b9c91fd8bfafbfaaf8c059d5d2d668a933c5d4d3670"
     },
     {
       "path": "A5front/test/planner_api_test.dart",
@@ -23593,13 +23658,13 @@
     },
     {
       "path": "A5front/test/result_autosave_test.dart",
-      "bytes": 4407,
-      "sha256": "27298161ebfa411e07ce888120b05fcdd0f1e9dca33f3019353ed9629b624492"
+      "bytes": 4409,
+      "sha256": "4f1f1a95df0aa2de92aedb7139be1e66f2d5f4c53b6fb94ac2d0ddd71bd7e1f7"
     },
     {
       "path": "A5front/test/result_day_scroll_test.dart",
-      "bytes": 6725,
-      "sha256": "e2a946b5d3041b20c4b5c6db7d00ee9d685be8353c4fcf4779b4054dac3a69f3"
+      "bytes": 6714,
+      "sha256": "58b70c437f9870142e16903c008203d5082c2180d5d21af04b08ba3821ebb6a1"
     },
     {
       "path": "A5front/test/revision_visual_check_test.dart",
@@ -23628,8 +23693,8 @@
     },
     {
       "path": "A5front/test/sticky_map_result_test.dart",
-      "bytes": 5584,
-      "sha256": "c0ea7f48a2323be6c0844a29719c8a17f2695d473477c66758fc52730851a1ff"
+      "bytes": 5750,
+      "sha256": "3d1e3393e384db78c980c72885087bca5e8757bd47a5d115aab9efb13a6420b1"
     },
     {
       "path": "A5front/test/system_back_navigation_test.dart",
@@ -23645,6 +23710,11 @@
       "path": "A5front/test/temporary_lodging_price_test.dart",
       "bytes": 781,
       "sha256": "6701eb83d3293df45c5d625a82f277aba7ef037156c2aeef27e50d078455707f"
+    },
+    {
+      "path": "A5front/test/theme_exclusion_test.dart",
+      "bytes": 2124,
+      "sha256": "d42ddf4339d9820ed437becb6c34caf23f4853f2e3e2ceae2c805a455de7445c"
     },
     {
       "path": "A5front/test/transport_korean_test.dart",
@@ -23718,23 +23788,23 @@
     },
     {
       "path": "DB/test_planner_20261019_update.sql",
-      "bytes": 37916088,
-      "sha256": "9c45c375838dfdcefdf7f43a94ef31db25515c29b574a7b9b2c1c338187606fe"
+      "bytes": 37785468,
+      "sha256": "0d43731a72ca014964e8a8da82f34beba723793942d9c88c23cead568eb2b968"
     },
     {
       "path": "DB/test_planner_app_metadata.sql",
-      "bytes": 957196,
-      "sha256": "36b9b6a13e40acb5703fbbdfead2e92cecf617c6ff71eb972a780d9934e414e6"
+      "bytes": 1436287,
+      "sha256": "13732e771938d8394a43d7d2b7cf2700fad08c89d0ba1daf5a0a1dc8c2167b30"
     },
     {
       "path": "DB/test_planner_collected_passes_20261012.sql",
       "bytes": 156590,
-      "sha256": "8715ca6ad84441d86c846a02c161f4dd0455cb3eb0ada2588a8cdac8f53e69d1"
+      "sha256": "7aa30da60ce70b16d8df5e9fb8861933ac718a0e0c002b41e35efef0fcff4aad"
     },
     {
       "path": "docs/PROJECT_MARKDOWN.zip",
-      "bytes": 145174,
-      "sha256": "1972cd1f01524dd9471486991aef0a58e2f1f2ca5f57844516cf08fe8b92730a"
+      "bytes": 149094,
+      "sha256": "85469a980ba2c7b94c4045acd28878696ca4448e738e5c0efe9738568f86b7cc"
     },
     {
       "path": "GITHUB_FINAL_CHECK_20261009.json",
@@ -23743,8 +23813,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 3150,
-      "sha256": "7eda81b3feb6365484d05fb72139a71e921c2c41c220e3a5949455a7c1bd3a08"
+      "bytes": 1983,
+      "sha256": "25e048dcc1823f9c22815e8b4da0693c0ba39c6fb54f1b7c8d0a81482deb67e5"
     },
     {
       "path": "TravelPlanner_Backend/.gitattributes",
@@ -23755,11 +23825,6 @@
       "path": "TravelPlanner_Backend/.gitignore",
       "bytes": 729,
       "sha256": "e18b0253c00ceec7d23a1e740f25384d7855c659ce58ef515de1e6c9b3384dfc"
-    },
-    {
-      "path": "TravelPlanner_Backend/.gradle/9.7.1/checksums/checksums.lock",
-      "bytes": 17,
-      "sha256": "602950db5e20f3fac023ede1d42653c2a58afe2d73c56f5aa012f8011aab716c"
     },
     {
       "path": "TravelPlanner_Backend/.gradle/9.7.1/checksums/md5-checksums.bin",
@@ -23774,12 +23839,7 @@
     {
       "path": "TravelPlanner_Backend/.gradle/9.7.1/executionHistory/executionHistory.bin",
       "bytes": 14236591,
-      "sha256": "eb6abb571af5c24e974bcb8d0ecd59334df14a5e1a19a878a044cbe095f2b240"
-    },
-    {
-      "path": "TravelPlanner_Backend/.gradle/9.7.1/executionHistory/executionHistory.lock",
-      "bytes": 17,
-      "sha256": "0ea82823d2277acd8dab3fb0eee14146af1a2c7e786d389054300c4e6ca4206e"
+      "sha256": "01cd438dbed06a7bd471495ff0cc7644f24002ef9090da9d52ec10f876133103"
     },
     {
       "path": "TravelPlanner_Backend/.gradle/9.7.1/fileChanges/last-build.bin",
@@ -23788,28 +23848,18 @@
     },
     {
       "path": "TravelPlanner_Backend/.gradle/9.7.1/fileHashes/fileHashes.bin",
-      "bytes": 129883,
-      "sha256": "236b53b633db6d589820fde3015dd327629a4dc67d8024212afd6b5295e6d48d"
-    },
-    {
-      "path": "TravelPlanner_Backend/.gradle/9.7.1/fileHashes/fileHashes.lock",
-      "bytes": 17,
-      "sha256": "b251471b53731d18c7c88deb93c7f405ffab4464948bc146359eb0e8b9dacd0e"
+      "bytes": 132283,
+      "sha256": "e753df817fd33d62b0d6c9c441f06e26ac494eb80030c0b6bb6b62f978e90c5b"
     },
     {
       "path": "TravelPlanner_Backend/.gradle/9.7.1/fileHashes/resourceHashesCache.bin",
-      "bytes": 177624,
-      "sha256": "8c2156010a0a3e18ea349e631db65755f729ff1332f94658e075782a41679d27"
+      "bytes": 193639,
+      "sha256": "167cb63bffcc787b1045484f994f75f9c4ceafe9fa4198cdd2d05fc2708432f0"
     },
     {
       "path": "TravelPlanner_Backend/.gradle/9.7.1/gc.properties",
       "bytes": 0,
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-    },
-    {
-      "path": "TravelPlanner_Backend/.gradle/buildOutputCleanup/buildOutputCleanup.lock",
-      "bytes": 17,
-      "sha256": "367ac10696eab77684d399bde5570d65ca8ecee4810495c24b92f0e47cfecd9f"
     },
     {
       "path": "TravelPlanner_Backend/.gradle/buildOutputCleanup/cache.properties",
@@ -24013,8 +24063,8 @@
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/controller/PlanController.class",
-      "bytes": 7492,
-      "sha256": "998653879797522a2087f70756b722e4a37b6f9a893faae00157864c71252fb1"
+      "bytes": 8194,
+      "sha256": "b99da71375b450ab79ffc4ff4ada417c08c229748a1b2f10f2f4a6250545ccf7"
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/controller/PlanGenerationController$EndTimeDecision.class",
@@ -24033,8 +24083,8 @@
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/controller/TransitController.class",
-      "bytes": 19755,
-      "sha256": "a59f420ea6f5020b6ca0cf84b2c562c61bab3ea99507eb63a4dde115937ff02f"
+      "bytes": 20129,
+      "sha256": "d37d1d08ce6175e825a9fa2e770e8597f037e7dd6b0d997246d2497ab739d540"
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/controller/UserController.class",
@@ -24129,17 +24179,17 @@
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/dto/PlanRequest$AccommodationInput.class",
       "bytes": 2891,
-      "sha256": "ebdff655717b039894735915f9e1e31a1c15d1841ae7f32a8e1a2df896e26034"
+      "sha256": "eb9d833bb408a58625a4996295c1d2c4894867651e2d14248d7d8ab229124467"
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/dto/PlanRequest$FixedScheduleInput.class",
       "bytes": 2952,
-      "sha256": "e7aeee786711c3b17cd528a5446e06bb8650fbfffa257c7afaa2d0668e0f3dcc"
+      "sha256": "d56f369957463f7f3fa8d8eb7ffbcccfa40154b53a4fff743746df2fd9fcbc9b"
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/dto/PlanRequest.class",
-      "bytes": 11669,
-      "sha256": "e2585efa3d84708fde6415548c196abb389e30815e9a3288146e7f5ed0652af5"
+      "bytes": 12573,
+      "sha256": "cefa2dec59d98b9b902ba18d6a5f7e7defc47a0052c72e7598e999eec4e49972"
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/dto/ReplaceRequest$Target.class",
@@ -24232,9 +24282,14 @@
       "sha256": "d9fdc4edb397c099d42598ec6bb48071b62108b601c9763f70c28abcbe5035d3"
     },
     {
+      "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/entity/Plan$1.class",
+      "bytes": 820,
+      "sha256": "1cd99ff885370009cc90b3abef4870a45a5078b7c5523fba7e5df068f0ee4d44"
+    },
+    {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/entity/Plan.class",
-      "bytes": 10018,
-      "sha256": "747d8175d319d826cf66fd9f67184b3b5b15b90751e8d2d7c8d4e37d9c604dac"
+      "bytes": 10988,
+      "sha256": "67beef051b2088e283c8bd1783a7b0a0d5b8208b53099a034a40cf26f400ad94"
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/entity/Region.class",
@@ -24543,8 +24598,8 @@
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/service/FlightTransferService.class",
-      "bytes": 8096,
-      "sha256": "78b13c4a01aae2d6ddf099417ebd6a8efa4bdc89e34fe6fe96d61c0ecaeb6db5"
+      "bytes": 9392,
+      "sha256": "a494aebd2e856387d6b9ba85aa10dbb930876403f0d1990f0d2e66fb0984c2db"
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/service/GoogleMapsService$CollectBatch.class",
@@ -24553,8 +24608,8 @@
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/service/GoogleMapsService.class",
-      "bytes": 29784,
-      "sha256": "a907dc87540c934a4d358b95cfdc2e8089dc7498692bd6a3bd9d72d4938ca15a"
+      "bytes": 31480,
+      "sha256": "cdee89d67b42cb698a83add41b4c51086d0fdfca530e5205980b77002d5b010e"
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/service/GtfsImportService$1.class",
@@ -24607,6 +24662,11 @@
       "sha256": "c789f6286cf963b80ea4140003e38f4ebedf71a72bc44bf2eef57c6800c456a1"
     },
     {
+      "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/service/LandStopoverPlanner.class",
+      "bytes": 4222,
+      "sha256": "75e29e4ddaf4b63df4f864e603d154221733a3cce1d062f3cddf3156589a6402"
+    },
+    {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/service/LodgingCatalog.class",
       "bytes": 8704,
       "sha256": "97d32e62c37b46de176367808995fb477d4d885907dc5d522c27fc1c538d1b81"
@@ -24623,13 +24683,13 @@
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/service/MealCandidateRecovery.class",
-      "bytes": 7792,
-      "sha256": "7440a039edfe935240cc30415e31a7a287c1427c24623cc4a9641eba1a800a28"
+      "bytes": 14754,
+      "sha256": "3c417a1baad7633f8f3fa910045007619c3a2d38c582c58477918097b22b2af3"
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/service/MobilePassCosts.class",
-      "bytes": 8972,
-      "sha256": "e8be79c5809d461d3c2bbcb152fadbb89100284e5c92644999f4f59fa2b2e35d"
+      "bytes": 9114,
+      "sha256": "201fee4be3728e4d31042597441cf848c04ac1028a7dc284a9aae6f595a1630a"
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/service/NavitimeRouteService.class",
@@ -24703,8 +24763,8 @@
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/service/PlanGenerationService.class",
-      "bytes": 59213,
-      "sha256": "bb56d4b504215c1d4a7b207dc976ac0193773b77089374fd587d28055e4a6e2c"
+      "bytes": 69086,
+      "sha256": "8306a7b64632cf2cf3a1aa0b07637907c22830757e0d3b27c691e473aa05eca2"
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/service/PlanItemAdjustmentService$Target.class",
@@ -24718,8 +24778,8 @@
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/service/PlanModifierService.class",
-      "bytes": 12609,
-      "sha256": "11a9969bca2919e447891913efe72202cdbaa486ad36869e46f8d87f54aa7827"
+      "bytes": 12604,
+      "sha256": "2156f06e7f6bb501c2dd7f7127f6c82cba74317d9bbece5e132a9f450bcef40a"
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/service/PlanPeriodListener.class",
@@ -24729,22 +24789,22 @@
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/service/PlanPersistenceService$1.class",
       "bytes": 1102,
-      "sha256": "386cbe7c030e5dcd7db8c122d1a6ec5a0b4dcc886113eb4d3ebd0d5caec1895d"
+      "sha256": "4a0dcc18d58316af38401a1496e08af8f69b9278f45f5abc3ab56a29874cdfd5"
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/service/PlanPersistenceService.class",
-      "bytes": 17732,
-      "sha256": "83e53dd4d53d7de606d60bfc88831163630d892e7a76bd1d2b74c180de6961c7"
+      "bytes": 19073,
+      "sha256": "2d4569079bc14387ce950110654ccfb16c084c78c755f7f7b41e984836d4ec95"
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/service/PlanReplaceService.class",
-      "bytes": 29082,
-      "sha256": "759b8f2b783421f4853aea99794952beb1226f6f4cc6398ec2f3e90d41d8dbc6"
+      "bytes": 29077,
+      "sha256": "64fad266ed27979d191eb132ea9b9626f25d0d412288eb62b4fbe80cb6069b41"
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/service/PlanService$1.class",
       "bytes": 1362,
-      "sha256": "6770e20d501d8eebcc4ced95be19987ef330c3f26ddb9074280842e243c5f0e6"
+      "sha256": "a0b77cd0754620d3acc3ad9a7e261d51944b46b75591aa82a2862e482f97a23e"
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/service/PlanService$Cand.class",
@@ -24759,12 +24819,12 @@
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/service/PlanService$DayCounts.class",
       "bytes": 660,
-      "sha256": "efe624b61c8f3dea16a0d78bd3c903e871effd0606c78305e332d603d6c53865"
+      "sha256": "17cdaa87d7b8fffb6e8fcd7f935f0f8d3c265c91acbdbea2053e6fb2187f5616"
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/service/PlanService$DayItem.class",
       "bytes": 1671,
-      "sha256": "89f369d0d392e98c02b15f73fcf4ba867d467a070220e775c427ea671c5e4eb3"
+      "sha256": "9d9570322cb8b7d0fe68214595255c39bee91c791422b22e263bf90708183bb8"
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/service/PlanService$DayPlan.class",
@@ -24774,12 +24834,12 @@
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/service/PlanService$DayState.class",
       "bytes": 1883,
-      "sha256": "c1f4aed78455469c87bcc86afa0c768bf0ffdf245d0df4f2454d84b45dbc55a0"
+      "sha256": "3b03dcc77bd264f396fc3b12e16246b5ba95a6fb5f3f5d2f9cd16370c731fa1a"
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/service/PlanService$Eval.class",
       "bytes": 828,
-      "sha256": "685fd0eaebdcbe50ab5df795e76b1a2458a26afa1c11014874facb5c6a92f9cc"
+      "sha256": "4d64d11528b9aebe3ff7d88cb08492af9d77a60565f6ca8a595e3a8e587d9dfa"
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/service/PlanService$FixedBlock.class",
@@ -24794,12 +24854,12 @@
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/service/PlanService$Replacement.class",
       "bytes": 620,
-      "sha256": "3075da7f683b10d90e23609d0d801c02e87283e3ba67ea289a630443036c0542"
+      "sha256": "55eeceb5d216c2031611a2c865a0a22c3d8cb983c6d7a85129f5f51b017aabea"
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/service/PlanService$ReplaceResult.class",
       "bytes": 939,
-      "sha256": "93f44f8335c270a75b06de23a503baf3296d929c6b8093c20b8521c7e5dd6d03"
+      "sha256": "906270434c07a7e7ba4ec38a84e33ad8370404b96a5dd776d5ec006b34f7b51d"
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/service/PlanService$SimulatedItinerary$Type.class",
@@ -24819,12 +24879,12 @@
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/service/PlanService$Slot.class",
       "bytes": 708,
-      "sha256": "23436e448a5e77519e4fdc39e54dfd2bf8fbb762c17be8f460f9fdcad899d2fb"
+      "sha256": "d044a55b51f273903f9de01e5e0595f79a72164ef88dbc67007566d42beda306"
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/service/PlanService$SlotFit.class",
       "bytes": 652,
-      "sha256": "a03315c76caed7bdfd854f4232ed268c0d4152275052895db0a4ee761c7ab76a"
+      "sha256": "b8f5c1f222c0c03e7255073ec478c39d40e85b70ca959748de3d8ad96e5651cf"
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/service/PlanService$TripInput.class",
@@ -24843,8 +24903,8 @@
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/service/PlanService.class",
-      "bytes": 97148,
-      "sha256": "c7934e531c593ac89aeceb4a9436bf11d9567ba19c0011bbcdc080a2828e1230"
+      "bytes": 99358,
+      "sha256": "224f44145edf82943aac5c50af791a32ed4659c7b84e26719ddbe20a4de6bff6"
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/service/PlanSummarizer$1.class",
@@ -24933,8 +24993,8 @@
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/service/SavedPlanQueryService.class",
-      "bytes": 26904,
-      "sha256": "7773b0fd817c1108975d048bdd26f3b9c514294457b8b195de52588ed83d7680"
+      "bytes": 27063,
+      "sha256": "503ed04a66ec7be51403b91e2dc55f042a38899cf947ea47f161c383f0b01efb"
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/service/SupplementalFoodService$1.class",
@@ -24963,8 +25023,8 @@
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/service/TimelineConsistency.class",
-      "bytes": 11093,
-      "sha256": "0ccbb83ac7c0e4a69a699b2c3db021a56ad275282abc1353edfe1b44f4f9b578"
+      "bytes": 11274,
+      "sha256": "49641238aca5c8c31887b0e314c2ccc2ec5535a8a8846dd0ddff3e79f6eb50b2"
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/service/TransitNameService.class",
@@ -24973,8 +25033,8 @@
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/service/TransitTotals.class",
-      "bytes": 7089,
-      "sha256": "98ad2eb5b407d76cbfd4515cab68d988c18ee5296dd8089d9d6e1612489908c9"
+      "bytes": 7536,
+      "sha256": "7e176c05ee16c75a8765a3b0844ffefb5ee43de6566b55a67a13d9540aa13285"
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/service/UserProfileService.class",
@@ -25282,6 +25342,36 @@
       "sha256": "5fdb3105a0ac9f341321d6878067da621e4e9d02a394ece759a9bb6f6673627d"
     },
     {
+      "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/transit/SeaRoutes$Crossing.class",
+      "bytes": 2282,
+      "sha256": "46ae05e5c1fbff25899173beb3555cef6b117f6c9d6146727b69f158d1c1690a"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/transit/SeaRoutes$Hub.class",
+      "bytes": 824,
+      "sha256": "5ca1ca3bf0c93f39cb835ca62b82d1a2758cbbcfe5f3954b27eb045f5c5d84b6"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/transit/SeaRoutes$Island.class",
+      "bytes": 1914,
+      "sha256": "783f4756fe07ddca23c35101e3b842d0b0212c96661ac9ecec4784c28559f39b"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/transit/SeaRoutes$Pref.class",
+      "bytes": 2082,
+      "sha256": "b6cdc100f429554358273fbdf497e3b8e821da6a67121d2c1af9927d4f24cb07"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/transit/SeaRoutes$Route.class",
+      "bytes": 1489,
+      "sha256": "c06ab7556f8c566404e2c8c63dcb228061e0a951fa3fbca9f99f636a8f9c71a1"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/transit/SeaRoutes.class",
+      "bytes": 23745,
+      "sha256": "28b783eddbe21cd62b4a7cc8c885caf4e6cc0b02e88258d280d89a18d596603a"
+    },
+    {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/transit/TransitLegPlanner$1.class",
       "bytes": 887,
       "sha256": "a4d1aa62c1fc36e0c1969439a792c026df2d3aa4d7a6f6aff00f551a59eaeb78"
@@ -25289,7 +25379,7 @@
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/transit/TransitLegPlanner$2.class",
       "bytes": 990,
-      "sha256": "5a4b0655941a93537c36c6a9b63d9992063121da74c37318a59ceec52d85c37c"
+      "sha256": "5dc64a95ee3fadba7c32a9feda46d0d33a80b97eb6c4d0811ae767e816e3cb3b"
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/transit/TransitLegPlanner$Gate.class",
@@ -25308,8 +25398,8 @@
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/transit/TransitLegPlanner.class",
-      "bytes": 33053,
-      "sha256": "0c0afbdbc0d4377d27623eb47dc72b66fc78d3cc2da79804b2f37e8ee8aa7f0b"
+      "bytes": 40371,
+      "sha256": "31682a887643ef960a9abb4bef1e05274343dc7569edbaead2ab14067d8ec301"
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/util/AirportDirectory$Airport.class",
@@ -25368,8 +25458,8 @@
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/util/JapanCities.class",
-      "bytes": 9320,
-      "sha256": "5c05e9a0a33dd61bd332d5baca96ea87a8bc26defd3b069fec2cee4a89e038c5"
+      "bytes": 10681,
+      "sha256": "7cf9a455f7890d3da2c9a1f758fcc8065f2bedff694fb0b774fbcced1292496e"
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/util/JapanRegionDirectory.class",
@@ -25433,8 +25523,8 @@
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/util/TravelTimeEstimator.class",
-      "bytes": 1875,
-      "sha256": "bd8ab210dd03e5a4283efb0c2aaef098c25bdf874c4c4cc54dc60fafb8f41f9e"
+      "bytes": 2125,
+      "sha256": "7aae01937827311550e3d4e3467dc117c5b920cd8aa687c05b6df1710ebdbcc9"
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/main/com/travel/planner/util/TripProfile$DayKind.class",
@@ -25480,6 +25570,11 @@
       "path": "TravelPlanner_Backend/build/classes/java/test/com/travel/planner/controller/OAuthLoginControllerTest.class",
       "bytes": 5078,
       "sha256": "43ae7b25346dbe02420b160502622a08ece8f362fc33718b69cc7ac2ec251b8e"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/classes/java/test/com/travel/planner/controller/PlanDeleteControllerTest.class",
+      "bytes": 7640,
+      "sha256": "fa98f7df0f0e83f8beffa794a099a58de774ebbaca479bf27af57f52915bc1a7"
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/test/com/travel/planner/controller/PlanItemControllerTest.class",
@@ -25532,6 +25627,11 @@
       "sha256": "c6271092d034931116e5a4605692387a2fc4ae0915b698acdad3d2d10ac5660b"
     },
     {
+      "path": "TravelPlanner_Backend/build/classes/java/test/com/travel/planner/service/CandidateRecoveryRevisionTest.class",
+      "bytes": 10733,
+      "sha256": "2046ec7ed9e2897886f2b5bba8cb1931b5582e9c5283af5d65ff57abd3894105"
+    },
+    {
       "path": "TravelPlanner_Backend/build/classes/java/test/com/travel/planner/service/CityRegionValidationTest.class",
       "bytes": 4357,
       "sha256": "8c5115a98dbb7729b83e1c713a5f8d6700bd179d5b346fc978b758665332f7f2"
@@ -25548,13 +25648,23 @@
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/test/com/travel/planner/service/EndTimeApprovalTest.class",
-      "bytes": 20287,
-      "sha256": "afc89bf4d8d2f41a2eedbde1a6696e1d38344dd9264131e6b99eba1d8ee2a4c7"
+      "bytes": 21566,
+      "sha256": "33b643744c232e38d605d35417a17f3a62a237221905fb2136a4d4c13bde263c"
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/test/com/travel/planner/service/EndTimeDecisionControllerTest.class",
       "bytes": 8371,
       "sha256": "2f0ff793b976cfb73d29f5e256ae9130fb87265046f6cf9fbb0017fb93e12f21"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/classes/java/test/com/travel/planner/service/FailedMealDiagnosticTest$DiagnosticStop.class",
+      "bytes": 515,
+      "sha256": "9cba3aff3c43f155612932ec55a74b28a85bc9bf2ad9a476fcc3cdab114b61c7"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/classes/java/test/com/travel/planner/service/FailedMealDiagnosticTest.class",
+      "bytes": 9883,
+      "sha256": "f0f1ee1adc39867810cdb596350f4c77621d05397f525dec3f5ef734eea22c67"
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/test/com/travel/planner/service/FareDataServiceTest$RailFareModelEstimate.class",
@@ -25633,8 +25743,8 @@
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/test/com/travel/planner/service/IslandTravelTest.class",
-      "bytes": 11825,
-      "sha256": "b1d80840a7eaf0763c581d5b1786b97fed08d4230755bd2ca35493455c0433f3"
+      "bytes": 12229,
+      "sha256": "aa36d87d0b4c2613bb24b890ce1ba6b89121fb1543305e77aa4c98a62508bdb0"
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/test/com/travel/planner/service/KoreanPlaceDescriptionsTest.class",
@@ -25668,8 +25778,8 @@
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/test/com/travel/planner/service/LongTripTest.class",
-      "bytes": 24699,
-      "sha256": "86d7930bfcb7a7bd73949e3a2b23d246291966436d2b99cdc8bcee2eebf98a74"
+      "bytes": 26778,
+      "sha256": "c456c897f34495a82c733036605520829093d5be43dd671166a2352b334e8a39"
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/test/com/travel/planner/service/MealCandidateRecoveryTest.class",
@@ -25690,6 +25800,11 @@
       "path": "TravelPlanner_Backend/build/classes/java/test/com/travel/planner/service/MealGapTest.class",
       "bytes": 9844,
       "sha256": "d2ead26d36fc12091c8905378118f09dbad6b6353e81db957f6bd2e5695b57bc"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/classes/java/test/com/travel/planner/service/MealRecoveryExpansionTest.class",
+      "bytes": 7502,
+      "sha256": "46ad66202e922b1a9ca931e724a23ed4117004514ea33a8a84f14708ffb17883"
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/test/com/travel/planner/service/OAuthLoginBridgeTest$1MutableClock.class",
@@ -25778,8 +25893,8 @@
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/test/com/travel/planner/service/PlanServiceTest.class",
-      "bytes": 41077,
-      "sha256": "df5b29b0c85b7232855f05287d0c275544de64fa3dbe662b2584f8ed1d3883ee"
+      "bytes": 41518,
+      "sha256": "841dbfaa36cbc4dad4f5e5a19b08250414aab3b5f1cc907084783a677c41bee2"
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/test/com/travel/planner/service/PlanSummaryTest.class",
@@ -25832,6 +25947,11 @@
       "sha256": "b75aeac9fceb50f317cdfe59ddab8d6a9f69877a7a4d5098e2e5133276b4e70f"
     },
     {
+      "path": "TravelPlanner_Backend/build/classes/java/test/com/travel/planner/service/SeaRouteIntegrationTest.class",
+      "bytes": 4904,
+      "sha256": "60acd3b6503553c18555e68131d971c0039f81d74158a28f14e096b0c75cad1f"
+    },
+    {
       "path": "TravelPlanner_Backend/build/classes/java/test/com/travel/planner/service/SupplementalFoodServiceTest.class",
       "bytes": 10188,
       "sha256": "9a524e0fe4f96270cd5bee9e005676e2ca8e770d680f53c091d6bc1ee1da7957"
@@ -25869,12 +25989,12 @@
     {
       "path": "TravelPlanner_Backend/build/classes/java/test/com/travel/planner/service/UndatedPlanTest$1.class",
       "bytes": 1176,
-      "sha256": "fe800d126514b8154640c2145cdbd0aa35671e3f3b1f1acf0a96bc06d3a5dd1e"
+      "sha256": "231e43babb36f6ac48d064fb66de54f9397273fde5dfb52a1fce975f802490c1"
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/test/com/travel/planner/service/UndatedPlanTest.class",
-      "bytes": 31299,
-      "sha256": "6720c24d8298451d2d7400326d6d00cd65ae4e94075c8af4fc000b1736e60e72"
+      "bytes": 31619,
+      "sha256": "9952f91e411fc2439825dfec1769a2264659f186ab55ac1739738aef79901dcf"
     },
     {
       "path": "TravelPlanner_Backend/build/classes/java/test/com/travel/planner/service/UserProfileServiceTest.class",
@@ -25927,6 +26047,11 @@
       "sha256": "afd8898ab60d9447ac976a579a45f6d3ddee5eda7aed0954c6999324902b9df8"
     },
     {
+      "path": "TravelPlanner_Backend/build/classes/java/test/com/travel/planner/transit/SeaRoutesTest.class",
+      "bytes": 13711,
+      "sha256": "569528a9bc14b2eb4d8d8d2a03f26e8befe8d321f074ec901f7427038f6a2cc6"
+    },
+    {
       "path": "TravelPlanner_Backend/build/classes/java/test/com/travel/planner/transit/TransitSearchCacheTest.class",
       "bytes": 6151,
       "sha256": "7d71e8c170b9deebb00924ff63321d7cbcb906173c35d65d6c7fccb213d60ba7"
@@ -25943,23 +26068,583 @@
     },
     {
       "path": "TravelPlanner_Backend/build/reports/problems/problems-report.html",
-      "bytes": 130524,
-      "sha256": "77e133c4b0fe96c7be5438a1c364d50ed8a2267637c32c33986eee76ebf25323"
+      "bytes": 130367,
+      "sha256": "04408b9679d8831629b132168b08a2532d1753e897a1971a4a57edcab0caa387"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.config.WebCorsConfigurationTest/index.html",
+      "bytes": 2918,
+      "sha256": "5759e9a2d06cfeaf83c53dc11da1347fae3f7eb8abcb9e9672132bb993041575"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.controller.AccountSettingsAndExchangeRateTest/index.html",
+      "bytes": 5625,
+      "sha256": "5804499e94d4c24fedd51a131fc6386b9ad58a8660a380b78e74cff28ab01115"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.controller.LiveDirectionsControllerTest/index.html",
+      "bytes": 3317,
+      "sha256": "c878192e3a7f027ca8d04ab3f6292163b1990a118e45a5a94e439ecd38f9d7ad"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.controller.OAuthLoginControllerTest/index.html",
+      "bytes": 2993,
+      "sha256": "73fe9b88ee097f03a0b5f1cdae79f3e41f6dc66a5e6dc9eb7aad605e097f3490"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.controller.PlanDeleteControllerTest/clientDeletePathReturnsNoContentAndUsesAuthenticatedOwner().html",
+      "bytes": 3079,
+      "sha256": "caceeeddb9d6a9d87d8f43f58987ee4f42937810af5afa1739f5db28d6883b6f"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.controller.PlanDeleteControllerTest/index.html",
+      "bytes": 3402,
+      "sha256": "a9ff2b5430cb3af51b96e12655e2f80f737a52b7339f9870ed170fce50e30ce1"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.controller.PlanItemControllerTest/existingClientPathsListAndReplaceSelectedPlace().html",
+      "bytes": 3022,
+      "sha256": "6297b7a5b3111bb6543efba354473492a4f3caa46048e8ee9ce8dc5da7f348fe"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.controller.PlanItemControllerTest/index.html",
+      "bytes": 3070,
+      "sha256": "bdc7c523dca6d556c5a334e02d03e80ff4ed3392c66c7874b451fc762322de1d"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.lodging.HotelSearchCacheTest/index.html",
+      "bytes": 3294,
+      "sha256": "90a4e15f27107e06f7473cd47ae616159d7b6083250bcbb00e7257efe8c09b11"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.lodging.RakutenTravelClientTest/index.html",
+      "bytes": 4676,
+      "sha256": "bf2ac3bac23397cf8db5dda3f9c8d9f7ac83362849698b72397a41cc20a0b445"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.lodging.RakutenTravelClientTest/realRakutenReturnsNightlyMinimumWithUpstreamJavaHttpClient().html",
+      "bytes": 2203,
+      "sha256": "5414cb0e83c8be78ecc6246dbe17dfbc70a0e5c7e5a477c0f136f6ea945089d8"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.PlannerApplicationTests/index.html",
+      "bytes": 9183,
+      "sha256": "5fba04e866cad977c56d08a5b6d301c9f33c6c06b394b7de3f477b6f3357e621"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.AirportAccessRoutesTest/index.html",
+      "bytes": 3038,
+      "sha256": "03f187bca461ad7d00441c4b0e19e5b001df225defe3cedbb53d42d2dcd3e30b"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.AiServiceProviderTest/emptyResultWhenBothFail().html",
+      "bytes": 3398,
+      "sha256": "66c35aa2bb8435e83cd8986191bf940446aa73ab8c1a14789c86f34bb2f399e0"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.AiServiceProviderTest/geminiTakesOverWhenOpenAiKeepsFailing().html",
+      "bytes": 3320,
+      "sha256": "6f683693575fff02cd4303ce153a495173f64ce2a4d947931d82d8a890e7616a"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.AiServiceProviderTest/index.html",
+      "bytes": 4225,
+      "sha256": "4cd9a07fdfd076ba61e5ea2b33cb85064e3fc70ff5109c081722bc7c342760ae"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.AiServiceProviderTest/missingOpenAiKeyFallsThroughToGemini().html",
+      "bytes": 2608,
+      "sha256": "698c1c937b2c6da556e520e29261fe83d73f0ca8850c3c46970b9fe78e5cd122"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.BoundedCandidateSearchTest/index.html",
+      "bytes": 2741,
+      "sha256": "c345902f3cb059b5458bbc39c334f159888f6fae86f56342a71c6d75f7f25043"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.CandidateRecoveryRevisionTest/index.html",
+      "bytes": 3976,
+      "sha256": "80d596c25aaf96aa66e857abfa9f044494b74e6fde68a5fe97a1305fa380bb19"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.CityRegionValidationTest/index.html",
+      "bytes": 3319,
+      "sha256": "608b511cf9de9cfa0c00b7389c74c8c8ce170b60efa992e7d5eae6b1126e4dec"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.CollectedPassCatalogTest/index.html",
+      "bytes": 5009,
+      "sha256": "edb7216ca86ac903d520251437a6585ac9e7500347b0fe7b9dc9bce5fe8cc35b"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.CollectedPassCatalogTest/one24HourPurchaseCoversTwoDaysButDoesNotDiscountJr().html",
+      "bytes": 2729,
+      "sha256": "f071d02b749b7b3c2cbc69bb85215d29a3d15ca29757ff0d2796d5af0fe5c024"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.CurrentDatabaseRouteTest/index.html",
+      "bytes": 4429,
+      "sha256": "f29e05c0eb25b7c6f3142816b8fc416952aa2a4974032d4f62ba9a2e5706b472"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.CurrentDatabaseRouteTest/tokyoRouteUsesDatabaseRideStepsEvenWithoutStoredTravelEstimate().html",
+      "bytes": 6015,
+      "sha256": "53c6a2fca419a45fab6308a2592d0de47b295bc8cdb7301a1768375975fef8c8"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.EndTimeApprovalTest/approvedLateFinishNeverDelaysTheNextMorning().html",
+      "bytes": 3611,
+      "sha256": "f13cd91cf7949c5752e032ba5f3c8f267418e4f5e51642495e50a9a393961b43"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.EndTimeApprovalTest/decliningAnImpossibleTransferFailsAfterAttemptAndDoesNotSave().html",
+      "bytes": 3743,
+      "sha256": "bff0735a41328cfe5e69e6613d202914a606e91fef4b114cbcdc993f6639d3bd"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.EndTimeApprovalTest/firstDayConsentDoesNotSkipThirdDayAndDecliningDoesNotSave().html",
+      "bytes": 4573,
+      "sha256": "11fc367bf6867cd008fa675fcefc7614743e293ebdc515299d701ca6e9be5883"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.EndTimeApprovalTest/flightDeadlineCannotBeOverridden().html",
+      "bytes": 3595,
+      "sha256": "b0c80408f7098afdd331b164c7a8aa932db7d4a8c7d7cc536277fc91ddd871bb"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.EndTimeApprovalTest/index.html",
+      "bytes": 5021,
+      "sha256": "b87dd380ba47d8b9790d9ee99e5cc3525ce0896f3b4732d0a46d3e67d4740468"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.EndTimeApprovalTest/repairableDayFinishesWithinLimitWithoutAsking().html",
+      "bytes": 3207,
+      "sha256": "ca0aaa9217b5148dc18f497ac7cb51261a51b8367b89976e4f50ff6e8ca2265d"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.EndTimeApprovalTest/transferOverlappingNextNineAmCannotBeApprovedOrCommitted().html",
+      "bytes": 3715,
+      "sha256": "89ee2884f1a01e46d22cd9849bce54e585fbadb94c9253193adbbcc1b8a26c99"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.EndTimeApprovalTest/waitingCanBeCancelledAndStillCountsTowardTwoJobLimit().html",
+      "bytes": 4315,
+      "sha256": "22dbe1c571785a75bd8fc19a73520cb519b525bb6ebd4068cfe3869d881fdf2b"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.EndTimeDecisionControllerTest/index.html",
+      "bytes": 2719,
+      "sha256": "4d8aa289c631adce3cf5419d35a3fa24c8796719c7f3914dc4619250671590a0"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.FailedMealDiagnosticTest/index.html",
+      "bytes": 3576,
+      "sha256": "90c79511592560a943c32d07969cd9a71499f05fe85f72ed787113238efba68e"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.FailedMealDiagnosticTest/inspectWithoutSavingAnyTrip().html",
+      "bytes": 2111,
+      "sha256": "aaa639afaddcb2ee99f2ce18e85c2554d7add7035af3e396e341713d925d07f4"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.FareDataServiceTest/brokenRowsInTheDatabaseDoNotBreakFareCalculation().html",
+      "bytes": 2653,
+      "sha256": "47c29be7a044ab748a3dea1736ec0debd3ff2f17deb33b4d4eb74228438395d3"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.FareDataServiceTest/index.html",
+      "bytes": 6038,
+      "sha256": "e8876ae17d2d8f0225a28c9e331bf05eaf1582772056b9564f2b30465c39601b"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.FareFlowTest/index.html",
+      "bytes": 3773,
+      "sha256": "cc7ee8a5caa84b5775243de6a47e4e75e9ff0396f4e7b41962c7c8a46625d6c2"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.FareFlowTest/lodgingRowsSayWhatKindOfPlaceTheLodgingIs().html",
+      "bytes": 2669,
+      "sha256": "9b0e62a00b8f63a74028101957984209ce8c4da166e3631251e83eb62a5d5771"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.FareFlowTest/sameDayOnAWeekdayIsNotWorthThePass().html",
+      "bytes": 2634,
+      "sha256": "47b8fbf11fc15eede212d456bb782712d5982dc63900ff775907b5d06cdbba8d"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.FareFlowTest/saturdayInOsakaGetsTheHolidayDayPass().html",
+      "bytes": 2644,
+      "sha256": "a875246427c4611517485825a1a085d2737e5db1f2043fd184ac20eabd600fef"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.FareFlowTest/withoutFareDataTheSameDayIsEstimatedAndNoPassIsSuggested().html",
+      "bytes": 2744,
+      "sha256": "660c2a91a41af60b85e2c06696269b00f116c02956bfc084e9b08f00b7958419"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.GenerationConnectionTest/backgroundCallsNewEngineAndSupportsSnacks().html",
+      "bytes": 2762,
+      "sha256": "4fd8c330d1beb2d75341dde5b18b751da2dedea3b5011c8202eac85674e06dfd"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.GenerationConnectionTest/index.html",
+      "bytes": 3699,
+      "sha256": "39f7be4991dbf581e7a893441a8c3882351686437a15522adde0f6a05787ff4e"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.GenerationConnectionTest/omittedAirportsDoNotTriggerGeocodingOrRoundTripPenalty().html",
+      "bytes": 3046,
+      "sha256": "23e2193b57f61fac7d6759e65740fea6f835933d4d9be0d8fd473149656c5993"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.HikeAccessTest/index.html",
+      "bytes": 3294,
+      "sha256": "bd7f152128380537a6d74e6a7395108bd2c53594c6803b1eff9117151dacd660"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.HikeAccessTest/parkingIsLookedUpOnceOnlyForSummitsWithoutTransit().html",
+      "bytes": 2781,
+      "sha256": "7c0fe75e286791069ce96f715f9c200fa87ebb8c0a6947ceff856ce289592c90"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.HikingTest/index.html",
+      "bytes": 2905,
+      "sha256": "16476c83145a0f4b7a11cd74e5a4a82eecd516cf60a9e793c9e18a491baca6f2"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.HotelRecommendationTest/index.html",
+      "bytes": 3405,
+      "sha256": "2a169f5a4bbf4fd80f196f8f8696ed1c99b2a4277c2284b48f995c5536ee95d4"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.HotelWebPriceServiceTest/index.html",
+      "bytes": 3391,
+      "sha256": "74c565f6ba8c0a5b41bc3ed6879687b081d596b7c8562d86a64c840326e7d3bd"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.HotelWebPriceServiceTest/missingPriceSearchActuallyCallsGeminiWithGoogleSearch().html",
+      "bytes": 2666,
+      "sha256": "d8de17a8c31e037121700c7c3e55dfbfea78b6f62f74d25d143ec9719a63ac8a"
     },
     {
       "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.IslandTravelTest/airportAccessFlightAndArrivalAreRepairedWithinTheDay().html",
-      "bytes": 3856,
-      "sha256": "91c94ad969621dcfb08c229740693da4cac4b0747a670685378500490280a8f1"
+      "bytes": 3027,
+      "sha256": "a527423bccde5136d5e83dd9e55ef498c44999081e42654776b25c7ab5b3a5cc"
     },
     {
       "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.IslandTravelTest/index.html",
-      "bytes": 3899,
-      "sha256": "224f00cecede0a643b6914de7700ea5e2d49e6fb67f837d8ace7a4927a337660"
+      "bytes": 3889,
+      "sha256": "1d974f84a06d4f056bcbd07437f1feac4d5f84c93c1e06c07f346ad295fb2895"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.KoreanPlaceDescriptionsTest/index.html",
+      "bytes": 3045,
+      "sha256": "3dd80452308f989f150500ed0a894f475c980555d16ba1ea4984aabfd33c4c3a"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.LiveMealCacheCheckTest/existingAsakusaMealWindowSelectsARealOpenRestaurant().html",
+      "bytes": 2181,
+      "sha256": "2d3398e25175749aebf44889552dad2fb13c2a743991edc2b25715db6836740f"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.LiveMealCacheCheckTest/index.html",
+      "bytes": 3714,
+      "sha256": "1f5fac6dbc8e66ad4e5632b1f63404044890455a8164335695a2f9e679adbf11"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.LodgingCostServiceTest/index.html",
+      "bytes": 5474,
+      "sha256": "bc5b671f9c674c18cace0056c6473d05373a9a25070557a2071a04aa452d77d9"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.LongTripPerformanceTest/index.html",
+      "bytes": 4135,
+      "sha256": "b93c62de8dfa9a6ce126a5d5c7c81b6dfec9954589449e56bf11e57696da97cd"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.LongTripPerformanceTest/realCatalogueThirtyDayBenchmarkWithoutWritesOrExternalApis().html",
+      "bytes": 2203,
+      "sha256": "75c8e08213da0a1b406630ba187d2395be18ba127add24246f50f1750ecbab20"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.LongTripPerformanceTest/seedSearchStopsAfterSameFortyFeasibleCandidates().html",
+      "bytes": 2633,
+      "sha256": "ec7bd50b720d3107217c0cc0ec8b49bf584d8bf831c6fc4a9541efedf83f84ae"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.LongTripTest/index.html",
+      "bytes": 5837,
+      "sha256": "99b0a07f106c00cf9f03ddc23cd86ab2b3e79ae2666c4e3e4b419e7fbe4176b2"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.MealCandidateRecoveryTest/distantSearchResultsNeverBecomeFakeLocalMeals().html",
+      "bytes": 3434,
+      "sha256": "37a9752268ac95c85ca294372bc849a970702588987a9c83e2803d02819a4ad3"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.MealCandidateRecoveryTest/index.html",
+      "bytes": 3369,
+      "sha256": "95f00f80d42ff3cab6d6536b8cc1ec40167ca0b8f4b0ef485f4004abdd7bd586"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.MealGapTest/freeMealsAreReplacedByRestaurantsFoundNearby().html",
+      "bytes": 2652,
+      "sha256": "a79d09291fcdd44da8d2ca49e684cae5435f6d915dc840ee0c066d6102d4e558"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.MealGapTest/index.html",
+      "bytes": 3276,
+      "sha256": "3139fc7b21c6141c37dc9e817f563db03439defd4e276a1606199115c91bb134"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.MealRecoveryExpansionTest/index.html",
+      "bytes": 3300,
+      "sha256": "aae6957f188de9ee01b0079e22b2b01a41334e18627ae2124df0b918e18c41f7"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.OAuthLoginBridgeTest/index.html",
+      "bytes": 3735,
+      "sha256": "af7c53b852de1be15b52860936943eb242516b32815e5c7c76a5258d4ec3a0bb"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.OvernightLodgingTest/index.html",
+      "bytes": 3587,
+      "sha256": "28db6fcb39227c773d0012ac3811c8fca9cff6329e0463410ae1a01cdaca5301"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.PaceSettingsTest/index.html",
+      "bytes": 5356,
+      "sha256": "967856a41c4fcdcc55eed39cb00ae437044aa62d531880621f6280952fdaf093"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.PassAdviceTest/index.html",
+      "bytes": 4538,
+      "sha256": "07cf6f55b3ed3c51525fb36100bf72739db50becc15b4536bdc3cf32edb077a9"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.PlaceDescriptionServiceTest/index.html",
+      "bytes": 3732,
+      "sha256": "a528e9520cb5e3c8fcc506e4adeee9e9d2b2dcb96a7bdba6136064a584bd58ba"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.PlaceDescriptionServiceTest/lodgingOfTheTripIsDescribedButAirportsAreNot().html",
+      "bytes": 2642,
+      "sha256": "392845cc36a6d511eaba80a0589911964a0c046ad244863e3eea177095bf5893"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.PlaceDescriptionServiceTest/onlyPlacesWithoutSummaryAreAskedAndTheAnswerIsSaved().html",
+      "bytes": 2677,
+      "sha256": "0a3852e03dd55cdd42342f7aa3d4d69edef83bf9e03ad0422aa4620ab22bb956"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.PlaceDescriptionServiceTest/slowAiDoesNotHoldThePlanBeyondTheTimeLimit().html",
+      "bytes": 2751,
+      "sha256": "88f2599b1bddc296c00c8c8253119b25ada337c7ecc0264338da3378c2ff674f"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.PlaceNameDisplayTest/index.html",
+      "bytes": 3981,
+      "sha256": "f644ca44d62adc1a25bdbf2c6d9cbfadee34a7a44d0c4a5530ec377d44e3a338"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.PlaceNameServiceTest/canBeTurnedOffAndAiFailureKeepsTheOriginalNames().html",
+      "bytes": 2817,
+      "sha256": "d2a7caab436f0e9dcfc96237bdfc3d7c6bfc575507aa8b662a2fbc00510b4248"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.PlaceNameServiceTest/index.html",
+      "bytes": 3580,
+      "sha256": "22fa10aafddc9e6def0d014334d3578502841e0723c898ddfe39f383b8152395"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.PlaceNameServiceTest/onlyForeignNamesWithoutAKoreanNameAreAskedAndOnlyTheNameColumnIsSaved().html",
+      "bytes": 2777,
+      "sha256": "9031b27302b0164da0a5c0de673a0405ce5701883b04bab0340301d7f3cb5290"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.PlaceNameServiceTest/slowAiDoesNotHoldTheResponseAndTheLateAnswerIsStillSaved().html",
+      "bytes": 2934,
+      "sha256": "776ee7f6d614374a56d2cd3a67e839737d30e9134bd0f73e16038ea32f70b877"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.PlanItemAdjustmentServiceTest/index.html",
+      "bytes": 4648,
+      "sha256": "4f2b490216e31c540f49633b3af85a461fad5d52a6cea269d98ef1919a257591"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.PlanPeriodListenerTest/index.html",
+      "bytes": 4403,
+      "sha256": "fd3b208d66c5886c7449f9bc3e38df5b1590ac38ecb18187aa800099c7741202"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.PlanPeriodListenerTest/undatedDaysSurviveReloadAndDeleteWithoutChangingPlannerSchema().html",
+      "bytes": 5083,
+      "sha256": "0678eee6137375fb593c9b521e18f70c0137f73c2dfa87ef5cef8b36564795e1"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.PlanReplaceTest/index.html",
+      "bytes": 4309,
+      "sha256": "3ff3ea98282910be225e705508a680e20a143494db256c1b950f53a2355b6df5"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.PlanServiceTest/index.html",
+      "bytes": 11295,
+      "sha256": "7a7cb732f5ee855dae3aec7053fae6858f92099ddf71487bfac27397fda5441e"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.PlanSummaryTest/index.html",
+      "bytes": 5719,
+      "sha256": "37bb4fc3fd01a7a5dc193a4a08bc9b8b00d1a25152351ff307395182d30109d3"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.ProductRevisionTest/index.html",
+      "bytes": 5023,
+      "sha256": "4e724f7bb7f097dfa4841901420793e781e7fc30712da01f145d11d30d7c047f"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.RegionCollectTest/index.html",
+      "bytes": 5310,
+      "sha256": "350f5ece43895959a527148a95292e55fd88146f2eae978fe4dd134658efaefe"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.RegionCollectTest/pagingStopsWhenThePageIsMostlyKnown().html",
+      "bytes": 2782,
+      "sha256": "7d826e3ad64cd15aa9a5fa1e3a96db78281409faa739ea938b14f9816b0525db"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.RegionCollectTest/stopRequestEndsTheRun().html",
+      "bytes": 2509,
+      "sha256": "759179abe318bd2a22ce23063639b7f70d0e1c3f3ea8289e9ebedf14a1e7502e"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.RegionCollectTest/stopsAtBudgetWithoutLoggingTheCityAndResumesThere().html",
+      "bytes": 2877,
+      "sha256": "87f3ec9dd9ac39e28bcecf1cd6ad623113c2cc149088e43a094c22fdc1fa74e1"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.RegionCollectTest/townsUseOneGridPointAndEightSearches().html",
+      "bytes": 2876,
+      "sha256": "af2ab96f2be00c7d9f8bdb4bc125c1f5bd0ade73e1314a8196d7b7fcb676f2dc"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.RegionCollectTest/unknownCityIsSkippedNotLogged().html",
+      "bytes": 2757,
+      "sha256": "f57610b658a06c95aa563fc90f7338df0102b2545e6ea557427f58b4a8eb4c4c"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.RemainingDayReflowTest/index.html",
+      "bytes": 3965,
+      "sha256": "1ac47374cff4c34fc75bd53e554aa891a6fa99a4834022bb7042c7885648d9c0"
     },
     {
       "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.SavedPlanQueryServiceTest/index.html",
-      "bytes": 4112,
-      "sha256": "4842166403142a34e1829f582763db362c8fd6baf8baa7f4630d9abbfaff0cee"
+      "bytes": 4098,
+      "sha256": "a2721b5acf80912e225707ff67c9153d95d477b56785b4837f5d402849acd24a"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.SeaRouteIntegrationTest/index.html",
+      "bytes": 3032,
+      "sha256": "221cdde41cc80e6d72c90a4a09a34d9196e6ea764e40b277d8a7804d18c68c51"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.SupplementalFoodServiceTest/index.html",
+      "bytes": 5087,
+      "sha256": "e67bd341436ab667d03f97863c32aa06da2ea420180eb1c73c4f4e2167891487"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.SupplementalFoodServiceTest/saveAndReplaceKeepSupplementalDetailsWithoutChangingPrimaryPlaces().html",
+      "bytes": 5833,
+      "sha256": "4490f448f0f023dfa6a0327b276f545e7c3a5b466b22399d496fc01bd31b615f"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.SupportLogicTest/index.html",
+      "bytes": 6456,
+      "sha256": "50038dfb5a8590e8c47979eb93ad72eaad79d48af186ea682dddfd593823bd7a"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.TransitLegCarryTest/index.html",
+      "bytes": 2674,
+      "sha256": "b8add014de2b89df8c470f82d2ae59e4c388b86085bc5e3beb42904b573b4e33"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.TransitServiceTest/feedIsStoredReplacedDeletedAndUsedForLegs().html",
+      "bytes": 2813,
+      "sha256": "06e7e02a2b153515bdc5eafc652654c21cc20aa999e6cf08e8360b816020d714"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.TransitServiceTest/index.html",
+      "bytes": 4739,
+      "sha256": "61a347c43c36695e72967b9c858dd67949201018973f12746816470cfdb25e98"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.UndatedPlanTest/index.html",
+      "bytes": 4972,
+      "sha256": "b2f84911393f7b8dc26424df0fdce42c5142022d65b4885db9180ecf873f0f94"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.service.UserProfileServiceTest/index.html",
+      "bytes": 4581,
+      "sha256": "efdfda087ab3a1d15aaed0923a5ceabac909bb52309c906ded2922ba0d2f564f"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.transit.BusActualDataTest/index.html",
+      "bytes": 3645,
+      "sha256": "539f2fd979d7ea58d53d3109fc9b5fa4c4367e66057fe7713d1181f3112c2904"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.transit.BusActualDataTest/readsNationalArchiveAndChecksTravelSamples().html",
+      "bytes": 2149,
+      "sha256": "ba9de0fefc016aafc52d20ac7cf7f78a09c650f1e5857af0bd89fc84df6c75ed"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.transit.BusStopTest/index.html",
+      "bytes": 4666,
+      "sha256": "837f25ff3f3caf5835df705abe79143e13a5dd3446b8c6480729271a9c0b0565"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.transit.FareBookTest/index.html",
+      "bytes": 7502,
+      "sha256": "cb033ab780fbeda727e5350e6e86282aaf0aa8aa4c19d6fb5d1f719a2d6c624a"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.transit.FareRouteTest/index.html",
+      "bytes": 3800,
+      "sha256": "f0dcb20bc66a771a6b9c7a200bf98fc962fbd7ebf32f99d940645cff5d74fd1a"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.transit.GtfsNetworkTest/index.html",
+      "bytes": 6586,
+      "sha256": "1b476f4491b3cfffb5f9d4aba090e441e0c017ce96933ac35ffd8a8952ab0dd0"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.transit.PassAdvisorTest/index.html",
+      "bytes": 6826,
+      "sha256": "5cf02ff1145821af1e50e9775511e9962afaf47735d73b1e7aed1f1070eb4a9a"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.transit.RailNetworkTest/index.html",
+      "bytes": 5830,
+      "sha256": "c7f8079084d8153ce09f8c383c6ce31fe38177c504dca9e344ea467a622e7920"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.transit.SeaRoutesTest/index.html",
+      "bytes": 5179,
+      "sha256": "b928c57540a0139b9bfed89e9da037c8d8158959d62301f3576c4475b4a9ac41"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.transit.TransitSearchCacheTest/index.html",
+      "bytes": 2998,
+      "sha256": "f2c4b57884292c4997daad23e5ada24644f2758084529ca4f11f00aa3708eced"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.util.OpeningHoursTest/index.html",
+      "bytes": 4613,
+      "sha256": "f4faa28517d4ff8bd540b5102c0b72d6d985b8383718e0342f6ace5553d16f69"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/reports/tests/test/com.travel.planner.util.PlaceNamesTest/index.html",
+      "bytes": 3473,
+      "sha256": "455b017104b215ba53d229d9ad03ea49661ac523e5b888c03483a00142cca472"
     },
     {
       "path": "TravelPlanner_Backend/build/reports/tests/test/css/base-style.css",
@@ -25973,8 +26658,8 @@
     },
     {
       "path": "TravelPlanner_Backend/build/reports/tests/test/index.html",
-      "bytes": 2845,
-      "sha256": "a12da49b8bca7159037ef0f8df1262ba5b4790ce0a2120affcc8c719a74e36a2"
+      "bytes": 25909,
+      "sha256": "50f66590ad901cd86dea8d5667c3c3ef12758f9472a24f9e31cc6a2bdb036f82"
     },
     {
       "path": "TravelPlanner_Backend/build/reports/tests/test/js/report.js",
@@ -26002,6 +26687,11 @@
       "sha256": "48a28e97b34fc8e5b157657633670cd1b7de126cfc414da65ce9c3d5bc8be733"
     },
     {
+      "path": "TravelPlanner_Backend/build/resources/main/sea/islands.json",
+      "bytes": 36857,
+      "sha256": "1d1ef6c9ab6316558f52a7c0b7d99013083a1bab8b79930c74ee485ebcd036f3"
+    },
+    {
       "path": "TravelPlanner_Backend/build/resources/main/transit/fare-tables.json",
       "bytes": 49814,
       "sha256": "0baafd300c9c63695ddb7ce17476cf56d2b813b7dcab6631945ba15ee1c5b1d5"
@@ -26018,23 +26708,358 @@
     },
     {
       "path": "TravelPlanner_Backend/build/test-results/test/binary/output-events.bin",
-      "bytes": 1442,
-      "sha256": "d8d7d30780dfbd13023852df80d0b5c9bd531481ce493b7a267ced472c654e93"
+      "bytes": 49197,
+      "sha256": "78055a6901abe03d7c50a56e422f4afeda17436182a0e94f503f84f5c59d5830"
     },
     {
       "path": "TravelPlanner_Backend/build/test-results/test/binary/results-generic.bin",
-      "bytes": 1683,
-      "sha256": "fe01ae69fb527ea140453019b59b3e7d0d62f9d3d3609614ddb5a18125ebe79b"
+      "bytes": 58017,
+      "sha256": "d37ece19b7ac55e0582c88d09bcda08981c1311bfc8637d8c3735b6beb77bd35"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.config.WebCorsConfigurationTest.xml",
+      "bytes": 611,
+      "sha256": "a1c08be5b86db30341583b482914760e5b176e64fe1820c6f4235fc1e8af2057"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.controller.AccountSettingsAndExchangeRateTest.xml",
+      "bytes": 2458,
+      "sha256": "1c8712c071c898990a0dcd40e7ebe35844f4d5b07a19152b415c3d4d60512e52"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.controller.LiveDirectionsControllerTest.xml",
+      "bytes": 831,
+      "sha256": "5533f4926a1ad01e25264e80821fe5bd739c925a031d843e3b1a1d82fce85ff9"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.controller.OAuthLoginControllerTest.xml",
+      "bytes": 657,
+      "sha256": "aeab486cb0a260f98ef658718e46aba3474a882746a6173c8723ac077e611a1e"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.controller.PlanDeleteControllerTest.xml",
+      "bytes": 1274,
+      "sha256": "2cca62544024417ec71b04e7e19786879bb0e586d3821b1b9a6060aac82101ff"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.controller.PlanItemControllerTest.xml",
+      "bytes": 1108,
+      "sha256": "e8560255c7c13f042aef506763dea3d31f3eb7cc56273495ab86fdc44405f80d"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.lodging.HotelSearchCacheTest.xml",
+      "bytes": 790,
+      "sha256": "ef1a9f19d4583b5c8c279613f24538f9739344e1abc095e3959af62243910e28"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.lodging.RakutenTravelClientTest.xml",
+      "bytes": 987,
+      "sha256": "811618388387868e7195a028224c68315bbf7f838bc2989f81bd201e054afb88"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.PlannerApplicationTests.xml",
+      "bytes": 6247,
+      "sha256": "fabe864f88a6cbf78c6d39dfbb7d84f689806d643ff981431e9ff58dde58e17d"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.AirportAccessRoutesTest.xml",
+      "bytes": 672,
+      "sha256": "6374e12e64b2d2d2cd51fa4b7dbe671617bfcfed8aedbb36158a2b87e89ad16c"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.AiServiceProviderTest.xml",
+      "bytes": 2284,
+      "sha256": "7db7cc5064b364a08172ad3a82d08fc095fa22ba567942d5e8e449625bc3d2fc"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.BoundedCandidateSearchTest.xml",
+      "bytes": 525,
+      "sha256": "4c206030f6f7896569da54a569c34524cc10918af5d922d1194c193117ef6191"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.CandidateRecoveryRevisionTest.xml",
+      "bytes": 1165,
+      "sha256": "65f8f8a4621f6713859afc146a93bb6ed2a507ade73c0503923323cbad2396fa"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.CityRegionValidationTest.xml",
+      "bytes": 814,
+      "sha256": "6d7864caa78b7efe8125abb95ca0d6ade55497ce7c583fccd1ae2b259c6ac280"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.CollectedPassCatalogTest.xml",
+      "bytes": 2171,
+      "sha256": "b14e68fb53dbd5afaa4b6d35608b5509c9381858a7b6ba631b1a98078fd980b8"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.CurrentDatabaseRouteTest.xml",
+      "bytes": 5101,
+      "sha256": "0518be21e2901d5bc31e1e14baa8f467c61ebf9ca9dfd01af52b55e133ce581c"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.EndTimeApprovalTest.xml",
+      "bytes": 10070,
+      "sha256": "18f536ed37b5e85ac42f23ab9198e95b83ea84f96598e1dfc05415d08d53b056"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.EndTimeDecisionControllerTest.xml",
+      "bytes": 516,
+      "sha256": "85ed421158dfc0bc7df4764686c467ce5934945fda49993dcf9908fd70b5cbf1"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.FailedMealDiagnosticTest.xml",
+      "bytes": 503,
+      "sha256": "8e2a1c1cab1eb1cb7677c11cf755f0ee809614b7ecf6838ef347322c90b0aaf1"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.FareDataServiceTest.xml",
+      "bytes": 2151,
+      "sha256": "0b4262f0071b4d31a2afc922769d8edab5320490b097fefc446cf5ea33da8609"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.FareFlowTest.xml",
+      "bytes": 1415,
+      "sha256": "04a0e03b3bb15b84abe629161e9a31808ae54df1571af4192aebfd619871340e"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.GenerationConnectionTest.xml",
+      "bytes": 1587,
+      "sha256": "a91ff81457163e5f0d5e0a8ef3d56b0e5838a10c81f88b36447d7344512f968e"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.HikeAccessTest.xml",
+      "bytes": 946,
+      "sha256": "982a5017561f775afdebf5319872b3e7bc72256b01695b4d0b40abee9975ac28"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.HikingTest.xml",
+      "bytes": 586,
+      "sha256": "7fe389856a9e098837f4cc802c0175de4129f0ee30928411d85b23746d700ef5"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.HotelRecommendationTest.xml",
+      "bytes": 854,
+      "sha256": "3b28bb0728a93de14e91a2348e09ee8db385b883415230e219eef6663cf0da1c"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.HotelWebPriceServiceTest.xml",
+      "bytes": 872,
+      "sha256": "eeca415fc771cbfde7fefc19d217447b0a3d2ff5ac7f97e3ef2c4063c6cad382"
     },
     {
       "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.IslandTravelTest.xml",
-      "bytes": 2300,
-      "sha256": "de7df14934f87e2a55e0b55bbe13b91dc081fc2bfc86ae52294fa4909d775c7b"
+      "bytes": 1460,
+      "sha256": "556b7b85b557207745392f1a1b72fc976c7c6b5043178e2a433ce14ca05561a7"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.KoreanPlaceDescriptionsTest.xml",
+      "bytes": 681,
+      "sha256": "9cfbe0bd29424a2ef76fa106718b281ae42a89edde6ab85c95345eaf97af4fbc"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.LiveMealCacheCheckTest.xml",
+      "bytes": 523,
+      "sha256": "22a7360c16af0f7af861e8305121e92cc1aceced345df92674de7dbbcda0fd87"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.LodgingCostServiceTest.xml",
+      "bytes": 1871,
+      "sha256": "4f317f91649d92b3e2c305d53210c6c6363b0b117d4e62733cce0264061f89b4"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.LongTripPerformanceTest.xml",
+      "bytes": 743,
+      "sha256": "f7dc3d91b16129c3f3fc2ab7661264e2da09ae5fd56b32c0f3ef5f57842e4ed1"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.LongTripTest.xml",
+      "bytes": 1920,
+      "sha256": "745f9a1ba4d0ddedd4fdc03fc5a6cd7d98fe1564d2fe09bfc9363b10f94554fe"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.MealCandidateRecoveryTest.xml",
+      "bytes": 1680,
+      "sha256": "fa7d025cc24b103dadfc1d3b9408c7a36223df2500435ca284a942364a479c66"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.MealGapTest.xml",
+      "bytes": 832,
+      "sha256": "8307cbabd2ace6eb4c189b1e84cf67fe71927ecd55586191fec73e50fecfdabb"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.MealRecoveryExpansionTest.xml",
+      "bytes": 807,
+      "sha256": "664cdca69d30f2b404ef7fac486e28b4df59731bd89b4d56de83595e84ec622f"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.OAuthLoginBridgeTest.xml",
+      "bytes": 1003,
+      "sha256": "383be3641a3d98bf47d0d894ffa486edd9f0a7bbb23d98034a91d5509207bc5a"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.OvernightLodgingTest.xml",
+      "bytes": 933,
+      "sha256": "ad9af28d52bb41354e017ef150e5c4c4a07322b2855b1143b499a599322635c7"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.PaceSettingsTest.xml",
+      "bytes": 1745,
+      "sha256": "a03f9f749df16007f696a72ef5a3f5fcd5b4500419d71b1016219c7075aecfca"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.PassAdviceTest.xml",
+      "bytes": 1347,
+      "sha256": "204ab606ddfae675cadd789afd6cb3b2661a7d89d160a5e15215fb47d4dedf1c"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.PlaceDescriptionServiceTest.xml",
+      "bytes": 1284,
+      "sha256": "b970bfad460e26e4c7ec5f77d8b426ce0f8b6c2af428b323687bdff266e45986"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.PlaceNameDisplayTest.xml",
+      "bytes": 1123,
+      "sha256": "07e160a39bc7f0a91959ada9b2c04cb8b84d43aa9d225f4b0a294ae357caf322"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.PlaceNameServiceTest.xml",
+      "bytes": 1477,
+      "sha256": "144c92222f90e4e4ed05d4690d6327f970f88d662922c4b0aa3d8ce78de13dfa"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.PlanItemAdjustmentServiceTest.xml",
+      "bytes": 1511,
+      "sha256": "a0efa91e1aa796b153fb31352486056a282bf3c50e0dfd2713d7e56e54e8e472"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.PlanPeriodListenerTest.xml",
+      "bytes": 4158,
+      "sha256": "f999a014901b3d03910a8f56b54a53740158aa06247a28ec28f006bfe015cf11"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.PlanReplaceTest.xml",
+      "bytes": 1248,
+      "sha256": "d0b850aab23015bb8f98b9ee788b73ba2459c1ff291831744f538c7bdaa60dc8"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.PlanServiceTest.xml",
+      "bytes": 4519,
+      "sha256": "46e5412f41a02836522183e976f4b03afaddc1bda6bc3112386fe23746e8bb92"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.PlanSummaryTest.xml",
+      "bytes": 1911,
+      "sha256": "1df2a183613193ec3062884b53dcb3686c8f3799c2a07b898b5ecab8b11e8c40"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.ProductRevisionTest.xml",
+      "bytes": 1623,
+      "sha256": "b766ac27873fd0c4ad778d85d4ce37bd09f6423148fdca4cce107d42e14a0882"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.RegionCollectTest.xml",
+      "bytes": 2892,
+      "sha256": "5f9f9b289d6d6fd0870a857e72c8205c82c2c16c84f73bc61dbbe90ea76a645c"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.RemainingDayReflowTest.xml",
+      "bytes": 1128,
+      "sha256": "9794d438f15a21bb49efbf4c0bed49a47f32e47b484102bef1645d075a52565e"
     },
     {
       "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.SavedPlanQueryServiceTest.xml",
-      "bytes": 1215,
-      "sha256": "ab2aabcc17b9defdd8bb9604689738d9b92aaa2fa0dc5e2d67f9cdc1587ab056"
+      "bytes": 1209,
+      "sha256": "53f4019bfee968b4bc83cc79dbc4a8e13ca4f0aa6bd25146663fd6fa36ea7e05"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.SeaRouteIntegrationTest.xml",
+      "bytes": 669,
+      "sha256": "302bc9a5d9cbc084c9637aa1c02e285083b1ec71b4e26d36cb7b1fe4da062ac3"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.SupplementalFoodServiceTest.xml",
+      "bytes": 5241,
+      "sha256": "7dd4f6e9e00f5c0eaf17be3769038e4181b9b636a67040797cf3bbc4c00bec7f"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.SupportLogicTest.xml",
+      "bytes": 2267,
+      "sha256": "d4b9ead9329beb21fb7438d5a815862c3d6c70844b33f20cdeb049c80b97fe2c"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.TransitLegCarryTest.xml",
+      "bytes": 489,
+      "sha256": "89d8701af28fb7d3178f7282886ca8c53ac732e9627be2c827122c2944b1504a"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.TransitServiceTest.xml",
+      "bytes": 1718,
+      "sha256": "ecd037e5363a3da95385b651aa5c4aa1341370abc34b64573f4f85df4ae41992"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.UndatedPlanTest.xml",
+      "bytes": 1559,
+      "sha256": "6504c3ecd56c24aef5cd65d1164394abeb255c5f869f1d67a26b5cfc73a9b479"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.service.UserProfileServiceTest.xml",
+      "bytes": 1848,
+      "sha256": "21d0ddb073248b69e1d870a4b9c4932d05439772af04fe4dc79c697e0fd8a545"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.transit.BusActualDataTest.xml",
+      "bytes": 504,
+      "sha256": "533f9c64b9a8cf59ef77a293ad1537f967e479ac7fd7a3f71f358097ce0ca130"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.transit.BusStopTest.xml",
+      "bytes": 1390,
+      "sha256": "ce8c415e7fc87bc7e6e439728fe4b014a39b4b32988086fe89fcc9ff90c75323"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.transit.FareBookTest.xml",
+      "bytes": 2696,
+      "sha256": "ee5810b1a534913b5f421273aefd0cf8bf745b18d8d6b3b73e856e0db97a33ec"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.transit.FareRouteTest.xml",
+      "bytes": 1005,
+      "sha256": "c867441cc771bac7dbb62ecbed7c58fc36263aaaa6369aefa24ef3bff32bd2be"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.transit.GtfsNetworkTest.xml",
+      "bytes": 2322,
+      "sha256": "c19eae01cfcc9d8466ad663730c30efea9686f736196e368f4f717bda1bbe3d9"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.transit.PassAdvisorTest.xml",
+      "bytes": 2428,
+      "sha256": "c77455969c0eced26f97f549069411016de226b6bf55d21ade515ae7a92e95bb"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.transit.RailNetworkTest.xml",
+      "bytes": 1965,
+      "sha256": "8f4285e78fabf9b524fda3344f9e46aa0e210c549e5c6d874daf348af2af5910"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.transit.SeaRoutesTest.xml",
+      "bytes": 1629,
+      "sha256": "f195cab5206f2271bb33290a062c83d691672796cbaca35a1e3cf72a439a42ed"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.transit.TransitSearchCacheTest.xml",
+      "bytes": 650,
+      "sha256": "e95811e9fb8323ce4ccda67ea1fd3bd44f4179fafc9da90fea8b911bb5dacd60"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.util.OpeningHoursTest.xml",
+      "bytes": 1366,
+      "sha256": "db01253bb52d57b69b9e5eb334b28a9c46f6cd59a7b2c1fa6a8c1625ab271056"
+    },
+    {
+      "path": "TravelPlanner_Backend/build/test-results/test/TEST-com.travel.planner.util.PlaceNamesTest.xml",
+      "bytes": 844,
+      "sha256": "443a37981b2b535ea7552651ffd73ee66cbf96e587732f09bcb0227fee89aca0"
     },
     {
       "path": "TravelPlanner_Backend/build/tmp/bootJar/MANIFEST.MF",
@@ -26042,74 +27067,49 @@
       "sha256": "68f1acabb704281ff37e4effbb097fb6566b5723ba216c4c1ed347070ebb21b8"
     },
     {
+      "path": "TravelPlanner_Backend/build/tmp/compileJava/compileTransaction/stash-dir/MealCandidateRecovery.class.uniqueId1",
+      "bytes": 14741,
+      "sha256": "46d9320b2563a6dd8d59e6c2e8e63519d53c0b406699167b8e7c4d4f2c186ed8"
+    },
+    {
       "path": "TravelPlanner_Backend/build/tmp/compileJava/compileTransaction/stash-dir/PlanGenerationService.class.uniqueId0",
-      "bytes": 59213,
-      "sha256": "bb56d4b504215c1d4a7b207dc976ac0193773b77089374fd587d28055e4a6e2c"
-    },
-    {
-      "path": "TravelPlanner_Backend/build/tmp/compileJava/compileTransaction/stash-dir/PlanModifierService.class.uniqueId2",
-      "bytes": 12609,
-      "sha256": "11a9969bca2919e447891913efe72202cdbaa486ad36869e46f8d87f54aa7827"
-    },
-    {
-      "path": "TravelPlanner_Backend/build/tmp/compileJava/compileTransaction/stash-dir/PlanReplaceService.class.uniqueId4",
-      "bytes": 29082,
-      "sha256": "759b8f2b783421f4853aea99794952beb1226f6f4cc6398ec2f3e90d41d8dbc6"
-    },
-    {
-      "path": "TravelPlanner_Backend/build/tmp/compileJava/compileTransaction/stash-dir/PlanSummarizer$1.class.uniqueId5",
-      "bytes": 860,
-      "sha256": "12824be4431b8cff4880e65184e5dd24628b4ecc4b3efee711f0000922bff7b8"
-    },
-    {
-      "path": "TravelPlanner_Backend/build/tmp/compileJava/compileTransaction/stash-dir/PlanSummarizer.class.uniqueId3",
-      "bytes": 29092,
-      "sha256": "c0f8253795babccbe9519c4d42ba03aaf175afa083e985f533ccd0a70c0edc9b"
-    },
-    {
-      "path": "TravelPlanner_Backend/build/tmp/compileJava/compileTransaction/stash-dir/SavedPlanQueryService.class.uniqueId1",
-      "bytes": 26904,
-      "sha256": "7773b0fd817c1108975d048bdd26f3b9c514294457b8b195de52588ed83d7680"
+      "bytes": 69086,
+      "sha256": "8306a7b64632cf2cf3a1aa0b07637907c22830757e0d3b27c691e473aa05eca2"
     },
     {
       "path": "TravelPlanner_Backend/build/tmp/compileJava/previous-compilation-data.bin",
-      "bytes": 234977,
-      "sha256": "e3d3851165ca38a6036cfa3ad5e41f2d828bd86e6d64e73e19d08c2959a332b9"
+      "bytes": 235473,
+      "sha256": "b3e6b77f44641d951bf418cd5af1bd954184b828dc2ba1a0912147f6144d38de"
     },
     {
-      "path": "TravelPlanner_Backend/build/tmp/compileTestJava/compileTransaction/stash-dir/PlaceNameDisplayTest$1.class.uniqueId0",
-      "bytes": 1198,
-      "sha256": "2df146951d5596a7581cca3e3db9bf2e31f041d77dc1207c66dddc8b6f8eacaa"
+      "path": "TravelPlanner_Backend/build/tmp/compileTestJava/compileTransaction/stash-dir/CandidateRecoveryRevisionTest.class.uniqueId0",
+      "bytes": 10733,
+      "sha256": "2046ec7ed9e2897886f2b5bba8cb1931b5582e9c5283af5d65ff57abd3894105"
     },
     {
-      "path": "TravelPlanner_Backend/build/tmp/compileTestJava/compileTransaction/stash-dir/PlaceNameDisplayTest.class.uniqueId1",
-      "bytes": 12678,
-      "sha256": "7768e3dbb014fc74e8c284d9eb99a758abb290578009a6ac1e8efe6102809051"
+      "path": "TravelPlanner_Backend/build/tmp/compileTestJava/compileTransaction/stash-dir/FailedMealDiagnosticTest$DiagnosticStop.class.uniqueId3",
+      "bytes": 515,
+      "sha256": "9cba3aff3c43f155612932ec55a74b28a85bc9bf2ad9a476fcc3cdab114b61c7"
     },
     {
-      "path": "TravelPlanner_Backend/build/tmp/compileTestJava/compileTransaction/stash-dir/PlanSummaryTest.class.uniqueId4",
-      "bytes": 17665,
-      "sha256": "7d84726752c23bef86246b0c6b76d3818a65d8d05cdcd7f378609f8cb47876a4"
+      "path": "TravelPlanner_Backend/build/tmp/compileTestJava/compileTransaction/stash-dir/FailedMealDiagnosticTest.class.uniqueId1",
+      "bytes": 9884,
+      "sha256": "4c6b2b31bb2ac6ef44ed8118f40bc06241d99153e9ecab806e43f54dc9f62174"
     },
     {
-      "path": "TravelPlanner_Backend/build/tmp/compileTestJava/compileTransaction/stash-dir/SavedPlanQueryServiceTest.class.uniqueId5",
-      "bytes": 8971,
-      "sha256": "410015d43361efe42fa813ada7124aa9411667c25559be01860425a612665d4b"
+      "path": "TravelPlanner_Backend/build/tmp/compileTestJava/compileTransaction/stash-dir/MealCandidateRecoveryTest.class.uniqueId4",
+      "bytes": 7392,
+      "sha256": "e7e3b4d1154976ba9e39138e90fce24a13eb411195456cf8cc2b8d48042a4212"
     },
     {
-      "path": "TravelPlanner_Backend/build/tmp/compileTestJava/compileTransaction/stash-dir/UndatedPlanTest$1.class.uniqueId2",
-      "bytes": 1176,
-      "sha256": "fe800d126514b8154640c2145cdbd0aa35671e3f3b1f1acf0a96bc06d3a5dd1e"
-    },
-    {
-      "path": "TravelPlanner_Backend/build/tmp/compileTestJava/compileTransaction/stash-dir/UndatedPlanTest.class.uniqueId3",
-      "bytes": 31299,
-      "sha256": "6720c24d8298451d2d7400326d6d00cd65ae4e94075c8af4fc000b1736e60e72"
+      "path": "TravelPlanner_Backend/build/tmp/compileTestJava/compileTransaction/stash-dir/MealRecoveryExpansionTest.class.uniqueId2",
+      "bytes": 7502,
+      "sha256": "46ad66202e922b1a9ca931e724a23ed4117004514ea33a8a84f14708ffb17883"
     },
     {
       "path": "TravelPlanner_Backend/build/tmp/compileTestJava/previous-compilation-data.bin",
-      "bytes": 156578,
-      "sha256": "b6f700ccd4d77c8f7ca7a6018e989862705fc6d171c8cfa4ee855da92edbe1e3"
+      "bytes": 159509,
+      "sha256": "5d50daab1abe58d424a16cef4d3daebd2c1dec721f24c465e7e697edaa9d0609"
     },
     {
       "path": "TravelPlanner_Backend/build.gradle",
@@ -26123,8 +27123,8 @@
     },
     {
       "path": "TravelPlanner_Backend/config/database-local.properties.example",
-      "bytes": 168,
-      "sha256": "15b7c3038a6574de268bccc40a8b8782615834d72e80c733e4dd9187dd966083"
+      "bytes": 331,
+      "sha256": "db4b7d1728db04aebe9608891b88b92975e85748c45876a03e7f1d80c878c3da"
     },
     {
       "path": "TravelPlanner_Backend/data/domestic-flight-coverage-20261009.json",
@@ -26139,17 +27139,17 @@
     {
       "path": "TravelPlanner_Backend/data/hike-access.sqlite",
       "bytes": 12288,
-      "sha256": "f02bfb487fae22368bf727ca0a9d5a0fa4e9cdae6b00745a7eb407a559e7979f"
+      "sha256": "c4b2334b274c0facaaf890ecdf9d57a9e77fa09590e53da20aa221c07651cc84"
     },
     {
       "path": "TravelPlanner_Backend/data/hotel-search-cache.sqlite",
-      "bytes": 376832,
-      "sha256": "37fafb44032710d014e7c582b6fdd1fc7889f796b918cd294856960361f33809"
+      "bytes": 413696,
+      "sha256": "a1c0413084753fbf5567c02be6fb67f64f5af973c242968a6ff9a8209e937e1a"
     },
     {
       "path": "TravelPlanner_Backend/data/hotel-web-prices.sqlite",
       "bytes": 12288,
-      "sha256": "019d775d0762bc23dab7cb83d02c0b4fbbfcbd02ca703f8765f8cd8ba6ab4dc9"
+      "sha256": "4574aac68ec8c272d036a34b2805e64bdd346980391df0d4fc41119ea1f1b0e4"
     },
     {
       "path": "TravelPlanner_Backend/data/north-transit-supplement-20261009.json",
@@ -26174,7 +27174,7 @@
     {
       "path": "TravelPlanner_Backend/data/transit-catalog.sqlite",
       "bytes": 908824576,
-      "sha256": "c528bea4222d4f31f9b1f660076d288f674cb54e07acd6e3ba3df839c148d96b"
+      "sha256": "b53094a301f94327acba76974f433dfb204315009479dcba0cbd74b6edd34690"
     },
     {
       "path": "TravelPlanner_Backend/data/transit-crawl-report.json",
@@ -26333,8 +27333,8 @@
     },
     {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/controller/PlanController.java",
-      "bytes": 5233,
-      "sha256": "30f88cd10da14cfde422c4f1bc598ba904e3e2a4b40597706e65aa9ec0c11d86"
+      "bytes": 5610,
+      "sha256": "9eab278840d196ab315b6a7897b3c1f695bc937835e654228e51623b90eb2497"
     },
     {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/controller/PlanGenerationController.java",
@@ -26348,8 +27348,8 @@
     },
     {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/controller/TransitController.java",
-      "bytes": 17293,
-      "sha256": "b9c3841b484ddab07fdb1b95b2ab997830e10cc09a3069097360836c39cc03fe"
+      "bytes": 17684,
+      "sha256": "9cf0676b4623eaac7e54690c6ed303e9a1ac93eb138c3e8af2a2318067223751"
     },
     {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/controller/UserController.java",
@@ -26428,8 +27428,8 @@
     },
     {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/dto/PlanRequest.java",
-      "bytes": 7483,
-      "sha256": "f444139e355e391df303915f10a2779f067421be42b737fb947013e0a9793ce4"
+      "bytes": 8288,
+      "sha256": "a2766fa7b50ec26a4aaaac96e27b30a21fe9497d72133dc68181e186a1b973c5"
     },
     {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/dto/ReplaceRequest.java",
@@ -26503,8 +27503,8 @@
     },
     {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/entity/Plan.java",
-      "bytes": 4385,
-      "sha256": "ce17d044e034c48eb8a541f9156963e7c66674aa5d1d1adb8bc8b7b95aaed84b"
+      "bytes": 5193,
+      "sha256": "146f2462f03e028213aad40d101d6aecee98fb5314a5c5e910f4892ccc0e8c8f"
     },
     {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/entity/Region.java",
@@ -26748,13 +27748,13 @@
     },
     {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/service/FlightTransferService.java",
-      "bytes": 3950,
-      "sha256": "e67bc21168e5be0cb2df7ad391f255b44aa8e45b626485861c5d639ed42ccdbe"
+      "bytes": 5380,
+      "sha256": "3534da71d475114fb9dc543c294781bb1db4c3990efc3a3344095af95e087719"
     },
     {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/service/GoogleMapsService.java",
-      "bytes": 37241,
-      "sha256": "30ac574924e9f570c64e8025c786bdc436c7ccc3f41b5f59271ed0d4f964a61a"
+      "bytes": 39145,
+      "sha256": "ac8beb8998ce34b0167cbbfebeac84af3e24ec8cb628012f4629ac8eb28f52b5"
     },
     {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/service/GtfsImportService.java",
@@ -26797,6 +27797,11 @@
       "sha256": "44517787d7cd43193302896fccc9ef2ebf7b2a2956e98fa5bd6674a3d7b7dce5"
     },
     {
+      "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/service/LandStopoverPlanner.java",
+      "bytes": 1536,
+      "sha256": "067145bc26324d0278363634c9765db8f10a6d569b5afb28ebf9b4ccb663561e"
+    },
+    {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/service/LodgingCatalog.java",
       "bytes": 4451,
       "sha256": "a84e3ef02b3b467b690eae702e99a716c3f0d9554bbfa65a403f5e33c71976bd"
@@ -26808,13 +27813,13 @@
     },
     {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/service/MealCandidateRecovery.java",
-      "bytes": 3130,
-      "sha256": "ddd30ce1b3c9e1a3ef76aca74d606b5e69dce23e65627351e8ad31083170750c"
+      "bytes": 8866,
+      "sha256": "82f2fd05ffe7bddec8f0d0d1f5cad718dbf69b5104240fe7a6030d68adbf4c3f"
     },
     {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/service/MobilePassCosts.java",
-      "bytes": 4115,
-      "sha256": "6d29c1e11e53281caf9f3e934d5e7880c6cad51333296e7d488f95cd16b1ff81"
+      "bytes": 4377,
+      "sha256": "d724367543eecc5c191cb621bbe0485e3275715c1d60a793bea90fe9b8bc89fb"
     },
     {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/service/NavitimeRouteService.java",
@@ -26863,8 +27868,8 @@
     },
     {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/service/PlanGenerationService.java",
-      "bytes": 56856,
-      "sha256": "18714ca4901e7837fd324b1227da0f29c5ef6cef770d4a059bdb0baca8d82400"
+      "bytes": 62872,
+      "sha256": "8409d1428fbfb43708b4fecd48e06f8fe0c2941c4552f872dc1218b2097d834b"
     },
     {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/service/PlanItemAdjustmentService.java",
@@ -26873,8 +27878,8 @@
     },
     {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/service/PlanModifierService.java",
-      "bytes": 9339,
-      "sha256": "0a29011b9dfce437edd67aa2b76cc6c8517546c6edea8f49d51d98c202c28695"
+      "bytes": 9334,
+      "sha256": "660f0dbd533eaedaee7cb170298d037f987627e8e8d8d1e27f5a7e3cbd618ee9"
     },
     {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/service/PlanPeriodListener.java",
@@ -26883,18 +27888,18 @@
     },
     {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/service/PlanPersistenceService.java",
-      "bytes": 12605,
-      "sha256": "c2115064d0dcfc0de3845617a45400c359b57b8999b107eed7739b02d9a62e20"
+      "bytes": 13834,
+      "sha256": "ce6c2d23cb4599ae5392356ef36452b7a901108ff6ae492714935ff852041038"
     },
     {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/service/PlanReplaceService.java",
-      "bytes": 20635,
-      "sha256": "05b4585876be2b167a18f01deea0b114ead3e15e06382239742a1e0f93a0cc00"
+      "bytes": 20630,
+      "sha256": "3dc0ad434a1393e59762e11dabf7b8c6fe898e7e1598c13003af0767a1d748d7"
     },
     {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/service/PlanService.java",
-      "bytes": 146170,
-      "sha256": "3cc4836c8433e3936fce8cc807ee940f299b890f3ec80ca15a98fb92fe23770b"
+      "bytes": 149872,
+      "sha256": "e656a11405cf40cfd2caf5343373f061499df18cb2bbca64c4b1f91521003dad"
     },
     {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/service/PlanSummarizer.java",
@@ -26938,8 +27943,8 @@
     },
     {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/service/SavedPlanQueryService.java",
-      "bytes": 17018,
-      "sha256": "f6cd21bbb01d144292f90deae13c2f956d8b103c6fd19a55c43b1691a276c43f"
+      "bytes": 17116,
+      "sha256": "ac84a0980bf562bd170441f450a4520779fdfb143eddbdeb8945b6da09dc44fb"
     },
     {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/service/SupplementalFoodService.java",
@@ -26953,8 +27958,8 @@
     },
     {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/service/TimelineConsistency.java",
-      "bytes": 8073,
-      "sha256": "a7c3a5358805351d71e8bcc0358e1d27e2a3b8bf22fc1af4913e5dfcfd0074a8"
+      "bytes": 8197,
+      "sha256": "13ec3935f2d26be96df638bc0d41d9c2d3bd100743c5958bd82050c755de929c"
     },
     {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/service/TransitNameService.java",
@@ -26963,8 +27968,8 @@
     },
     {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/service/TransitTotals.java",
-      "bytes": 6856,
-      "sha256": "6af5fdf2708326ee9df3e2cdf340c182995ffb8136dd49bf915edf982b18eeed"
+      "bytes": 7439,
+      "sha256": "9736ca67b113e32433085f307f50de610558f30469409c38eed44872f0e02c71"
     },
     {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/service/UserProfileService.java",
@@ -27067,9 +28072,14 @@
       "sha256": "bae07b5d5a94e1f9959c49eaef9a109d9296d51af05d586b07b0865be64c70e2"
     },
     {
+      "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/transit/SeaRoutes.java",
+      "bytes": 31473,
+      "sha256": "7826f1627501e53b470774f9dfabf2ab7d05e9572f631d4f9ae0b6e651850801"
+    },
+    {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/transit/TransitLegPlanner.java",
-      "bytes": 41710,
-      "sha256": "6fe3352c463f73b18948de00ef223eb1fa869d6622624de22dde6fe567701274"
+      "bytes": 50947,
+      "sha256": "6dbfa588bf553aa6f56ce0f50343fddc26e8f5616e6a32f48815804cc38600ee"
     },
     {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/util/AirportDirectory.java",
@@ -27103,8 +28113,8 @@
     },
     {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/util/JapanCities.java",
-      "bytes": 9702,
-      "sha256": "aea62fcbd713d64d049322edeb602a6aa399213063adb65d30cda3f23ce4a7d8"
+      "bytes": 11896,
+      "sha256": "9756d4170e1fda63a62ccad7d8c39239f9f9b7dffc0dff8109be710c537bf399"
     },
     {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/util/JapanRegionDirectory.java",
@@ -27163,8 +28173,8 @@
     },
     {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/util/TravelTimeEstimator.java",
-      "bytes": 2125,
-      "sha256": "9126d507509511b3a649a7b835568f64469b55173849271445e6fae59179d05e"
+      "bytes": 2442,
+      "sha256": "11838059b91bc09741bc9f50306d75d601b07daedef86c1f75d0ccf1abc9e061"
     },
     {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/util/TripProfile.java",
@@ -27185,6 +28195,11 @@
       "path": "TravelPlanner_Backend/src/main/resources/fonts/NanumGothic.ttf",
       "bytes": 4691820,
       "sha256": "48a28e97b34fc8e5b157657633670cd1b7de126cfc414da65ce9c3d5bc8be733"
+    },
+    {
+      "path": "TravelPlanner_Backend/src/main/resources/sea/islands.json",
+      "bytes": 36857,
+      "sha256": "1d1ef6c9ab6316558f52a7c0b7d99013083a1bab8b79930c74ee485ebcd036f3"
     },
     {
       "path": "TravelPlanner_Backend/src/main/resources/transit/fare-tables.json",
@@ -27222,6 +28237,11 @@
       "sha256": "2808b28d13505219c30e6045b9769e94f9ddf265deee57f68a2fbd8f93b203fc"
     },
     {
+      "path": "TravelPlanner_Backend/src/test/java/com/travel/planner/controller/PlanDeleteControllerTest.java",
+      "bytes": 2990,
+      "sha256": "9137be2e248be958c3ec5132d0f9aa663e50dd82d37eeddb1a7e18d0575f280a"
+    },
+    {
       "path": "TravelPlanner_Backend/src/test/java/com/travel/planner/controller/PlanItemControllerTest.java",
       "bytes": 2641,
       "sha256": "f30693ee2933a7eea629c677ef62eecebaf25756ed9a7177a126433ca6a127f7"
@@ -27257,6 +28277,11 @@
       "sha256": "91ec78487399609f7863e28f8c70565e3f589bec58bf07773756f53e5a5cce5e"
     },
     {
+      "path": "TravelPlanner_Backend/src/test/java/com/travel/planner/service/CandidateRecoveryRevisionTest.java",
+      "bytes": 4745,
+      "sha256": "3459cd1d9ba1fc97b1d15cc6218d4a8c0a28eb45bdd278b8a2f9b4c615dc8efe"
+    },
+    {
       "path": "TravelPlanner_Backend/src/test/java/com/travel/planner/service/CityRegionValidationTest.java",
       "bytes": 1981,
       "sha256": "2f0f54e1c96a2c4ef0da0ddad635893a530a8dd47d4614f4ed08463c63a15e3b"
@@ -27273,13 +28298,18 @@
     },
     {
       "path": "TravelPlanner_Backend/src/test/java/com/travel/planner/service/EndTimeApprovalTest.java",
-      "bytes": 8988,
-      "sha256": "5b4c57acfd647f4fb46448a15f1ec3559ea106788f2db01a4557676be483853a"
+      "bytes": 10027,
+      "sha256": "fb11d213ccb3b63f1aed3e72f2d587aeadbeb5aff8d237d2e7443d51bc030daa"
     },
     {
       "path": "TravelPlanner_Backend/src/test/java/com/travel/planner/service/EndTimeDecisionControllerTest.java",
       "bytes": 2639,
       "sha256": "97cd9396c986147785170b5113428ef0158340d4394093f5c3ecb8399257cd48"
+    },
+    {
+      "path": "TravelPlanner_Backend/src/test/java/com/travel/planner/service/FailedMealDiagnosticTest.java",
+      "bytes": 2802,
+      "sha256": "3514326d3e409273aa486765cff393db7d433a61b948e7e89252ff8937de54b0"
     },
     {
       "path": "TravelPlanner_Backend/src/test/java/com/travel/planner/service/FareDataServiceTest.java",
@@ -27328,8 +28358,8 @@
     },
     {
       "path": "TravelPlanner_Backend/src/test/java/com/travel/planner/service/IslandTravelTest.java",
-      "bytes": 4709,
-      "sha256": "b6897239f29239c85558285c40e794f2c61a511deb8aec9de6245cfdd53649ae"
+      "bytes": 4743,
+      "sha256": "ebf7749437c14b0ba4517ca3a44b99a69ca8a2d51780f98f4f71eeddf045f5b2"
     },
     {
       "path": "TravelPlanner_Backend/src/test/java/com/travel/planner/service/KoreanPlaceDescriptionsTest.java",
@@ -27353,8 +28383,8 @@
     },
     {
       "path": "TravelPlanner_Backend/src/test/java/com/travel/planner/service/LongTripTest.java",
-      "bytes": 17577,
-      "sha256": "b89a3049b0dd75b2aee9fb6164aca73e7a6bf3779619d35e0225313a64f7dd7a"
+      "bytes": 20081,
+      "sha256": "0315a0a9c217e29a63189d52acf412f0b6c9401f2a55ee7270abf0e7eb19ed33"
     },
     {
       "path": "TravelPlanner_Backend/src/test/java/com/travel/planner/service/MealCandidateRecoveryTest.java",
@@ -27365,6 +28395,11 @@
       "path": "TravelPlanner_Backend/src/test/java/com/travel/planner/service/MealGapTest.java",
       "bytes": 5795,
       "sha256": "f92bb6a0d03f8e74f2134090e8fc12a528f3063da325e5f06ddfa0d0fd5291f2"
+    },
+    {
+      "path": "TravelPlanner_Backend/src/test/java/com/travel/planner/service/MealRecoveryExpansionTest.java",
+      "bytes": 3385,
+      "sha256": "49e390e92508584d466084cba7a864b6f20ee4fb0ad2c1e4a56b1102873baa7d"
     },
     {
       "path": "TravelPlanner_Backend/src/test/java/com/travel/planner/service/OAuthLoginBridgeTest.java",
@@ -27418,8 +28453,8 @@
     },
     {
       "path": "TravelPlanner_Backend/src/test/java/com/travel/planner/service/PlanServiceTest.java",
-      "bytes": 43949,
-      "sha256": "527d7c1ebf8abf26768bc6b007aa462a3cb337d6155226bdd631f3a3a7971ef5"
+      "bytes": 43521,
+      "sha256": "eb980655831ad02fbda0ab0987fd6a31fab21337d0dcbf37fc53ff095ede1cda"
     },
     {
       "path": "TravelPlanner_Backend/src/test/java/com/travel/planner/service/PlanSummaryTest.java",
@@ -27445,6 +28480,11 @@
       "path": "TravelPlanner_Backend/src/test/java/com/travel/planner/service/SavedPlanQueryServiceTest.java",
       "bytes": 6454,
       "sha256": "e2595416c08a64cdc54bd4790ffff44739ac63c2e199e75a8b06cc553b268a4a"
+    },
+    {
+      "path": "TravelPlanner_Backend/src/test/java/com/travel/planner/service/SeaRouteIntegrationTest.java",
+      "bytes": 1893,
+      "sha256": "119df1777e0fdf06a634e872dc9ae344780e4e8ee21bc3043c399a50f3310504"
     },
     {
       "path": "TravelPlanner_Backend/src/test/java/com/travel/planner/service/SupplementalFoodServiceTest.java",
@@ -27473,8 +28513,8 @@
     },
     {
       "path": "TravelPlanner_Backend/src/test/java/com/travel/planner/service/UndatedPlanTest.java",
-      "bytes": 28895,
-      "sha256": "557592b4681f98b676add32a233d6fdc992f755b1ed791379309ff18de42a018"
+      "bytes": 29178,
+      "sha256": "7b51ffd5e587b930d6f6dd06cd3ea529d2b2f02c9b61949d1a6afb79f34a3735"
     },
     {
       "path": "TravelPlanner_Backend/src/test/java/com/travel/planner/service/UserProfileServiceTest.java",
@@ -27522,6 +28562,11 @@
       "sha256": "cd8989e59eb239730e895acadef259bbba21214b8fcf69fb8383233353d487f7"
     },
     {
+      "path": "TravelPlanner_Backend/src/test/java/com/travel/planner/transit/SeaRoutesTest.java",
+      "bytes": 12705,
+      "sha256": "4e3445d8ca693627a888b6014a6506644348dfb24bdf2ac4243d117f6135aa25"
+    },
+    {
       "path": "TravelPlanner_Backend/src/test/java/com/travel/planner/transit/TransitSearchCacheTest.java",
       "bytes": 2694,
       "sha256": "da215d16c639fa3ea0d7cf0395cf3366228930df125af4d7a3894eb6d08bf5d0"
@@ -27543,8 +28588,8 @@
     },
     {
       "path": "UPLOAD_EXCLUSIONS.json",
-      "bytes": 39971,
-      "sha256": "472146d77f7b9957bbf116cd5b623bc2d7f4bbc5c3214c00ba64b14b2104ca75"
+      "bytes": 40146,
+      "sha256": "fa71645fdc067683c02909d5ce9a55e03a86efaf28c7edeb516ca00402399da2"
     },
     {
       "path": "백엔드_알고리즘_기반과_앱별_변경_20261009.pdf",

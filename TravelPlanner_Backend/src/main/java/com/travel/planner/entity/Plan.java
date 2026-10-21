@@ -86,6 +86,25 @@ public class Plan {
     @Column
     private String transportation;
 
+    /** 섬 이동 수단 ("비행기"/"배", 비우면 자동) */
+    @Transient
+    private String islandTransport;
+
+    // Preserve the supplied main schema: the preference is encoded in the existing transport value.
+    public String getIslandTransport() {
+        if (islandTransport != null) return islandTransport;
+        return switch (com.travel.planner.transit.SeaRoutes.prefOf(transportation)) {
+            case FLIGHT -> "비행기";
+            case SHIP -> "배";
+            default -> null;
+        };
+    }
+
+    /** 구간 계산에 쓰는 이동 수단 (섬 이동 수단을 붙인 값) */
+    public String legTransport() {
+        return com.travel.planner.transit.SeaRoutes.tag(transportation != null ? transportation : "대중교통", getIslandTransport());
+    }
+
     @Column
     private java.time.LocalTime preferredStartTime;
 

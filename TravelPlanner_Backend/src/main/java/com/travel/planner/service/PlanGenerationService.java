@@ -58,6 +58,8 @@ public class PlanGenerationService {
     @org.springframework.beans.factory.annotation.Autowired
     private SupplementalFoodService supplementalFood;
     @org.springframework.beans.factory.annotation.Autowired
+    private MealCandidateRecovery mealRecovery;
+    @org.springframework.beans.factory.annotation.Autowired
     private LodgingCatalog lodgingCatalog;
     @org.springframework.beans.factory.annotation.Autowired
     private HotelRecommendation hotelRecommendation;
@@ -153,6 +155,18 @@ public class PlanGenerationService {
             dayCities = planService.assignDayCities(request, totalDays, centers, arrivalAirport, departureAirport, lodgingByNight,
                     planService.sightMinutesByCity(request, allPlaces));
         }
+        if(!request.isExcludeSuburbs()){
+            var split=splitLongLandTransfers(dayCities,centers,lodgingByNight.keySet(),request);
+            var extra=new LinkedHashSet<String>();for(int n=0;n<split.size();n++)if(!java.util.Objects.equals(split.get(n),dayCities.get(n))) {
+                extra.add(split.get(n));warnings.add((n+1)+"일차는 긴 육로 이동을 나누어 "+split.get(n)+"에서 숙박하고 다음 날 오전 9시에 출발합니다.");
+            }
+            if(!extra.isEmpty()){
+                var updated=new ArrayList<>(request.getCities());for(String city:extra)if(!updated.contains(city))updated.add(city);request.setCities(updated);
+                for(String city:extra){allPlaces.addAll(placeRepository.findByCity(city));var known=JapanCities.find(city);if(known!=null)centers.putIfAbsent(city,new double[]{known.lat,known.lng});}
+                if(supplementalFood!=null)supplementalFood.supplement(allPlaces,new ArrayList<>(extra));
+                dayCities=split;
+            }
+        }
         // Complete every overnight stay, including gaps in user-provided accommodations.
         if (totalDays > 1) suggestHotels(request, totalDays, dayCities, centers, mainCity, lodgingByNight, accommodationEntities, warnings,email);
 
@@ -186,9 +200,11 @@ public class PlanGenerationService {
         PlanGenerationJobs.progress("날짜별 동선과 방문 시간을 계산하고 있습니다.");
         PlanService.TripPlan tripPlan = planService.planTrip(input);
         // 식사 시간에 갈 식당이 없어 "자유 식사"가 된 자리가 있으면, 그 주변 식당을 찾아 넣고 한 번 더 짠다
+        tripPlan = fillAttractionGaps(input,tripPlan);
         tripPlan = fillMealGaps(input, tripPlan, dayCities, mainCity);
+        if(mealRecovery!=null)tripPlan=mealRecovery.complete(input,tripPlan,planService);
         if(airportAccess!=null)airportAccess.add(tripPlan.getDays(),request.getTransportation(),warnings);
-        if(flightTransfers!=null)flightTransfers.add(tripPlan.getDays());
+        if(flightTransfers!=null)flightTransfers.add(tripPlan.getDays(),request.legTransport());
         TimelineConsistency.repair(tripPlan.getDays(),railRouteService,request,warnings);
         validateOvernightAnchors(tripPlan);
         warnings.addAll(tripPlan.getWarnings());
@@ -228,7 +244,7 @@ public class PlanGenerationService {
         response.setReason(PlanSummarizer.tripOverview(request, tripPlan.getDays()));
         response.setDays(PlanSummarizer.summarizeDays(tripPlan.getDays()));
         PlanGenerationJobs.progress("이동 정보와 일정 결과를 정리하고 있습니다.");
-        response.setTimeline(timelineAssembler.toTimeline(tripPlan.getDays(), request.getLanguage(), request.getTransportation()));
+        response.setTimeline(timelineAssembler.toTimeline(tripPlan.getDays(), request.getLanguage(), request.legTransport()));
         // 구간별 교통 정보에서 일자별·전체 교통비를 합산해 개요와 요약에 붙인다
         TransitTotals.apply(response, railRouteService.isNetworkLoaded());
         // 여행 전체의 요금 합계와 견주어 이득인 교통 패스를 고른다
@@ -632,9 +648,11 @@ public class PlanGenerationService {
         int added = 0;
         for (Object[] anchor : mealGapAnchors(plan.getDays(), dayCities, mainCity)) {
             try {
-                for (Place p : googleMapsService.searchRestaurantsNear((double) anchor[0], (double) anchor[1], MEAL_GAP_RADIUS_M, (String) anchor[2])) {
+                List<Place> nearby=googleMapsService.searchRestaurantsNear((double) anchor[0], (double) anchor[1], MEAL_GAP_RADIUS_M, (String) anchor[2]);
+                if(supplementalFood!=null)nearby=supplementalFood.cacheSearchResults((String)anchor[2],nearby);
+                for (Place p : nearby) {
                     if (p.getPlaceId() == null || !known.add(p.getPlaceId())) continue;
-                    Place saved = planPersistenceService.upsertPlace(p);
+                    Place saved = SupplementalFoodService.supplemental(p)?p:planPersistenceService.upsertPlace(p);
                     input.candidates.add(saved);
                     added++;
                 }
@@ -647,6 +665,50 @@ public class PlanGenerationService {
         int after = mealGapCount(again);
         System.out.println("[식당] 자유 식사 " + gaps + "곳 주변에서 식당 " + added + "곳을 찾아 다시 짰습니다: 자유 식사 " + gaps + " → " + after);
         return after < gaps ? again : plan;
+    }
+
+    List<String> splitLongLandTransfers(List<String> dayCities,Map<String,double[]> centers,Set<Integer> fixedNights,PlanRequest request){
+        var choices=JapanCities.CITIES.values().stream().filter(c->c.island=='M' || c.island=='H').map(c->c.name).toList();
+        var cache=new HashMap<String,Integer>();
+        java.util.function.ToIntBiFunction<String,String> travel=(a,z)->cache.computeIfAbsent(a+"→"+z,key->{
+            double[] from=centers.get(a),to=centers.get(z);var knownFrom=JapanCities.find(a);var knownTo=JapanCities.find(z);
+            if(from==null && knownFrom!=null)from=new double[]{knownFrom.lat,knownFrom.lng};if(to==null && knownTo!=null)to=new double[]{knownTo.lat,knownTo.lng};
+            if(from==null || to==null || com.travel.planner.util.IslandTravel.crossesSea(from[0],from[1],to[0],to[1]))return Integer.MAX_VALUE;
+            double km=DistanceUtil.calculateDistance(from[0],from[1],to[0],to[1]);if(km<180)return 0;
+            int estimate=com.travel.planner.util.TravelTimeEstimator.minutes(from[0],from[1],to[0],to[1],request.getTransportation());
+            var leg=railRouteService.leg(from[0],from[1],a,to[0],to[1],z,request.getTransportation(),estimate,null,9*60);
+            return leg==null?Integer.MAX_VALUE:leg.getMinutes();
+        });
+        // The existing transport network, not straight-line distance, decides whether a stop is reachable.
+        java.util.function.BiFunction<String,String,List<String>> nearby=(a,z)->{
+            var from=JapanCities.find(a);var to=JapanCities.find(z);if(from==null || to==null)return choices.stream().limit(10).toList();
+            return choices.stream().filter(c->!c.equals(a)&&!c.equals(z)).sorted(Comparator.comparingDouble(c->{
+                var point=JapanCities.find(c);double first=DistanceUtil.calculateDistance(from.lat,from.lng,point.lat,point.lng),last=DistanceUtil.calculateDistance(point.lat,point.lng,to.lat,to.lng);
+                return first+last+Math.abs(first-last)*0.2;
+            })).limit(10).toList();
+        };
+        return LandStopoverPlanner.split(dayCities,fixedNights,nearby,travel,480);
+    }
+
+    static int emptySightMinutes(PlanService.TripPlan plan){return plan.getDays().stream().flatMap(d->d.getItems().stream()).filter(i->i.getType()==PlanService.SimulatedItinerary.Type.FREE && i.getEndMin()!=null).mapToInt(i->Math.max(0,i.getEndMin()-i.getStartMin())).sum();}
+    PlanService.TripPlan fillAttractionGaps(PlanService.TripInput input,PlanService.TripPlan initial){
+        if(emptySightMinutes(initial)<90)return initial;
+        var known=new java.util.HashSet<String>();for(var p:input.candidates)known.add(p.getPlaceId());
+        var searched=new ArrayList<double[]>();int added=0;
+        for(var day:initial.getDays()){
+            for(int i=0;i<day.getItems().size();i++){
+                var item=day.getItems().get(i);if(item.getType()!=PlanService.SimulatedItinerary.Type.FREE || item.getEndMin()==null || item.getEndMin()-item.getStartMin()<90)continue;
+                double[] at=located(day.getItems(),i,-1);if(at==null)at=located(day.getItems(),i,1);if(at==null)continue;
+                final double a=at[0],o=at[1];if(searched.size()>=6 || searched.stream().anyMatch(x->DistanceUtil.calculateDistance(x[0],x[1],a,o)<1))continue;
+                searched.add(at);PlanGenerationJobs.progress(day.getDayNumber()+"일차 주변 관광지를 보충하고 있습니다.");
+                for(var p:googleMapsService.searchAttractionsNear(a,o,4000,day.getCity())){
+                    if(p.getPlaceId()==null || !known.add(p.getPlaceId()))continue;
+                    input.candidates.add(planPersistenceService.upsertPlace(p));added++;
+                }
+            }
+        }
+        if(added==0)return initial;
+        var again=planService.planTrip(input);return emptySightMinutes(again)<emptySightMinutes(initial)?again:initial;
     }
 
     private void emergencyCollect(String city, String query, String provisionalTheme, List<Place> allPlaces) {
@@ -814,6 +876,12 @@ public class PlanGenerationService {
         for (String city : nightCities) {
             List<Place> hotels = lodgingCatalog==null?placeRepository.findByCity(city).stream().filter(PlanService::isLodging).filter(LodgingCatalog::located).toList():lodgingCatalog.recommended(city);
             if(hotels.isEmpty())hotels=googleMapsService.searchRecommendedHotels(city).stream().filter(LodgingCatalog::located).toList();
+            double[] area=centers.get(city);
+            if(area!=null && (hotels.isEmpty() || hotels.stream().noneMatch(h->DistanceUtil.calculateDistance(area[0],area[1],h.getLatitude(),h.getLongitude())<=8))){
+                var merged=new LinkedHashMap<String,Place>();for(var h:hotels)merged.put(h.getPlaceId(),h);
+                for(var h:googleMapsService.searchHotelsNear(area[0],area[1],8000,city))if(LodgingCatalog.located(h))merged.putIfAbsent(h.getPlaceId(),h);
+                hotels=new ArrayList<>(merged.values());
+            }
             if(hotels.isEmpty())throw new PlanGenerationException(city+" 추천 숙소를 찾지 못했습니다. 해당 지역의 숙소명과 주소를 입력해주세요.");
             if(hotelBudget!=null) hotels=hotelBudget.eligible(hotels,request,totalDays-1,warnings);
             double[] center = centers.get(city);

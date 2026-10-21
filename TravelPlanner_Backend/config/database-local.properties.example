@@ -1,3 +1,5 @@
-spring.datasource.url=jdbc:mariadb://127.0.0.1:3306/test_planner_20261019_update
-spring.datasource.username=YOUR_DB_USER
-spring.datasource.password=YOUR_DB_PASSWORD
+# Copy to database-local.properties and fill in NEW database connection details.
+# Do not point this replacement backend at planner_local_v2.
+spring.datasource.url=jdbc:mariadb://127.0.0.1:3306/REPLACE_WITH_NEW_DATABASE
+spring.datasource.username=REPLACE_WITH_NEW_USERNAME
+spring.datasource.password=REPLACE_WITH_NEW_PASSWORD

@@ -78,7 +78,8 @@ public class PlanPersistenceService {
         // reroute 에서 원래 조건을 복원할 수 있도록 요청 값을 함께 저장한다.
         plan.setCities(String.join(", ", request.getCities()));
         plan.setCompanion(request.getCompanion());
-        plan.setTransportation(request.getTransportation());
+        plan.setTransportation(request.legTransport());
+        plan.setIslandTransport(request.getIslandTransport());
         plan.setPreferredStartTime(request.getPreferredStartTime());
         plan.setPreferredEndTime(request.getPreferredEndTime());
         if (request.getExcludedThemes() != null) plan.setExcludedThemes(String.join(", ", request.getExcludedThemes()));
@@ -91,7 +92,8 @@ public class PlanPersistenceService {
             plan.addAccommodation(accommodation);
         }
 
-        String transport = request.getTransportation() != null ? request.getTransportation() : "대중교통";
+        String transport = com.travel.planner.transit.SeaRoutes.tag(
+                request.getTransportation() != null ? request.getTransportation() : "대중교통", request.getIslandTransport());
         List<Traffic> traffics = new ArrayList<>();
         for (PlanService.DayPlan day : days) {
             traffics.addAll(appendDay(plan, day.getDayNumber(), day.getItems(), transport, supplementalToSave));
@@ -120,12 +122,30 @@ public class PlanPersistenceService {
             planRepository.flush();
         }
 
-        String transport = plan.getTransportation() != null ? plan.getTransportation() : "대중교통";
+        String transport = plan.legTransport();
         java.util.Map<Itinerary,Place> supplementalToSave=new java.util.LinkedHashMap<>();
         List<Traffic> traffics = appendDay(plan, dayNumber, items, transport, supplementalToSave);
         planRepository.flush();
         trafficRepository.saveAll(traffics);
         if(supplementalFood!=null) supplementalToSave.forEach(supplementalFood::save);
+    }
+
+    /** Delete a saved plan only after verifying ownership, including dependent traffic. */
+    @Transactional
+    public void deletePlan(String email, Long id) {
+        Plan plan = planRepository.findDetailById(id).orElseThrow(() ->
+                new org.springframework.web.server.ResponseStatusException(
+                        org.springframework.http.HttpStatus.NOT_FOUND, "일정을 찾을 수 없습니다."));
+        if (plan.getUser() == null || !email.equals(plan.getUser().getEmail())) {
+            throw new org.springframework.web.server.ResponseStatusException(
+                    org.springframework.http.HttpStatus.FORBIDDEN, "본인의 일정만 삭제할 수 있습니다.");
+        }
+        if (!plan.getItineraries().isEmpty()) {
+            trafficRepository.deleteByItineraryIn(new ArrayList<>(plan.getItineraries()));
+        }
+        trafficRepository.flush();
+        planRepository.delete(plan);
+        planRepository.flush();
     }
 
     /** 회원 탈퇴 등으로 계획을 지울 때: Traffic → Plan(→ Itinerary/Accommodation) 순서로 삭제 */
@@ -174,7 +194,7 @@ public class PlanPersistenceService {
 
             Traffic traffic = new Traffic();
             traffic.setItinerary(itinerary);
-            traffic.setTransportType(leg != null && leg.getMode() != null ? leg.getMode() : transport);
+            traffic.setTransportType(leg != null && leg.getMode() != null ? leg.getMode() : com.travel.planner.transit.SeaRoutes.untag(transport));
             traffic.setEstimatedCost(leg != null && leg.getFareYen() != null ? leg.getFareYen() : 0);   // 성인 1인 추정 요금(엔)
             traffic.setPathDetails(leg != null ? leg.getSummary() : null);
             traffic.setDurationMinutes(sim.getTravelMinutes());   // 엔진이 계산한 이동 시간을 그대로 저장
@@ -225,7 +245,8 @@ public class PlanPersistenceService {
         req.setThemes(ThemeVocabulary.normalizeList(plan.getTheme()));
         req.setExcludedThemes(splitList(plan.getExcludedThemes()));
         req.setCompanion(plan.getCompanion());
-        req.setTransportation(plan.getTransportation());
+        req.setTransportation(com.travel.planner.transit.SeaRoutes.untag(plan.getTransportation()));
+        req.setIslandTransport(plan.getIslandTransport());
         req.setPreferredStartTime(plan.getPreferredStartTime());
         req.setPreferredEndTime(plan.getPreferredEndTime());
         req.setFixedSchedules(FixedScheduleCodec.fromJson(plan.getFixedSchedulesJson()));

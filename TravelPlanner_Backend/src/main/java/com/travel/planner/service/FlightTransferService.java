@@ -31,22 +31,37 @@ public class FlightTransferService {
             return persistence.upsertPlace(p);
         });
     }
-    public void add(List<PlanService.DayPlan> days){
+    public void add(List<PlanService.DayPlan> days){add(days,null);}
+    public void add(List<PlanService.DayPlan> days,String transportation){
         for(var day:days){
             var rebuilt=new ArrayList<PlanService.SimulatedItinerary>();
             PlanService.SimulatedItinerary previous=null;
             for(var item:day.getItems()){
                 PlanGenerationJobs.checkCancellation();
                 if(previous!=null && located(item) && IslandTravel.crossesSea(previous.getLatitude(),previous.getLongitude(),item.getLatitude(),item.getLongitude())){
+                    var crossing=com.travel.planner.transit.SeaRoutes.crossing(previous.getLatitude(),previous.getLongitude(),item.getLatitude(),item.getLongitude(),transportation);
+                    // Upstream ship routes already carry port access; do not inject flight placeholders over them.
+                    if(crossing!=null && crossing.anyShip()) {rebuilt.add(item);previous=item;continue;}
                     var departure=airport(previous.getLatitude(),previous.getLongitude());var arrival=airport(item.getLatitude(),item.getLongitude());
+                    boolean knownAir=crossing!=null && !crossing.unknown && crossing.anyFlight();
+                    if(knownAir) {
+                        var first=crossing.hops.getFirst()[0];var last=crossing.hops.getLast()[1];
+                        departure=airport(first.lat,first.lng);arrival=airport(last.lat,last.lng);
+                    }
                     var origin=place(departure);var destination=place(arrival);
+                    // The upstream sea leg includes boarding/arrival processing. Do not add it twice.
+                    int preparation=knownAir?0:60,arrivalPreparation=knownAir?0:30;
                     int start=previous.getEndMin()==null?previous.getStartMin():previous.getEndMin();
                     // TimelineConsistency resolves terrestrial airport access using the transit DB.
-                    rebuilt.add(new PlanService.SimulatedItinerary(PlanService.SimulatedItinerary.Type.VISIT,origin,null,start,start+60,0,origin.getLatitude(),origin.getLongitude()));
+                    rebuilt.add(new PlanService.SimulatedItinerary(PlanService.SimulatedItinerary.Type.VISIT,origin,null,start,start+preparation,0,origin.getLatitude(),origin.getLongitude()));
                     int flying=minutes(DistanceUtil.calculateDistance(departure.latitude,departure.longitude,arrival.latitude,arrival.longitude));
-                    int landing=start+60+flying;
+                    if(knownAir) {
+                        var airportCrossing=com.travel.planner.transit.SeaRoutes.crossing(departure.latitude,departure.longitude,arrival.latitude,arrival.longitude,transportation);
+                        if(airportCrossing!=null && !airportCrossing.unknown)flying=airportCrossing.minutes;
+                    }
+                    int landing=start+preparation+flying;
                     rebuilt.add(new PlanService.SimulatedItinerary(PlanService.SimulatedItinerary.Type.TRANSFER,null,"비행기 이동 필요",landing,null,flying,destination.getLatitude(),destination.getLongitude()));
-                    rebuilt.add(new PlanService.SimulatedItinerary(PlanService.SimulatedItinerary.Type.VISIT,destination,null,landing,landing+30,0,destination.getLatitude(),destination.getLongitude()));
+                    rebuilt.add(new PlanService.SimulatedItinerary(PlanService.SimulatedItinerary.Type.VISIT,destination,null,landing,landing+arrivalPreparation,0,destination.getLatitude(),destination.getLongitude()));
                 }
                 rebuilt.add(item);
                 if(located(item))previous=item;

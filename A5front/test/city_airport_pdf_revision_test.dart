@@ -116,7 +116,7 @@ void main() {
         (w) =>
             w is CheckboxListTile &&
             w.title is Text &&
-            ((w.title as Text).data?.startsWith('오키나와 (') ?? false),
+            (w.title as Text).data == '오키나와',
       );
       await tester.ensureVisible(checkbox);
       await tester.tap(checkbox);
