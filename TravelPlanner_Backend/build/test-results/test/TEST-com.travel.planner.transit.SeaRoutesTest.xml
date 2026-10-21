@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.travel.planner.transit.SeaRoutesTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2026-10-21T18:38:56.100Z" hostname="DESKTOP-L0O1S4Q" time="0.009">
+  <properties/>
+  <testcase name="tagRoundTrip()" classname="com.travel.planner.transit.SeaRoutesTest" time="0.0"/>
+  <testcase name="shortHopsUseTheFerry()" classname="com.travel.planner.transit.SeaRoutesTest" time="0.001"/>
+  <testcase name="chosenIslandTransportIsUsedWhenPossible()" classname="com.travel.planner.transit.SeaRoutesTest" time="0.001"/>
+  <testcase name="engineTravelTimeUsesTheCrossing()" classname="com.travel.planner.transit.SeaRoutesTest" time="0.002"/>
+  <testcase name="islandsWithoutRoutesGetAWarningNotATaxi()" classname="com.travel.planner.transit.SeaRoutesTest" time="0.001"/>
+  <testcase name="ferryLegHasGroundShipGroundSteps()" classname="com.travel.planner.transit.SeaRoutesTest" time="0.0"/>
+  <testcase name="sameLandIsNotACrossing()" classname="com.travel.planner.transit.SeaRoutesTest" time="0.001"/>
+  <testcase name="everyPortAndAirportIsOnItsOwnLand()" classname="com.travel.planner.transit.SeaRoutesTest" time="0.0"/>
+  <testcase name="landsAreRecognised()" classname="com.travel.planner.transit.SeaRoutesTest" time="0.0"/>
+  <testcase name="farIslandsChainFlightAndFerry()" classname="com.travel.planner.transit.SeaRoutesTest" time="0.001"/>
+  <testcase name="flightLegLeavesAirfareOut()" classname="com.travel.planner.transit.SeaRoutesTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.travel.planner.service.CollectedPassCatalogTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-21T18:38:39.672Z" hostname="DESKTOP-L0O1S4Q" time="0.236">
+  <properties/>
+  <testcase name="datedAndUndatedPassEligibilityRespectsSalesValidity()" classname="com.travel.planner.service.CollectedPassCatalogTest" time="0.002"/>
+  <testcase name="one24HourPurchaseCoversTwoDaysButDoesNotDiscountJr()" classname="com.travel.planner.service.CollectedPassCatalogTest" time="0.161"/>
+  <testcase name="ownPassPricesAndCoverageAreLoadedFromSeparateDatabase()" classname="com.travel.planner.service.CollectedPassCatalogTest" time="0.005"/>
+  <system-out><![CDATA[2026-10-22T03:38:39.674+09:00  INFO 7508 --- [planner] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.travel.planner.service.CollectedPassCatalogTest]: CollectedPassCatalogTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-22T03:38:39.736+09:00  INFO 7508 --- [planner] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.travel.planner.PlannerApplication for test class com.travel.planner.service.CollectedPassCatalogTest
+2026-10-22T03:38:39.737+09:00  INFO 7508 --- [planner] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.travel.planner.service.CollectedPassCatalogTest]: CollectedPassCatalogTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-22T03:38:39.738+09:00  INFO 7508 --- [planner] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.travel.planner.PlannerApplication for test class com.travel.planner.service.CollectedPassCatalogTest
+Hibernate: 
+    select
+        tn1_0.id,
+        tn1_0.ja,
+        tn1_0.kind,
+        tn1_0.ko 
+    from
+        transit_name tn1_0
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

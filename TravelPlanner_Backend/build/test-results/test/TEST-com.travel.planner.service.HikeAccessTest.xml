@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.travel.planner.service.HikeAccessTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-21T18:38:41.048Z" hostname="DESKTOP-L0O1S4Q" time="0.049">
+  <properties/>
+  <testcase name="summitWithoutTransitIsSlightlyLowerOnTransitTripsButNotByCar()" classname="com.travel.planner.service.HikeAccessTest" time="0.011"/>
+  <testcase name="summitInfoForLegs()" classname="com.travel.planner.service.HikeAccessTest" time="0.0"/>
+  <testcase name="parkingIsLookedUpOnceOnlyForSummitsWithoutTransit()" classname="com.travel.planner.service.HikeAccessTest" time="0.038"/>
+  <system-out><![CDATA[[등산] 대중교통 입구가 없는 등산하는 곳 1곳 중 1곳의 주차장을 찾았습니다.
+[등산] 대중교통 입구가 없는 등산하는 곳 1곳 중 0곳의 주차장을 찾았습니다.
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

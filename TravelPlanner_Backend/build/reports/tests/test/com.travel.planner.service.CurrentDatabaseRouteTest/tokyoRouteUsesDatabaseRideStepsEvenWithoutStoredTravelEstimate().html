@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - tokyoRouteUsesDatabaseRideStepsEvenWithoutStoredTravelEstimate()</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<div class="breadcrumbs">
+<a class="breadcrumb" href="../index.html">all</a> &gt; 
+<a class="breadcrumb" href="index.html">com.travel.planner.service.CurrentDatabaseRouteTest</a> &gt; 
+<span class="breadcrumb">tokyoRouteUsesDatabaseRideStepsEvenWithoutStoredTravelEstimate()</span>
+</div>
+<div class="tab-container">
+<ul class="tabLinks">
+<li>
+<a class="successGroup" href="#">Gradle Test Run :test</a>
+</li>
+</ul>
+<div class="tab">
+<h2>Gradle Test Run :test</h2>
+<h1>tokyoRouteUsesDatabaseRideStepsEvenWithoutStoredTravelEstimate()</h1>
+<div class="tab-container">
+<ul class="tabLinks">
+<li>
+<a class="" href="#">summary</a>
+</li>
+<li>
+<a class="" href="#">standard output</a>
+</li>
+</ul>
+<div class="tab">
+<h2>summary</h2>
+<div>
+<div class="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox">
+<div class="counter">1</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox">
+<div class="counter">0</div>
+<p>skipped</p>
+</div>
+</td>
+<td>
+<div class="infoBox duration">
+<div class="counter">0.844s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="tab">
+<h2>standard output</h2>
+<span class="code">
+<pre id="root-0-test-stdout-tokyoRouteUsesDatabaseRideStepsEvenWithoutStoredTravelEstimate()">Hibernate: 
+    select
+        ts1_0.id,
+        ts1_0.category,
+        ts1_0.code,
+        ts1_0.group_code,
+        ts1_0.latitude,
+        ts1_0.line_name,
+        ts1_0.longitude,
+        ts1_0.name,
+        ts1_0.operator_name,
+        ts1_0.operator_type,
+        ts1_0.rail_class,
+        ts1_0.source 
+    from
+        transit_station ts1_0
+Hibernate: 
+    select
+        tl1_0.id,
+        tl1_0.distance_km,
+        tl1_0.from_station_id,
+        tl1_0.to_station_id 
+    from
+        transit_link tl1_0
+Hibernate: 
+    select
+        ts1_0.id,
+        ts1_0.feed_key,
+        ts1_0.latitude,
+        ts1_0.longitude,
+        ts1_0.name,
+        ts1_0.name_ko,
+        ts1_0.stop_code 
+    from
+        transit_stop ts1_0
+Hibernate: 
+    select
+        tf1_0.id,
+        tf1_0.agencies,
+        tf1_0.checked_at,
+        tf1_0.fare_coverage_percent,
+        tf1_0.feed_key,
+        tf1_0.imported_at,
+        tf1_0.include_rail,
+        tf1_0.license,
+        tf1_0.message,
+        tf1_0.name,
+        tf1_0.pattern_count,
+        tf1_0.route_count,
+        tf1_0.status,
+        tf1_0.stop_count,
+        tf1_0.trip_count,
+        tf1_0.url,
+        tf1_0.valid_from,
+        tf1_0.valid_to 
+    from
+        transit_feed tf1_0
+Hibernate: 
+    select
+        tp1_0.id,
+        tp1_0.agency,
+        tp1_0.category,
+        tp1_0.cum_minutes,
+        tp1_0.fare_table,
+        tp1_0.feed_key,
+        tp1_0.first_departure,
+        tp1_0.flat_fare,
+        tp1_0.headsign,
+        tp1_0.irregular,
+        tp1_0.last_departure,
+        tp1_0.route_code,
+        tp1_0.route_long_name,
+        tp1_0.route_name,
+        tp1_0.service_from,
+        tp1_0.service_to,
+        tp1_0.stop_flags,
+        tp1_0.stop_ids,
+        tp1_0.trips_holiday,
+        tp1_0.trips_saturday,
+        tp1_0.trips_weekday 
+    from
+        transit_pattern tp1_0
+[교통] 교통망을 메모리에 올렸습니다: 역 10075개, 역간 연결 9491개, 환승 2455개 / 정류장 35260개, 노선 패턴 5159개 (GTFS 노선과 겹치는 철도망 노선 6개는 뺌) (826ms)
+Hibernate: 
+    select
+        tft1_0.id,
+        tft1_0.area_boxes,
+        tft1_0.bands,
+        tft1_0.categories,
+        tft1_0.child_round_down,
+        tft1_0.effective_from,
+        tft1_0.enabled,
+        tft1_0.except_lines,
+        tft1_0.line_filter,
+        tft1_0.name,
+        tft1_0.note,
+        tft1_0.operators,
+        tft1_0.reference_url,
+        tft1_0.source,
+        tft1_0.station_adds,
+        tft1_0.table_key,
+        tft1_0.updated_at,
+        tft1_0.verified_at 
+    from
+        transit_fare_table tft1_0
+Hibernate: 
+    select
+        tfp1_0.id,
+        tfp1_0.adult_yen,
+        tfp1_0.child_yen,
+        tfp1_0.fare_kind,
+        tfp1_0.group_name,
+        tfp1_0.note,
+        tfp1_0.reference_url,
+        tfp1_0.source,
+        tfp1_0.station_a,
+        tfp1_0.station_b,
+        tfp1_0.updated_at,
+        tfp1_0.verified_at 
+    from
+        transit_fare_pair tfp1_0
+Hibernate: 
+    select
+        tlk1_0.id,
+        tlk1_0.line_name,
+        tlk1_0.note,
+        tlk1_0.reference_url,
+        tlk1_0.source,
+        tlk1_0.stations,
+        tlk1_0.updated_at,
+        tlk1_0.verified_at 
+    from
+        transit_line_km tlk1_0
+</pre>
+<button class="clipboard-copy-btn" aria-label="Copy to clipboard" data-copy-element-id="root-0-test-stdout-tokyoRouteUsesDatabaseRideStepsEvenWithoutStoredTravelEstimate()">Copy</button>
+</span>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="https://www.gradle.org">Gradle 9.7.1</a> at 2026. 10. 22. 오전 3:38:56</p>
+</div>
+</div>
+</body>
+</html>

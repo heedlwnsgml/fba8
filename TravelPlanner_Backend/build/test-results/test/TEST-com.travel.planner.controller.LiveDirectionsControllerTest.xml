@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.travel.planner.controller.LiveDirectionsControllerTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-21T18:38:34.140Z" hostname="DESKTOP-L0O1S4Q" time="0.111">
+  <properties/>
+  <testcase name="readsCurrentGoogleStepsWithoutStoredEstimates()" classname="com.travel.planner.controller.LiveDirectionsControllerTest" time="0.014"/>
+  <testcase name="sendsAnOnDemandGoogleRequestWithNoCredentialsInTheResult()" classname="com.travel.planner.controller.LiveDirectionsControllerTest" time="0.096"/>
+  <testcase name="invalidCoordinatesAreNotInterpretedAsARequestUrl()" classname="com.travel.planner.controller.LiveDirectionsControllerTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

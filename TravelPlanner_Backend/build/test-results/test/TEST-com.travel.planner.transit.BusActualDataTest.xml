@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.travel.planner.transit.BusActualDataTest" tests="1" skipped="1" failures="0" errors="0" timestamp="2026-10-21T18:38:55.818Z" hostname="DESKTOP-L0O1S4Q" time="0.0">
+  <properties/>
+  <testcase name="readsNationalArchiveAndChecksTravelSamples()" classname="com.travel.planner.transit.BusActualDataTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

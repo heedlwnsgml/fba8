@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.travel.planner.service.PaceSettingsTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2026-10-21T18:38:42.275Z" hostname="DESKTOP-L0O1S4Q" time="0.579">
+  <properties/>
+  <testcase name="mediumLightDayMovesPastAFixedSchedule()" classname="com.travel.planner.service.PaceSettingsTest" time="0.052"/>
+  <testcase name="tourLightIntervalAndSightHoursFollowSettings()" classname="com.travel.planner.service.PaceSettingsTest" time="0.128"/>
+  <testcase name="disablingRestDaysSkipsMediumAndLongLightDays()" classname="com.travel.planner.service.PaceSettingsTest" time="0.186"/>
+  <testcase name="settingsAreValidated()" classname="com.travel.planner.service.PaceSettingsTest" time="0.001"/>
+  <testcase name="liveRestIntervalAndSightHoursFollowSettings()" classname="com.travel.planner.service.PaceSettingsTest" time="0.082"/>
+  <testcase name="mediumTripIgnoresLongTripSettings()" classname="com.travel.planner.service.PaceSettingsTest" time="0.031"/>
+  <testcase name="defaultCanBeOffWithoutLosingSavedIntervals()" classname="com.travel.planner.service.PaceSettingsTest" time="0.0"/>
+  <testcase name="tenDayTripGetsOneLightDayOnDaySeven()" classname="com.travel.planner.service.PaceSettingsTest" time="0.093"/>
+  <testcase name="paceNoteWording()" classname="com.travel.planner.service.PaceSettingsTest" time="0.0"/>
+  <testcase name="mediumLightDayIsAtTwoThirds()" classname="com.travel.planner.service.PaceSettingsTest" time="0.0"/>
+  <testcase name="settingsAreStoredOnTheUserWithDefaults()" classname="com.travel.planner.service.PaceSettingsTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

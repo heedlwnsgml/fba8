@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.travel.planner.service.OAuthLoginBridgeTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-10-21T18:38:42.098Z" hostname="DESKTOP-L0O1S4Q" time="0.01">
+  <properties/>
+  <testcase name="secretsAreIndependentAndTokenIsOneUse()" classname="com.travel.planner.service.OAuthLoginBridgeTest" time="0.0"/>
+  <testcase name="failureIsDeliveredWithoutTokens()" classname="com.travel.planner.service.OAuthLoginBridgeTest" time="0.001"/>
+  <testcase name="unfinishedRequestsAreBounded()" classname="com.travel.planner.service.OAuthLoginBridgeTest" time="0.008"/>
+  <testcase name="unclaimedRequestCannotReceiveToken()" classname="com.travel.planner.service.OAuthLoginBridgeTest" time="0.0"/>
+  <testcase name="expiredRequestAndCanceledRequestCannotBeUsed()" classname="com.travel.planner.service.OAuthLoginBridgeTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

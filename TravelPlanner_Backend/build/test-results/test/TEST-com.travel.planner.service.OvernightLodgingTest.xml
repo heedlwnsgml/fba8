@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.travel.planner.service.OvernightLodgingTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-10-21T18:38:42.108Z" hostname="DESKTOP-L0O1S4Q" time="0.167">
+  <properties/>
+  <testcase name="missingHotelsFailInsteadOfSavingAnUnanchoredTrip()" classname="com.travel.planner.service.OvernightLodgingTest" time="0.151"/>
+  <testcase name="lastDayEndsAtAirportWhenSpecified()" classname="com.travel.planner.service.OvernightLodgingTest" time="0.006"/>
+  <testcase name="gapsAreFilledWithoutChangingSpecifiedHotelAndConsecutiveDaysShareTheSameHotel()" classname="com.travel.planner.service.OvernightLodgingTest" time="0.009"/>
+  <testcase name="primaryHotelsWinWithoutReadingOlderHotels()" classname="com.travel.planner.service.OvernightLodgingTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

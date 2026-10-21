@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.travel.planner.service.EndTimeApprovalTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-10-21T18:38:40.758Z" hostname="DESKTOP-L0O1S4Q" time="0.077">
+  <properties/>
+  <testcase name="decliningAnImpossibleTransferFailsAfterAttemptAndDoesNotSave()" classname="com.travel.planner.service.EndTimeApprovalTest" time="0.014"/>
+  <testcase name="repairableDayFinishesWithinLimitWithoutAsking()" classname="com.travel.planner.service.EndTimeApprovalTest" time="0.005"/>
+  <testcase name="flightDeadlineCannotBeOverridden()" classname="com.travel.planner.service.EndTimeApprovalTest" time="0.006"/>
+  <testcase name="approvedLateFinishNeverDelaysTheNextMorning()" classname="com.travel.planner.service.EndTimeApprovalTest" time="0.012"/>
+  <testcase name="firstDayConsentDoesNotSkipThirdDayAndDecliningDoesNotSave()" classname="com.travel.planner.service.EndTimeApprovalTest" time="0.019"/>
+  <testcase name="transferOverlappingNextNineAmCannotBeApprovedOrCommitted()" classname="com.travel.planner.service.EndTimeApprovalTest" time="0.006"/>
+  <testcase name="waitingCanBeCancelledAndStillCountsTowardTwoJobLimit()" classname="com.travel.planner.service.EndTimeApprovalTest" time="0.012"/>
+  <system-out><![CDATA[2026-10-22T03:38:40.762+09:00  INFO 7508 --- [planner] [plan-generation] c.t.planner.service.PlanGenerationJobs   : Generation stage [생성 순서를 기다리고 있습니다.] took 1 ms
+2026-10-22T03:38:40.763+09:00  INFO 7508 --- [planner] [plan-generation] c.t.planner.service.PlanGenerationJobs   : Generation stage [1/1일차 이동 시간과 도착 시각을 확인하고 있습니다.] took 0 ms
+2026-10-22T03:38:40.763+09:00  INFO 7508 --- [planner] [plan-generation] c.t.planner.service.TimelineConsistency  : Day 1: no removable stops remain; finish=1,350, preferredLimit=1,320, flightLimit=2,147,483,647
+2026-10-22T03:38:40.768+09:00 ERROR 7508 --- [planner] [plan-generation] c.t.planner.service.PlanGenerationJobs   : Generation failure type PlanGenerationException at com.travel.planner.service.TimelineConsistency.repair(TimelineConsistency.java:75)
+2026-10-22T03:38:40.768+09:00  INFO 7508 --- [planner] [plan-generation] c.t.planner.service.PlanGenerationJobs   : Generation finished status=FAILED, elapsed=7 ms, stage=1일차 종료 시각 안에 맞는 대안을 찾고 있습니다.
+2026-10-22T03:38:40.774+09:00  INFO 7508 --- [planner] [plan-generation] c.t.planner.service.PlanGenerationJobs   : Generation stage [생성 순서를 기다리고 있습니다.] took 0 ms
+2026-10-22T03:38:40.774+09:00  INFO 7508 --- [planner] [plan-generation] c.t.planner.service.PlanGenerationJobs   : Generation stage [1/1일차 이동 시간과 도착 시각을 확인하고 있습니다.] took 0 ms
+2026-10-22T03:38:40.775+09:00  INFO 7508 --- [planner] [plan-generation] c.t.planner.service.PlanGenerationJobs   : Generation finished status=SUCCEEDED, elapsed=1 ms, stage=1일차 종료 시각 안에 맞는 대안을 찾고 있습니다.
+2026-10-22T03:38:40.779+09:00  INFO 7508 --- [planner] [plan-generation] c.t.planner.service.PlanGenerationJobs   : Generation stage [생성 순서를 기다리고 있습니다.] took 0 ms
+2026-10-22T03:38:40.780+09:00  INFO 7508 --- [planner] [plan-generation] c.t.planner.service.PlanGenerationJobs   : Generation stage [1/1일차 이동 시간과 도착 시각을 확인하고 있습니다.] took 0 ms
+2026-10-22T03:38:40.780+09:00  INFO 7508 --- [planner] [plan-generation] c.t.planner.service.TimelineConsistency  : Day 1: no removable stops remain; finish=1,280, preferredLimit=1,260, flightLimit=1,260
+2026-10-22T03:38:40.780+09:00 ERROR 7508 --- [planner] [plan-generation] c.t.planner.service.PlanGenerationJobs   : Generation failure type PlanGenerationException at com.travel.planner.service.TimelineConsistency.repair(TimelineConsistency.java:75)
+2026-10-22T03:38:40.780+09:00  INFO 7508 --- [planner] [plan-generation] c.t.planner.service.PlanGenerationJobs   : Generation finished status=FAILED, elapsed=0 ms, stage=1일차 종료 시각 안에 맞는 대안을 찾고 있습니다.
+2026-10-22T03:38:40.785+09:00  INFO 7508 --- [planner] [plan-generation] c.t.planner.service.PlanGenerationJobs   : Generation stage [생성 순서를 기다리고 있습니다.] took 0 ms
+2026-10-22T03:38:40.787+09:00  INFO 7508 --- [planner] [plan-generation] c.t.planner.service.PlanGenerationJobs   : Generation stage [1/2일차 이동 시간과 도착 시각을 확인하고 있습니다.] took 0 ms
+2026-10-22T03:38:40.787+09:00  INFO 7508 --- [planner] [plan-generation] c.t.planner.service.TimelineConsistency  : Day 1: no removable stops remain; finish=1,530, preferredLimit=1,320, flightLimit=1,979
+2026-10-22T03:38:40.792+09:00  INFO 7508 --- [planner] [plan-generation] c.t.planner.service.PlanGenerationJobs   : Generation stage [1일차 종료 시각 초과를 반영하고 있습니다.] took 5 ms
+2026-10-22T03:38:40.792+09:00  INFO 7508 --- [planner] [plan-generation] c.t.planner.service.PlanGenerationJobs   : Generation finished status=SUCCEEDED, elapsed=6 ms, stage=2/2일차 이동 시간과 도착 시각을 확인하고 있습니다.
+2026-10-22T03:38:40.798+09:00  INFO 7508 --- [planner] [plan-generation] c.t.planner.service.PlanGenerationJobs   : Generation stage [생성 순서를 기다리고 있습니다.] took 0 ms
+2026-10-22T03:38:40.799+09:00  INFO 7508 --- [planner] [plan-generation] c.t.planner.service.PlanGenerationJobs   : Generation stage [1/3일차 이동 시간과 도착 시각을 확인하고 있습니다.] took 0 ms
+2026-10-22T03:38:40.799+09:00  INFO 7508 --- [planner] [plan-generation] c.t.planner.service.TimelineConsistency  : Day 1: no removable stops remain; finish=1,350, preferredLimit=1,320, flightLimit=1,979
+2026-10-22T03:38:40.804+09:00  INFO 7508 --- [planner] [plan-generation] c.t.planner.service.PlanGenerationJobs   : Generation stage [1일차 종료 시각 초과를 반영하고 있습니다.] took 5 ms
+2026-10-22T03:38:40.804+09:00  INFO 7508 --- [planner] [plan-generation] c.t.planner.service.PlanGenerationJobs   : Generation stage [2/3일차 이동 시간과 도착 시각을 확인하고 있습니다.] took 0 ms
+2026-10-22T03:38:40.804+09:00  INFO 7508 --- [planner] [plan-generation] c.t.planner.service.PlanGenerationJobs   : Generation stage [3/3일차 이동 시간과 도착 시각을 확인하고 있습니다.] took 0 ms
+2026-10-22T03:38:40.804+09:00  INFO 7508 --- [planner] [plan-generation] c.t.planner.service.TimelineConsistency  : Day 3: no removable stops remain; finish=1,350, preferredLimit=1,320, flightLimit=2,147,483,647
+2026-10-22T03:38:40.810+09:00 ERROR 7508 --- [planner] [plan-generation] c.t.planner.service.PlanGenerationJobs   : Generation failure type PlanGenerationException at com.travel.planner.service.TimelineConsistency.repair(TimelineConsistency.java:75)
+2026-10-22T03:38:40.810+09:00  INFO 7508 --- [planner] [plan-generation] c.t.planner.service.PlanGenerationJobs   : Generation finished status=FAILED, elapsed=12 ms, stage=3일차 종료 시각 안에 맞는 대안을 찾고 있습니다.
+2026-10-22T03:38:40.817+09:00  INFO 7508 --- [planner] [plan-generation] c.t.planner.service.PlanGenerationJobs   : Generation stage [생성 순서를 기다리고 있습니다.] took 0 ms
+2026-10-22T03:38:40.817+09:00  INFO 7508 --- [planner] [plan-generation] c.t.planner.service.PlanGenerationJobs   : Generation stage [1/2일차 이동 시간과 도착 시각을 확인하고 있습니다.] took 0 ms
+2026-10-22T03:38:40.817+09:00  INFO 7508 --- [planner] [plan-generation] c.t.planner.service.TimelineConsistency  : Day 1: no removable stops remain; finish=1,985, preferredLimit=1,320, flightLimit=1,979
+2026-10-22T03:38:40.817+09:00 ERROR 7508 --- [planner] [plan-generation] c.t.planner.service.PlanGenerationJobs   : Generation failure type PlanGenerationException at com.travel.planner.service.TimelineConsistency.repair(TimelineConsistency.java:67)
+2026-10-22T03:38:40.817+09:00  INFO 7508 --- [planner] [plan-generation] c.t.planner.service.PlanGenerationJobs   : Generation finished status=FAILED, elapsed=0 ms, stage=1일차 종료 시각 안에 맞는 대안을 찾고 있습니다.
+2026-10-22T03:38:40.823+09:00  INFO 7508 --- [planner] [plan-generation] c.t.planner.service.PlanGenerationJobs   : Generation stage [생성 순서를 기다리고 있습니다.] took 0 ms
+2026-10-22T03:38:40.824+09:00  INFO 7508 --- [planner] [plan-generation] c.t.planner.service.PlanGenerationJobs   : Generation stage [생성 순서를 기다리고 있습니다.] took 0 ms
+2026-10-22T03:38:40.824+09:00  INFO 7508 --- [planner] [plan-generation] c.t.planner.service.PlanGenerationJobs   : Generation stage [1/1일차 이동 시간과 도착 시각을 확인하고 있습니다.] took 0 ms
+2026-10-22T03:38:40.824+09:00  INFO 7508 --- [planner] [plan-generation] c.t.planner.service.TimelineConsistency  : Day 1: no removable stops remain; finish=1,330, preferredLimit=1,320, flightLimit=2,147,483,647
+2026-10-22T03:38:40.824+09:00  INFO 7508 --- [planner] [plan-generation] c.t.planner.service.PlanGenerationJobs   : Generation stage [1/1일차 이동 시간과 도착 시각을 확인하고 있습니다.] took 0 ms
+2026-10-22T03:38:40.824+09:00  INFO 7508 --- [planner] [plan-generation] c.t.planner.service.TimelineConsistency  : Day 1: no removable stops remain; finish=1,330, preferredLimit=1,320, flightLimit=2,147,483,647
+2026-10-22T03:38:40.830+09:00  INFO 7508 --- [planner] [plan-generation] c.t.planner.service.PlanGenerationJobs   : Generation finished status=CANCELLED, elapsed=6 ms, stage=1일차 종료 시각 초과 허용 여부를 선택해주세요.
+2026-10-22T03:38:40.830+09:00  INFO 7508 --- [planner] [plan-generation] c.t.planner.service.PlanGenerationJobs   : Generation finished status=CANCELLED, elapsed=6 ms, stage=1일차 종료 시각 초과 허용 여부를 선택해주세요.
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

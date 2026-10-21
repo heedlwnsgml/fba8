@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.travel.planner.controller.PlanDeleteControllerTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-21T18:38:34.256Z" hostname="DESKTOP-L0O1S4Q" time="0.466">
+  <properties/>
+  <testcase name="rejectOtherOwnerAndMissingPlanWithoutDeletion()" classname="com.travel.planner.controller.PlanDeleteControllerTest" time="0.196"/>
+  <testcase name="deleteTrafficBeforeCascadingPlanAndPreserveOtherPlans()" classname="com.travel.planner.controller.PlanDeleteControllerTest" time="0.004"/>
+  <testcase name="clientDeletePathReturnsNoContentAndUsesAuthenticatedOwner()" classname="com.travel.planner.controller.PlanDeleteControllerTest" time="0.265"/>
+  <system-out><![CDATA[2026-10-22T03:38:34.682+09:00  INFO 7508 --- [planner] [    Test worker] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2026-10-22T03:38:34.682+09:00  INFO 7508 --- [planner] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-22T03:38:34.682+09:00  INFO 7508 --- [planner] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

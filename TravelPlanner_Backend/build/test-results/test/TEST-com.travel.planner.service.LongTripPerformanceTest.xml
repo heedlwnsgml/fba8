@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.travel.planner.service.LongTripPerformanceTest" tests="2" skipped="1" failures="0" errors="0" timestamp="2026-10-21T18:38:41.395Z" hostname="DESKTOP-L0O1S4Q" time="0.022">
+  <properties/>
+  <testcase name="realCatalogueThirtyDayBenchmarkWithoutWritesOrExternalApis()" classname="com.travel.planner.service.LongTripPerformanceTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="seedSearchStopsAfterSameFortyFeasibleCandidates()" classname="com.travel.planner.service.LongTripPerformanceTest" time="0.021"/>
+  <system-out><![CDATA[SEED_ROUTE_SEARCHES candidates=1000 actual=40 previous=1000
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

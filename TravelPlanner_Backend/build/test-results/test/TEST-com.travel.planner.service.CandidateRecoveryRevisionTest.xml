@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.travel.planner.service.CandidateRecoveryRevisionTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-10-21T18:38:39.654Z" hostname="DESKTOP-L0O1S4Q" time="0.012">
+  <properties/>
+  <testcase name="coordinateLessMealSearchesFromPreviousStopAndUsesSupplementalCatalogue()" classname="com.travel.planner.service.CandidateRecoveryRevisionTest" time="0.002"/>
+  <testcase name="fixedHotelsAndLastDestinationStayCannotBeReplaced()" classname="com.travel.planner.service.CandidateRecoveryRevisionTest" time="0.002"/>
+  <testcase name="nearbyHotelsNeedLocationButNotInventedOpeningHours()" classname="com.travel.planner.service.CandidateRecoveryRevisionTest" time="0.003"/>
+  <testcase name="newAttractionsReduceFreeTimeOnlyAfterEngineValidation()" classname="com.travel.planner.service.CandidateRecoveryRevisionTest" time="0.002"/>
+  <testcase name="longLandTransferUsesSpareNightsWithoutRemovingDestination()" classname="com.travel.planner.service.CandidateRecoveryRevisionTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

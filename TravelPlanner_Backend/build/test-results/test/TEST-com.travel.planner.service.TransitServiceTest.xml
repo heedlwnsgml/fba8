@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.travel.planner.service.TransitServiceTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-10-21T18:38:54.349Z" hostname="DESKTOP-L0O1S4Q" time="0.071">
+  <properties/>
+  <testcase name="feedIsStoredReplacedDeletedAndUsedForLegs()" classname="com.travel.planner.service.TransitServiceTest" time="0.042"/>
+  <testcase name="builtInFeedListIsWellFormed()" classname="com.travel.planner.service.TransitServiceTest" time="0.007"/>
+  <testcase name="legsFollowRealLocationsAndSkipPlaceholders()" classname="com.travel.planner.service.TransitServiceTest" time="0.001"/>
+  <testcase name="namesWithoutKoreanAreQueuedForTranslation()" classname="com.travel.planner.service.TransitServiceTest" time="0.01"/>
+  <testcase name="walkingOnlyTripHasNoFareSentenceAndMissingNetworkIsExplained()" classname="com.travel.planner.service.TransitServiceTest" time="0.0"/>
+  <testcase name="totalsAreAddedToDayOverviewAndTripSummary()" classname="com.travel.planner.service.TransitServiceTest" time="0.0"/>
+  <testcase name="importServiceReadsALocalFileAndReportsFailuresWithoutLosingData()" classname="com.travel.planner.service.TransitServiceTest" time="0.01"/>
+  <testcase name="translatedNamesAreCleaned()" classname="com.travel.planner.service.TransitServiceTest" time="0.0"/>
+  <system-out><![CDATA[[교통] 교통망을 메모리에 올렸습니다: 역 0개, 역간 연결 0개, 환승 0개 / 정류장 7개, 노선 패턴 5개 (0ms)
+[교통] 교통망을 메모리에 올렸습니다: 역 0개, 역간 연결 0개, 환승 0개 / 정류장 7개, 노선 패턴 5개 (0ms)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

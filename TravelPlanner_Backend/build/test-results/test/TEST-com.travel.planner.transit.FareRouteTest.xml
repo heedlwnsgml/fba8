@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.travel.planner.transit.FareRouteTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-10-21T18:38:55.854Z" hostname="DESKTOP-L0O1S4Q" time="0.007">
+  <properties/>
+  <testcase name="sameCompanyAcrossATransferIsOneTicket()" classname="com.travel.planner.transit.FareRouteTest" time="0.002"/>
+  <testcase name="fareDataCanBeSwappedWithoutRebuildingTheNetwork()" classname="com.travel.planner.transit.FareRouteTest" time="0.002"/>
+  <testcase name="shinkansenUsesOperatingKilometresAndShowsTheSurcharge()" classname="com.travel.planner.transit.FareRouteTest" time="0.002"/>
+  <testcase name="registeredFaresReplaceTheEstimates()" classname="com.travel.planner.transit.FareRouteTest" time="0.001"/>
+  <testcase name="withoutFareDataEverythingIsEstimatedAsBefore()" classname="com.travel.planner.transit.FareRouteTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.travel.planner.service.PassAdviceTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-10-21T18:38:42.854Z" hostname="DESKTOP-L0O1S4Q" time="0.032">
+  <properties/>
+  <testcase name="noSuggestionLeavesAnEmptyListAndKeepsTheSummary()" classname="com.travel.planner.service.PassAdviceTest" time="0.005"/>
+  <testcase name="validityLabels()" classname="com.travel.planner.service.PassAdviceTest" time="0.0"/>
+  <testcase name="approximateCoverageIsFlagged()" classname="com.travel.planner.service.PassAdviceTest" time="0.001"/>
+  <testcase name="tokyoDayWithManySubwayRidesGetsTheSubwayTicket()" classname="com.travel.planner.service.PassAdviceTest" time="0.004"/>
+  <testcase name="estimatedFaresAreMentionedInTheSummary()" classname="com.travel.planner.service.PassAdviceTest" time="0.006"/>
+  <testcase name="weekdayPassIsNotSuggestedOnAHoliday()" classname="com.travel.planner.service.PassAdviceTest" time="0.005"/>
+  <testcase name="withoutRegisteredPassesNothingHappens()" classname="com.travel.planner.service.PassAdviceTest" time="0.0"/>
+  <testcase name="internalFareRidesAreNotSerialized()" classname="com.travel.planner.service.PassAdviceTest" time="0.01"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

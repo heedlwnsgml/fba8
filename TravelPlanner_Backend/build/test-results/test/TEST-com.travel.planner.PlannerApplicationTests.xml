@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.travel.planner.PlannerApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-10-21T18:38:25.974Z" hostname="DESKTOP-L0O1S4Q" time="7.986">
+  <properties/>
+  <testcase name="contextLoads()" classname="com.travel.planner.PlannerApplicationTests" time="0.009"/>
+  <system-out><![CDATA[03:38:26.229 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.travel.planner.PlannerApplicationTests]: PlannerApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+03:38:26.383 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.travel.planner.PlannerApplication for test class com.travel.planner.PlannerApplicationTests
+03:38:26.507 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.travel.planner.PlannerApplicationTests]: PlannerApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+03:38:26.508 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.travel.planner.PlannerApplication for test class com.travel.planner.PlannerApplicationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.0)
+
+2026-10-22T03:38:26.987+09:00  INFO 7508 --- [planner] [    Test worker] c.t.planner.PlannerApplicationTests      : Starting PlannerApplicationTests using Java 25.0.3 with PID 7508 (started by USER in C:\Users\USER\Desktop\TravelPlanner_GitHub_refresh\TravelPlanner_Backend)
+2026-10-22T03:38:26.990+09:00  INFO 7508 --- [planner] [    Test worker] c.t.planner.PlannerApplicationTests      : The following 1 profile is active: "secret"
+2026-10-22T03:38:28.461+09:00  INFO 7508 --- [planner] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-10-22T03:38:28.609+09:00  INFO 7508 --- [planner] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 129 ms. Found 17 JPA repository interfaces.
+2026-10-22T03:38:29.262+09:00  INFO 7508 --- [planner] [    Test worker] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-10-22T03:38:29.382+09:00  INFO 7508 --- [planner] [    Test worker] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.4.1.Final
+2026-10-22T03:38:29.873+09:00  INFO 7508 --- [planner] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-10-22T03:38:29.921+09:00  INFO 7508 --- [planner] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-10-22T03:38:30.019+09:00  INFO 7508 --- [planner] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.mariadb.jdbc.Connection@4ab959e8
+2026-10-22T03:38:30.021+09:00  INFO 7508 --- [planner] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-10-22T03:38:30.095+09:00  INFO 7508 --- [planner] [    Test worker] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:mariadb://127.0.0.1/test_planner_20261019_update?user=planner_local&password=***&useUnicode=true&characterEncoding=utf8]
+	Database driver: MariaDB Connector/J
+	Database dialect: MariaDBDialect
+	Database version: 10.11.19
+	Default catalog/schema: test_planner_20261019_update/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-10-22T03:38:31.586+09:00  INFO 7508 --- [planner] [    Test worker] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-10-22T03:38:31.656+09:00  INFO 7508 --- [planner] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-10-22T03:38:31.739+09:00  INFO 7508 --- [planner] [    Test worker] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-10-22T03:38:33.213+09:00  WARN 7508 --- [planner] [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-10-22T03:38:33.936+09:00  INFO 7508 --- [planner] [    Test worker] c.t.planner.PlannerApplicationTests      : Started PlannerApplicationTests in 7.35 seconds (process running for 11.136)
+2026-10-22T03:38:33.938+09:00  WARN 7508 --- [planner] [    Test worker] o.s.core.events.SpringDocAppInitializer  : SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
+2026-10-22T03:38:33.938+09:00  WARN 7508 --- [planner] [    Test worker] o.s.core.events.SpringDocAppInitializer  : SpringDoc /api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
+[교통] 전국 버스 정류장 자료를 읽는 중입니다: P11-22_SHP.zip (전국 파일은 30초쯤 걸립니다)
+]]></system-out>
+  <system-err><![CDATA[Firebase 인증 키 파일이 없어 FCM을 초기화할 수 없습니다. (테스트 환경에서는 정상 작동합니다)
+]]></system-err>
+</testsuite>

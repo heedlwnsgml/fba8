@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.travel.planner.service.LodgingCostServiceTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2026-10-21T18:38:41.390Z" hostname="DESKTOP-L0O1S4Q" time="0.005">
+  <properties/>
+  <testcase name="missingListedMinimumDoesNotTriggerDatedVacancySearch()" classname="com.travel.planner.service.LodgingCostServiceTest" time="0.001"/>
+  <testcase name="tripCostPerPersonAddsTransitAndLodgingShare()" classname="com.travel.planner.service.LodgingCostServiceTest" time="0.0"/>
+  <testcase name="userEnteredPriceWinsAndIsNeverLookedUp()" classname="com.travel.planner.service.LodgingCostServiceTest" time="0.0"/>
+  <testcase name="savedHotelDisplayUsesOnlyLiveCacheAndLeavesUnknownEmpty()" classname="com.travel.planner.service.LodgingCostServiceTest" time="0.0"/>
+  <testcase name="unknownStaysAreLeftEmptyNotGuessed()" classname="com.travel.planner.service.LodgingCostServiceTest" time="0.001"/>
+  <testcase name="longStayStillUsesPublishedMinimumWithoutVacancyOrRoomEstimation()" classname="com.travel.planner.service.LodgingCostServiceTest" time="0.0"/>
+  <testcase name="parsesBothResponseShapes()" classname="com.travel.planner.service.LodgingCostServiceTest" time="0.0"/>
+  <testcase name="requestValuesAreEncodedOneByOne()" classname="com.travel.planner.service.LodgingCostServiceTest" time="0.0"/>
+  <testcase name="undatedTripUsesTheListedMinimum()" classname="com.travel.planner.service.LodgingCostServiceTest" time="0.0"/>
+  <testcase name="lookupsPerPlanAreCapped()" classname="com.travel.planner.service.LodgingCostServiceTest" time="0.001"/>
+  <testcase name="datedTripUsesListedMinimumWithoutVacancySearch()" classname="com.travel.planner.service.LodgingCostServiceTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

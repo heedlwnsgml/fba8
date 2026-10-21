@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.travel.planner.service.HotelWebPriceServiceTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-21T18:38:41.180Z" hostname="DESKTOP-L0O1S4Q" time="0.135">
+  <properties/>
+  <testcase name="admitsOnlyIdentityMatchedCitedRoomNightPrices()" classname="com.travel.planner.service.HotelWebPriceServiceTest" time="0.024"/>
+  <testcase name="missingPriceSearchActuallyCallsGeminiWithGoogleSearch()" classname="com.travel.planner.service.HotelWebPriceServiceTest" time="0.091"/>
+  <testcase name="cacheExpiresExactlyAtOneDayWithoutTouchingPrimaryDatabase()" classname="com.travel.planner.service.HotelWebPriceServiceTest" time="0.019"/>
+  <system-out><![CDATA[[숙박비] 웹에서 확인한 객실 1개·1박 가격 1건
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
