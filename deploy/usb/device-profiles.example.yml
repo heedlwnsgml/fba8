@@ -1,0 +1,15 @@
+# Public examples contain no keys or fixed private device serial.
+computer:
+  mode: ssh-tunnel
+  vm_host: 192.168.10.14
+  api_local_port: 8080
+  web_local_port: 5173
+android_host_usb:
+  mode: windows-adb
+  serial: REPLACE_WITH_ADB_SERIAL
+  api_local_port: 8080
+android_guest_usb:
+  mode: vmware-passthrough
+  serial: REPLACE_WITH_ADB_SERIAL
+  usb_vid: VERIFY_USING_LSUSB
+  usb_pid: VERIFY_USING_LSUSB

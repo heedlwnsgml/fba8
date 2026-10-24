@@ -1,0 +1,13 @@
+**
+!images.lock.env
+!deploy/
+!deploy/**
+**/private/**
+**/secrets/**
+**/inventory.actual.yml
+**/*.vault.yml
+**/*secret*.yml
+**/*.key
+**/*.pem
+**/*.sql
+**/*.sqlite*

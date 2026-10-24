@@ -1,0 +1,25 @@
+- name: Deploy a prepared immutable release
+  hosts: docker_hosts
+  become: true
+  tasks:
+    - name: Require release-specific inputs
+      ansible.builtin.assert:
+        that:
+          - tp_release_id is match('^[a-zA-Z0-9._-]+$')
+          - tp_release_source | length > 0
+    - name: Copy release without secrets or persistent data
+      ansible.builtin.copy:
+        src: '{{ tp_release_source }}/'
+        dest: '{{ tp_deploy_root }}/releases/{{ tp_release_id }}/'
+        mode: preserve
+        directory_mode: '0700'
+    - name: Download pinned images
+      ansible.builtin.command:
+        argv: [bash, '{{ tp_deploy_root }}/releases/{{ tp_release_id }}/deploy/scripts/pull-images.sh']
+      register: pulled
+      changed_when: "'Downloaded newer image' in pulled.stdout"
+    - name: Deploy and verify with automatic application rollback
+      ansible.builtin.command:
+        argv: [bash, '{{ tp_deploy_root }}/releases/{{ tp_release_id }}/deploy/scripts/deploy.sh', '{{ tp_release_id }}']
+      register: deployed
+      changed_when: "'DEPLOY_CHANGED=1' in deployed.stdout"

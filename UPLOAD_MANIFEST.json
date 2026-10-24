@@ -8,8 +8,8 @@
     },
     {
       "path": ".gitignore",
-      "bytes": 618,
-      "sha256": "43ab3b30f003db85c2621952bf45c19f215f2ddc70a9a1f539e94df81199af97"
+      "bytes": 666,
+      "sha256": "b788da4878e90d92e852d20a9eb79fe0d03a1d8648a48f5eb8c3d420938e67df"
     },
     {
       "path": "A5front/.dart_tool/dartpad/web_plugin_registrant.dart",
@@ -602,6 +602,11 @@
       "sha256": "83a2be9d3a72dd61023cdfc6c7b54d5d2ed405b0338146ab327f97352ea37210"
     },
     {
+      "path": "A5front/.dockerignore",
+      "bytes": 98,
+      "sha256": "b76c4df1c58412333a8c1e27a834beacab8c414a899f129cf64ccd718acb9c91"
+    },
+    {
       "path": "A5front/.flutter-plugins-dependencies",
       "bytes": 15136,
       "sha256": "f5294449c17e6dbdd32ba1385a887cbbfad5483eaf257b16f44cb45280e743c9"
@@ -615,6 +620,11 @@
       "path": "A5front/.metadata",
       "bytes": 1114,
       "sha256": "a0fae87229d905993a088cf29b60e6f7b7af0bd52f5f361a89f62db721289fca"
+    },
+    {
+      "path": "A5front/Dockerfile",
+      "bytes": 324,
+      "sha256": "0937ff82a3cf2f63087f9aaed6924d87d65b95114fbbd9bb3cc665889d1335f4"
     },
     {
       "path": "A5front/analysis_options.yaml",
@@ -22842,6 +22852,11 @@
       "sha256": "69c9272ec534268ec6ef53804561818551953865c95daa8fb544929c1112e63f"
     },
     {
+      "path": "A5front/deploy-nginx.conf",
+      "bytes": 887,
+      "sha256": "37741e188d8d1335efffb9cc1d275e915e64781250d523e37120504145512083"
+    },
+    {
       "path": "A5front/ios/.gitignore",
       "bytes": 569,
       "sha256": "37380775aeb2499662b7aca80f4ac4c95ae827c3ba2bfa179aa3e9af4812c623"
@@ -23827,6 +23842,11 @@
       "sha256": "7aa30da60ce70b16d8df5e9fb8861933ac718a0e0c002b41e35efef0fcff4aad"
     },
     {
+      "path": "DOCKER_DEPLOYMENT.md",
+      "bytes": 2255,
+      "sha256": "a3c53f2f4a6b7a0b7be5cf2270f73e373beb7d4b7f52b709334cd0ce1a2f3286"
+    },
+    {
       "path": "GITHUB_FINAL_CHECK_20261009.json",
       "bytes": 1947,
       "sha256": "78401615ae9e8554a6095fbbb5a393a2aa3d6597c502521748bc07c1e20897df"
@@ -23840,6 +23860,11 @@
       "path": "TravelPlanner_Backend.zip",
       "bytes": 0,
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "TravelPlanner_Backend/.dockerignore",
+      "bytes": 281,
+      "sha256": "f78ce6db429448e1b1a8046428093ec5e5b2620b3b69beacaee9a157f2f71138"
     },
     {
       "path": "TravelPlanner_Backend/.gitattributes",
@@ -23940,6 +23965,11 @@
       "path": "TravelPlanner_Backend/.idea/workspace.xml",
       "bytes": 2790,
       "sha256": "70f7e9ecd8df21c30313b8b3f50ad54c0b572a6f1daabe499c828a2c3e18feea"
+    },
+    {
+      "path": "TravelPlanner_Backend/Dockerfile",
+      "bytes": 1294,
+      "sha256": "de5ca03e8c3079dcef6d2127706ab823e4d1280c5f6c00efcab58f422fee57a6"
     },
     {
       "path": "TravelPlanner_Backend/build.gradle",
@@ -27152,6 +27182,11 @@
       "sha256": "db4b7d1728db04aebe9608891b88b92975e85748c45876a03e7f1d80c878c3da"
     },
     {
+      "path": "TravelPlanner_Backend/container-entrypoint.sh",
+      "bytes": 568,
+      "sha256": "b8e6f54d0b99dd5b52c6c33d39621817102c752e2086515f7854c8e0e040ed6b"
+    },
+    {
       "path": "TravelPlanner_Backend/data/P11-22_SHP.zip",
       "bytes": 39202472,
       "sha256": "12132cc1c349d5d84c1ae90e7e5fff7c12a79540f4487edfae46e9f640bc1c72"
@@ -28627,9 +28662,269 @@
       "sha256": "fa71645fdc067683c02909d5ce9a55e03a86efaf28c7edeb516ca00402399da2"
     },
     {
+      "path": "deploy/.gitignore",
+      "bytes": 93,
+      "sha256": "ecd45f9fce17dd469f6f80b9dfcb3165a62860f9ff90a577e35c8fe1d5a98c83"
+    },
+    {
+      "path": "deploy/ADMIN-HOTEL-PRICES-20261025.md",
+      "bytes": 2667,
+      "sha256": "47311567b2c281089f49228f4894a4675d8caf127168280b72ecdfaac1894d96"
+    },
+    {
+      "path": "deploy/CITY-MAP-HOTEL-RESERVE-20261025.md",
+      "bytes": 3360,
+      "sha256": "0db679011ef19d2520836659aebc794a6953438741be0b850bb85cac46160cf7"
+    },
+    {
+      "path": "deploy/HOTEL-ADMIN-PASS-20261025.md",
+      "bytes": 3408,
+      "sha256": "cf4e9788385f04aacd6b268af878dc9a288b673201b29a3e9849f45ebc793ef6"
+    },
+    {
+      "path": "deploy/MIGRATION.md",
+      "bytes": 2753,
+      "sha256": "9d8b876700d47d5a7cf741ed1f86536ae9447234f6210d7d55bad28760c9861e"
+    },
+    {
+      "path": "deploy/README.md",
+      "bytes": 5650,
+      "sha256": "5270d957fcf486c3601b1582689bab4f72e99b926494957ae91c75d3c3a24378"
+    },
+    {
+      "path": "deploy/VERIFICATION.md",
+      "bytes": 7245,
+      "sha256": "b7a45285b5702491fe4ecf86c45daf16f056ecbb2b6604cbb4522c64b0c80d96"
+    },
+    {
+      "path": "deploy/ansible/ansible.cfg",
+      "bytes": 171,
+      "sha256": "7d2ad40d31cdc0ea7c22baddcf17d5ee21c9bd160fe7be8f7518723c7b6c7c9a"
+    },
+    {
+      "path": "deploy/ansible/deploy.yml",
+      "bytes": 1087,
+      "sha256": "303a03bdd0221ef2ce0b6c35ed4576e090c58c0470eb2d4edf25e6969d627090"
+    },
+    {
+      "path": "deploy/ansible/group_vars/all.yml",
+      "bytes": 192,
+      "sha256": "d48138a073516cc1a698e7c0dee885e3867810722fe14d983896d7c286e6b76b"
+    },
+    {
+      "path": "deploy/ansible/inventory.example.yml",
+      "bytes": 351,
+      "sha256": "2dc6ec619e9421672dde5b20ac3eebde21471e1d6c6a97ba0e19353fdd53f4f9"
+    },
+    {
+      "path": "deploy/ansible/kind.yml",
+      "bytes": 799,
+      "sha256": "f68883e483eda90b9cb5534507874785f397336dd9728006c34d10a50f984b27"
+    },
+    {
+      "path": "deploy/ansible/kubernetes-deploy.yml",
+      "bytes": 3519,
+      "sha256": "a7676a9bd2b09af3ff7a1c1c6dc7704945fd610a0f1c673d2f0e00611497925f"
+    },
+    {
+      "path": "deploy/ansible/kubernetes.yml",
+      "bytes": 5440,
+      "sha256": "6c5318e34c72696ac5881a221f14c86b554e12a94047e2d014d50dc629b7baaf"
+    },
+    {
+      "path": "deploy/ansible/provision.yml",
+      "bytes": 109,
+      "sha256": "a61cce2d8c6d76c11ed2b0fde723b496e18b0b03660c8baf2077bc880b9e2e44"
+    },
+    {
+      "path": "deploy/ansible/roles/docker_host/tasks/main.yml",
+      "bytes": 2342,
+      "sha256": "6bb2a25d1b882a5e206a386b2eda7d4b96e0bd079b1b8c51b5e899ab09e59a4f"
+    },
+    {
+      "path": "deploy/ansible/usb-guest.yml",
+      "bytes": 1186,
+      "sha256": "eca06fa2f6c5bf8a5191db13feb80669bab78fb1426430dee8d336ff5200b2ed"
+    },
+    {
+      "path": "deploy/compose.yaml",
+      "bytes": 2399,
+      "sha256": "54e7838eb6f9f8dfe0340d76cb63eb2f1f4b4d1a40da5958512aa05230969d72"
+    },
+    {
+      "path": "deploy/config/application-docker.properties",
+      "bytes": 703,
+      "sha256": "c7f08682d5d970447b2a3ed5c2cfe228fe750c19ca9e454b804ec51e3fcdd6b8"
+    },
+    {
+      "path": "deploy/config/release.env.example",
+      "bytes": 300,
+      "sha256": "2e5fd096b18ed5dea3e54e2c9736d3864a1678694ab4e59f6f5f34be75ef1827"
+    },
+    {
+      "path": "deploy/database/90-create-app-user.sh",
+      "bytes": 642,
+      "sha256": "22ec6835753c3daec5416cae72e7ed10acc0d5616ddc53fd5b76178d2e15ada6"
+    },
+    {
+      "path": "deploy/images.lock.env",
+      "bytes": 345,
+      "sha256": "ab4da0a7fbb20b0667cbd1451526fefb8732a1144f10bff195c56d08b3fef915"
+    },
+    {
+      "path": "deploy/kubernetes/README-ACTUAL.md",
+      "bytes": 3866,
+      "sha256": "16925019905235f7372f37e65856d3ffbe31bb32dc074ab14624c2f353db385d"
+    },
+    {
+      "path": "deploy/kubernetes/README.md",
+      "bytes": 3106,
+      "sha256": "92d440396d9d419ebabc82934fb4e19abed0bfb37c8ed66ef88ccd77f001998d"
+    },
+    {
+      "path": "deploy/kubernetes/application.yml",
+      "bytes": 5844,
+      "sha256": "8e5f65015193f6a6b58a83d3fa87ec85ef2ecc65753f0d7663f0af10db7c237f"
+    },
+    {
+      "path": "deploy/kubernetes/backup-data.sh",
+      "bytes": 1374,
+      "sha256": "3ce4ca6c4149d1e53afa5080c71931960cd70cafb031c803a5ef3e5be08c240a"
+    },
+    {
+      "path": "deploy/kubernetes/cluster.sh",
+      "bytes": 945,
+      "sha256": "bbac458442cfa6404dffd08b6ba4633b263fa9dec06bb592983987571048c7ac"
+    },
+    {
+      "path": "deploy/kubernetes/deploy-kind.sh",
+      "bytes": 1574,
+      "sha256": "294bbd8e540d5abad5cb2de8611deeea596026a36f95b0245103399cd48bff9f"
+    },
+    {
+      "path": "deploy/kubernetes/kind-config.yml",
+      "bytes": 632,
+      "sha256": "93fb18b70e87ba4064fa8ca45bd1091cfc966e9af4536466a6e8110274856c88"
+    },
+    {
+      "path": "deploy/kubernetes/namespace.yml",
+      "bytes": 63,
+      "sha256": "a5c9c1fe81e31a7d1da02e91c3ca434dac6cd9a8a28763855de97f3ecd92132a"
+    },
+    {
+      "path": "deploy/kubernetes/render-kind.py",
+      "bytes": 1128,
+      "sha256": "bd1b84e413fe47d2ec2e9eb7734272cfa986d17191b49a6419588273ed04a082"
+    },
+    {
+      "path": "deploy/kubernetes/restore-data.sh",
+      "bytes": 834,
+      "sha256": "1d7661eea8b65b725be3e16318af8aa76582fc26e63129dea4b6f5cc17b6b966"
+    },
+    {
+      "path": "deploy/kubernetes/verify-kind.sh",
+      "bytes": 956,
+      "sha256": "6fb5de3fcc8a7d15293ad915f2a93f53c35f9a317cb7fc5cd7f8f0c48018396b"
+    },
+    {
+      "path": "deploy/scripts/build-images.sh",
+      "bytes": 453,
+      "sha256": "c6b7c94e83b16cb2fa09cb3e4c191ffd497d241fad977c309e65490031750ad5"
+    },
+    {
+      "path": "deploy/scripts/deploy.sh",
+      "bytes": 1964,
+      "sha256": "a45e9c4dc384ce371c8950179d179cb114432923bca2539a7bc124c78997b7ef"
+    },
+    {
+      "path": "deploy/scripts/export-migration.sh",
+      "bytes": 1731,
+      "sha256": "9ae0bd2cd4211d5244aaf3bc41bb815eb32fe08f19b264d7288dfdab74a28e19"
+    },
+    {
+      "path": "deploy/scripts/health.sh",
+      "bytes": 316,
+      "sha256": "029efe10f6e1ad6ae96db2c5961a1df2b29f7ef5a8c18d23c6c0b2300518f34f"
+    },
+    {
+      "path": "deploy/scripts/import-migration.sh",
+      "bytes": 1799,
+      "sha256": "ab15a9719e8f2211f7287ab028b05d0668574e6633d6a9988f845c49b6ae09ac"
+    },
+    {
+      "path": "deploy/scripts/pull-images.sh",
+      "bytes": 605,
+      "sha256": "33b3f0c5fa7d05a275699a0b58931b664a7e36c8667cb2d323f4f3a94d3d6e1a"
+    },
+    {
+      "path": "deploy/scripts/push-images.sh",
+      "bytes": 972,
+      "sha256": "3aa26323b6ad74b8d8adb959ecc4edaf873ff743e8a09f0ae4e144c24d76b7f3"
+    },
+    {
+      "path": "deploy/scripts/rollback.sh",
+      "bytes": 306,
+      "sha256": "4ce88513e6486557f00fd9596e495961f31d0e8020673a0be93be2f065da6128"
+    },
+    {
+      "path": "deploy/scripts/usb-bridge.sh",
+      "bytes": 352,
+      "sha256": "1524a300c3210a293c47c02ed8a36e3c65a08a56beaeb6aeb9d7f4d9e7118db3"
+    },
+    {
+      "path": "deploy/tooling/Dockerfile",
+      "bytes": 1349,
+      "sha256": "eed5780438983487065b6b2a25c28d6aafa1cc47104e904d2421145760e0f319"
+    },
+    {
+      "path": "deploy/tooling/Dockerfile.dockerignore",
+      "bytes": 163,
+      "sha256": "3ef487416e2a77461b98f56436f7b7a45d6fd46c284be9e7310ffdff84e5dbc4"
+    },
+    {
+      "path": "deploy/tooling/dockerignore",
+      "bytes": 163,
+      "sha256": "3ef487416e2a77461b98f56436f7b7a45d6fd46c284be9e7310ffdff84e5dbc4"
+    },
+    {
+      "path": "deploy/tooling/entrypoint.sh",
+      "bytes": 659,
+      "sha256": "d35c5c4c210c13417d6bf64040c6f78659ee7ee13c126c47022ac91e5965c012"
+    },
+    {
+      "path": "deploy/usb/device-profiles.example.yml",
+      "bytes": 401,
+      "sha256": "848a400a8f31948945e9cb19d2e53b238edfe0a830e26d1d94e2048dbb3fe06a"
+    },
+    {
+      "path": "deploy/windows/Connect-Phone.ps1",
+      "bytes": 497,
+      "sha256": "813ec913c5252828bd64d67d897ddeac9758baba41faf5732bc5e3e5199ecb02"
+    },
+    {
+      "path": "deploy/windows/Open-ServerTunnel.ps1",
+      "bytes": 591,
+      "sha256": "5d8daebfa7bc9ea85fa21355efc9da1ebd85cbba417510a855361b40243bdc8d"
+    },
+    {
+      "path": "deployer-image.lock.env",
+      "bytes": 126,
+      "sha256": "5a653adaa65df5a4ad77ded15135f5485447a2dae89d8ae8629e0cd292ad23dd"
+    },
+    {
       "path": "docs/PROJECT_MARKDOWN.zip",
       "bytes": 149094,
       "sha256": "85469a980ba2c7b94c4045acd28878696ca4448e738e5c0efe9738568f86b7cc"
+    },
+    {
+      "path": "images.lock.env",
+      "bytes": 345,
+      "sha256": "ab4da0a7fbb20b0667cbd1451526fefb8732a1144f10bff195c56d08b3fef915"
+    },
+    {
+      "path": "release.env",
+      "bytes": 482,
+      "sha256": "f9076d0eea8214a03e6d157d109eba0bbd9827aaf434fe05f1d4a60254f5bcea"
     },
     {
       "path": "백엔드_알고리즘_기반과_앱별_변경_20261009.pdf",

@@ -1,0 +1,6 @@
+tp_deploy_root: /opt/travelplanner
+# Keep false until the explicit config/reboot approval is received.
+tp_disable_selinux: false
+tp_allow_reboot: false
+tp_release_id: ''
+tp_release_source: ''

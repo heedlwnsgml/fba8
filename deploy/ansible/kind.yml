@@ -1,0 +1,18 @@
+- name: Create and deploy isolated single-VM Kubernetes
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    tp_bundle_root: /opt/travelplanner-deploy
+  tasks:
+    - name: Create cluster only when absent
+      ansible.builtin.command: bash {{ tp_bundle_root }}/deploy/kubernetes/cluster.sh
+      register: cluster
+      changed_when: "'CLUSTER_CHANGED=1' in cluster.stdout"
+    - name: Apply Kubernetes resources
+      ansible.builtin.command: bash {{ tp_bundle_root }}/deploy/kubernetes/deploy-kind.sh
+      register: deployment
+      changed_when: "'created' in deployment.stdout or 'configured' in deployment.stdout"
+    - name: Verify Pods and HTTP endpoints
+      ansible.builtin.command: bash {{ tp_bundle_root }}/deploy/kubernetes/verify-kind.sh
+      changed_when: false

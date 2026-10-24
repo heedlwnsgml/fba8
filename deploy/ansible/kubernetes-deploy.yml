@@ -1,0 +1,55 @@
+- name: Apply application to a reviewed Kubernetes cluster
+  hosts: kube_control_plane
+  become: true
+  vars:
+    kube_confirm_storage_migrated: false
+    kube_manifest_source: ../kubernetes
+  tasks:
+    - name: Require migrated data, exact images and private files
+      ansible.builtin.assert:
+        that:
+          - kube_confirm_storage_migrated | bool
+          - kube_storage_node is defined
+          - backend_image is match('^.+@sha256:[a-f0-9]{64}$')
+          - frontend_image is match('^.+@sha256:[a-f0-9]{64}$')
+          - database_image is match('^.+@sha256:[a-f0-9]{64}$')
+          - kube_private_dir is defined
+    - name: Stage namespace manifest
+      ansible.builtin.copy:
+        src: '{{ kube_manifest_source }}/namespace.yml'
+        dest: /root/travelplanner-namespace.yml
+        mode: '0600'
+    - name: Apply namespace
+      ansible.builtin.command: kubectl --kubeconfig=/etc/kubernetes/admin.conf apply -f /root/travelplanner-namespace.yml
+      register: namespace_apply
+      changed_when: "'created' in namespace_apply.stdout or 'configured' in namespace_apply.stdout"
+    - name: Create secrets directly from protected files without displaying content
+      ansible.builtin.shell: |
+        set -euo pipefail
+        export KUBECONFIG=/etc/kubernetes/admin.conf
+        kubectl -n travelplanner create secret generic planner-db --from-file=db_password={{ kube_private_dir | quote }}/secrets/db-password --from-file=db_root_password={{ kube_private_dir | quote }}/secrets/db-root-password --dry-run=client -o yaml | kubectl apply -f -
+        kubectl -n travelplanner create secret generic planner-config --from-file=application-secret.yml={{ kube_private_dir | quote }}/config/application-secret.yml --from-file=application-docker.properties={{ kube_private_dir | quote }}/config/application-docker.properties --dry-run=client -o yaml | kubectl apply -f -
+      args: {executable: /bin/bash}
+      register: secrets_apply
+      changed_when: "'created' in secrets_apply.stdout or 'configured' in secrets_apply.stdout"
+      no_log: true
+    - name: Confirm selected storage node label
+      ansible.builtin.command: kubectl --kubeconfig=/etc/kubernetes/admin.conf get node {{ kube_storage_node }} -o jsonpath={.metadata.labels.travelplanner-storage}
+      register: storage_label
+      changed_when: false
+    - name: Label storage node only when needed
+      ansible.builtin.command: kubectl --kubeconfig=/etc/kubernetes/admin.conf label node {{ kube_storage_node }} travelplanner-storage=true --overwrite
+      when: storage_label.stdout != 'true'
+    - name: Stage deployment with registry digests
+      ansible.builtin.copy:
+        content: "{{ lookup('file', kube_manifest_source + '/application.yml') | replace('BACKEND_IMAGE_DIGEST', backend_image) | replace('FRONTEND_IMAGE_DIGEST', frontend_image) | replace('DATABASE_IMAGE_DIGEST', database_image) }}"
+        dest: /root/travelplanner-application.yml
+        mode: '0600'
+    - name: Apply workloads declaratively
+      ansible.builtin.command: kubectl --kubeconfig=/etc/kubernetes/admin.conf apply -f /root/travelplanner-application.yml
+      register: workloads
+      changed_when: "'created' in workloads.stdout or 'configured' in workloads.stdout"
+    - name: Wait for readiness
+      ansible.builtin.command: kubectl --kubeconfig=/etc/kubernetes/admin.conf -n travelplanner rollout status {{ item }} --timeout=300s
+      loop: [statefulset/database, deployment/backend, deployment/frontend]
+      changed_when: false

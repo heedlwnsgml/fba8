@@ -1,0 +1,78 @@
+- name: Verify the actual guest OS
+  ansible.builtin.assert:
+    that:
+    - ansible_facts.distribution == 'CentOS'
+    - ansible_facts.distribution_major_version == '10'
+    fail_msg: This playbook must be reviewed for other operating systems.
+- name: Install operational prerequisites
+  ansible.builtin.dnf:
+    name:
+    - curl
+    - tar
+    - gzip
+    - rsync
+    - python3
+    - python3-pip
+    - util-linux
+    state: present
+- name: Check Docker repository
+  ansible.builtin.stat:
+    path: /etc/yum.repos.d/docker-ce.repo
+  register: docker_repo
+- name: Add official Docker repository when absent
+  ansible.builtin.get_url:
+    url: https://download.docker.com/linux/centos/docker-ce.repo
+    dest: /etc/yum.repos.d/docker-ce.repo
+    mode: '0644'
+  when: not docker_repo.stat.exists
+- name: Install Docker without upgrading existing installed packages
+  ansible.builtin.dnf:
+    name:
+    - docker-ce
+    - docker-ce-cli
+    - containerd.io
+    - docker-buildx-plugin
+    - docker-compose-plugin
+    state: present
+- name: Start and enable Docker
+  ansible.builtin.systemd_service:
+    name: docker
+    enabled: true
+    state: started
+- name: Disable firewalld per deployment requirement
+  ansible.builtin.systemd_service:
+    name: firewalld
+    enabled: false
+    state: stopped
+- name: Prepare isolated deployment directories
+  ansible.builtin.file:
+    path: '{{ tp_deploy_root }}/{{ item }}'
+    state: directory
+    mode: '0700'
+  loop:
+  - releases
+  - state
+  - backups
+- name: Configure persistent SELinux disable only after approval
+  when: tp_disable_selinux | bool
+  block:
+  - name: Preserve existing SELinux config and set requested mode
+    ansible.builtin.lineinfile:
+      path: /etc/selinux/config
+      regexp: ^SELINUX=
+      line: SELINUX=disabled
+      backup: true
+  - name: Inspect all kernel arguments
+    ansible.builtin.command: grubby --info=ALL
+    register: kernel_args
+    changed_when: false
+  - name: Disable SELinux in kernel boot arguments
+    ansible.builtin.command: grubby --update-kernel=ALL --args=selinux=0
+    when: '''selinux=0'' not in kernel_args.stdout'
+    register: disable_kernel
+  - name: Reboot when explicitly authorized and still active
+    ansible.builtin.reboot:
+      reboot_timeout: 300
+    when:
+    - tp_allow_reboot | bool
+    - ansible_facts.selinux.status != 'disabled'

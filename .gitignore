@@ -29,3 +29,5 @@
 **/config.json
 **/local.properties
 **/google-services.json
+
+!deploy/config/application-docker.properties

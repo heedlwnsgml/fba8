@@ -1,0 +1,69 @@
+name: travelplanner
+services:
+  database:
+    image: ${DATABASE_IMAGE:-mariadb:10.11}
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
+      TZ: Asia/Seoul
+    secrets: [db_root_password, db_password]
+    volumes:
+      - ${TP_SHARED_DIR:-/opt/travelplanner/shared}/mariadb:/var/lib/mysql
+      - ${TP_SHARED_DIR:-/opt/travelplanner/shared}/database-init:/docker-entrypoint-initdb.d:ro
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci", "--innodb-buffer-pool-size=256M", "--max-connections=100"]
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      start_period: 120s
+      interval: 10s
+      timeout: 5s
+      retries: 12
+    mem_limit: 1g
+    networks: [internal]
+    logging: &logging
+      driver: json-file
+      options: {max-size: "10m", max-file: "3"}
+  backend:
+    image: ${BACKEND_IMAGE:?Set immutable BACKEND_IMAGE}
+    restart: unless-stopped
+    init: true
+    depends_on:
+      database: {condition: service_healthy}
+    environment:
+      DB_HOST: database
+      DB_NAME: ${DB_NAME:-test_planner_20261019_update}
+      DB_USERNAME: planner
+      SPRING_PROFILES_ACTIVE: docker
+      SERVER_ADDRESS: 0.0.0.0
+      SERVER_PORT: "8080"
+      SPRING_JPA_HIBERNATE_DDL_AUTO: validate
+      SPRING_JPA_SHOW_SQL: "false"
+      APP_REFRESH_ENABLED: "false"
+      TRANSIT_FARES_SYNC_BUNDLED_ON_START: "false"
+      TZ: Asia/Seoul
+    ports: ["${TP_BIND_ADDRESS:-127.0.0.1}:${TP_API_PORT:-8080}:8080"]
+    secrets: [db_password]
+    volumes:
+      - ${TP_SHARED_DIR:-/opt/travelplanner/shared}/data:/app/data
+      - ${TP_SHARED_DIR:-/opt/travelplanner/shared}/config:/app/config:ro
+    mem_limit: 2g
+    cpus: 4
+    stop_grace_period: 45s
+    networks: [internal, egress]
+    logging: *logging
+  frontend:
+    image: ${FRONTEND_IMAGE:?Set immutable FRONTEND_IMAGE}
+    restart: unless-stopped
+    depends_on:
+      backend: {condition: service_healthy}
+    ports: ["${TP_BIND_ADDRESS:-127.0.0.1}:${TP_WEB_PORT:-8081}:8080"]
+    mem_limit: 192m
+    networks: [internal, egress]
+    logging: *logging
+networks:
+  internal: {internal: true}
+  egress: {}
+secrets:
+  db_root_password:
+    file: ${TP_SHARED_DIR:-/opt/travelplanner/shared}/secrets/db-root-password
+  db_password:
+    file: ${TP_SHARED_DIR:-/opt/travelplanner/shared}/secrets/db-password

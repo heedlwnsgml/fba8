@@ -1,0 +1,258 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: travelplanner
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      nodeSelector:
+        travelplanner-storage: 'true'
+      securityContext:
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+      containers:
+      - name: backend
+        image: BACKEND_IMAGE_DIGEST
+        ports:
+        - containerPort: 8080
+        env:
+        - name: DB_HOST
+          value: database
+        - name: DB_NAME
+          value: test_planner_20261019_update
+        - name: DB_USERNAME
+          value: planner
+        - name: SPRING_PROFILES_ACTIVE
+          value: docker
+        resources:
+          requests:
+            cpu: 500m
+            memory: 768Mi
+          limits:
+            cpu: '4'
+            memory: 2Gi
+        startupProbe:
+          httpGet:
+            path: /api/v1/auth/health/live
+            port: 8080
+          failureThreshold: 60
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /api/v1/auth/health/ready
+            port: 8080
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /api/v1/auth/health/live
+            port: 8080
+          periodSeconds: 15
+        volumeMounts:
+        - name: data
+          mountPath: /app/data
+        - name: config
+          mountPath: /app/config
+          readOnly: true
+        - name: db-password
+          mountPath: /run/secrets
+          readOnly: true
+      volumes:
+      - name: data
+        hostPath:
+          path: /opt/travelplanner/shared/data
+          type: Directory
+      - name: config
+        secret:
+          secretName: planner-config
+          defaultMode: 288
+      - name: db-password
+        secret:
+          secretName: planner-db
+          defaultMode: 292
+          items:
+          - key: db_password
+            path: db_password
+      automountServiceAccountToken: false
+      initContainers:
+      - name: wait-for-database
+        image: DATABASE_IMAGE_DIGEST
+        command:
+        - /bin/sh
+        - -ec
+        - export MYSQL_PWD=$(cat /run/secrets/db_password); until mariadb --connect-timeout=2
+          --host=database --user=planner -N -e "SELECT 1" >/dev/null 2>&1; do sleep
+          2; done
+        resources:
+          requests:
+            cpu: 25m
+            memory: 32Mi
+          limits:
+            cpu: 250m
+            memory: 128Mi
+        volumeMounts:
+        - name: db-password
+          mountPath: /run/secrets
+          readOnly: true
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  namespace: travelplanner
+spec:
+  selector:
+    app: backend
+  ports:
+  - port: 8080
+    targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: travelplanner
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: FRONTEND_IMAGE_DIGEST
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            cpu: 50m
+            memory: 32Mi
+          limits:
+            cpu: '1'
+            memory: 192Mi
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+      automountServiceAccountToken: false
+      initContainers:
+      - name: wait-for-backend
+        image: BACKEND_IMAGE_DIGEST
+        command:
+        - /bin/sh
+        - -ec
+        - until curl --fail --silent --max-time 3 http://backend:8080/api/v1/auth/health/ready
+          >/dev/null; do sleep 2; done
+        securityContext:
+          runAsUser: 10001
+          runAsGroup: 10001
+        resources:
+          requests:
+            cpu: 25m
+            memory: 32Mi
+          limits:
+            cpu: 250m
+            memory: 96Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  namespace: travelplanner
+spec:
+  selector:
+    app: frontend
+  ports:
+  - port: 8080
+    targetPort: 8080
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: database
+  namespace: travelplanner
+spec:
+  replicas: 1
+  serviceName: database
+  selector:
+    matchLabels:
+      app: database
+  template:
+    metadata:
+      labels:
+        app: database
+    spec:
+      nodeSelector:
+        travelplanner-storage: 'true'
+      containers:
+      - name: database
+        image: DATABASE_IMAGE_DIGEST
+        env:
+        - name: MARIADB_ROOT_PASSWORD_FILE
+          value: /run/secrets/db_root_password
+        - name: TZ
+          value: Asia/Seoul
+        ports:
+        - containerPort: 3306
+        resources:
+          requests:
+            cpu: 250m
+            memory: 256Mi
+          limits:
+            cpu: '2'
+            memory: 1Gi
+        readinessProbe:
+          exec:
+            command:
+            - healthcheck.sh
+            - --connect
+            - --innodb_initialized
+          initialDelaySeconds: 30
+        volumeMounts:
+        - name: db
+          mountPath: /var/lib/mysql
+        - name: init
+          mountPath: /docker-entrypoint-initdb.d
+          readOnly: true
+        - name: secrets
+          mountPath: /run/secrets
+          readOnly: true
+      volumes:
+      - name: db
+        hostPath:
+          path: /opt/travelplanner/shared/mariadb
+          type: Directory
+      - name: init
+        hostPath:
+          path: /opt/travelplanner/shared/database-init
+          type: Directory
+      - name: secrets
+        secret:
+          secretName: planner-db
+      automountServiceAccountToken: false
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: database
+  namespace: travelplanner
+spec:
+  selector:
+    app: database
+  ports:
+  - port: 3306
+    targetPort: 3306

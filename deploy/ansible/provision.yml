@@ -1,0 +1,5 @@
+- name: Prepare CentOS Docker application host
+  hosts: docker_hosts
+  become: true
+  roles:
+  - docker_host

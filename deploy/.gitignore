@@ -1,0 +1,7 @@
+private/
+secrets/
+*.vault.yml
+*.retry
+*.tar.gz
+inventory.actual.yml
+verification/*-private.*
