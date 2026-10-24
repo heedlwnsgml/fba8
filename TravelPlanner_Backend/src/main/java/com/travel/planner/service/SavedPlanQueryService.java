@@ -194,7 +194,13 @@ public class SavedPlanQueryService {
                 stays.add(copy);
             }
             var costs=lodgingPrices.estimateCached(stays,p.undated()?Plan.UNDATED_BASE:p.getStartDate(),p.undated(),2);
-            response.put("lodgings",costs.lodgings);
+            var savedPrices=lodgingPrices.planPrices(p.getId());
+            if(savedPrices!=null) {
+                savedPrices=savedPrices.stream().map(known -> known.getTotalYen()!=null?known:costs.lodgings.stream()
+                    .filter(fresh -> fresh.getTotalYen()!=null && java.util.Objects.equals(fresh.getPlaceId(),known.getPlaceId()) && fresh.getCheckInDay()==known.getCheckInDay())
+                    .findFirst().orElse(known)).toList();
+            }
+            response.put("lodgings",savedPrices==null?costs.lodgings:savedPrices);
         }
         return Map.of("request",request,"response",response);
     }

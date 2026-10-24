@@ -6,6 +6,7 @@ import 'dart:math';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import '../state/trip_draft.dart';
+import 'planner_base_url.dart';
 import '../services/generation_background.dart';
 import '../state/money_display.dart';
 
@@ -60,7 +61,13 @@ class PlannerApi extends ChangeNotifier {
   static final instance = PlannerApi();
   static String get defaultBaseUrl {
     const configured = String.fromEnvironment('API_BASE_URL');
-    if (configured.isNotEmpty) return configured;
+    if (configured.isNotEmpty) {
+      return resolvePlannerBaseUrl(
+        configured,
+        isWeb: kIsWeb,
+        pageUri: kIsWeb ? Uri.base : null,
+      );
+    }
     if (!kIsWeb && defaultTargetPlatform == TargetPlatform.android) {
       return 'http://10.0.2.2:8080';
     }
@@ -182,6 +189,21 @@ class PlannerApi extends ChangeNotifier {
         },
       ),
     );
+  }
+
+  Future<List<String>> getHotelPriceFailures() async {
+    _requireLogin();
+    final revision = sessionRevision;
+    final result = _asMap(
+      await _request(
+        'GET',
+        '/api/v1/admin/hotel-prices/missing',
+        authenticated: true,
+      ),
+    );
+    if (revision != sessionRevision)
+      throw const PlannerApiException('계정이 변경되었습니다.');
+    return (result['hotels'] as List? ?? []).whereType<String>().toList();
   }
 
   Future<Map<String, dynamic>> getExchangeRate() async {

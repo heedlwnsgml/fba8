@@ -390,7 +390,7 @@ class _TripFixedSchedulePageState extends State<TripFixedSchedulePage>
                     const SizedBox(height: 12),
 
                     Text(
-                      '예약한 식당, 공연, 투어처럼 반드시 고정해야 하는 일정을 입력해주세요.',
+                      '예약한 식당, 공연, 투어처럼 반드시 고정해야 하는 일정을 입력해주세요.\nGoogle 지도에서 검색되지 않는 장소는 일정에서 제외되거나 일정 생성이 실패할 수 있습니다.',
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         color: AppColors.textSecondary,
                         height: 1.45,

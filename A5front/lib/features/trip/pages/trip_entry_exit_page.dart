@@ -321,7 +321,7 @@ class _TripEntryExitPageState extends State<TripEntryExitPage>
                     const SizedBox(height: 8),
 
                     Text(
-                      '입국·출국 공항은 선택 사항입니다. 선택하지 않은 공항은 일정의 시작·종료 지점에 포함하지 않습니다. 숙박 일수만 정했다면 다음 단계에서 시작일을 선택합니다.',
+                      '입국·출국 공항은 선택 사항입니다. 선택하지 않은 공항은 일정의 시작·종료 지점에 포함하지 않습니다.',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
 

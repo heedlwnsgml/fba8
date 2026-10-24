@@ -62,11 +62,16 @@ void main() {
   testWidgets(
     'City confirmation appears only when selection changes and lock is below title',
     (tester) async {
+      tester.view.physicalSize = const Size(393, 852);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
       TripDraft.instance.cities = ['도쿄'];
       appRouter.go(AppRoutes.tripRegion);
       await tester.pumpWidget(MaterialApp.router(routerConfig: appRouter));
       await tester.pumpAndSettle();
       expect(find.text('선택한 도시'), findsNothing);
+      expect(tester.getTopLeft(find.byType(ExpansionTile).first).dy, lessThan(tester.getTopLeft(find.text('도시 고정')).dy));
       expect(
         tester.getTopLeft(find.text('도시 고정')).dy,
         greaterThan(tester.getTopLeft(find.byType(CitySelectionMap)).dy),
@@ -74,7 +79,7 @@ void main() {
       await tester.tap(find.text('다음'));
       await tester.pumpAndSettle();
       expect(find.text('선택한 도시'), findsOneWidget);
-      await tester.tap(find.text('이 도시로 계속'));
+      await tester.tap(find.descendant(of: find.byType(AlertDialog), matching: find.text('다음')));
       await tester.pumpAndSettle();
       expect(
         appRouter.routeInformationProvider.value.uri.path,

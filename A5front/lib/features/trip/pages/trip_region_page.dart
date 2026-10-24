@@ -450,7 +450,7 @@ class _TripRegionPageState extends State<TripRegionPage>
                 ),
                 FilledButton(
                   onPressed: () => Navigator.pop(dialogContext, true),
-                  child: const Text('이 도시로 계속'),
+                  child: const Text('다음'),
                 ),
               ],
             ),
@@ -495,7 +495,7 @@ class _TripRegionPageState extends State<TripRegionPage>
             Expanded(
               child: SingleChildScrollView(
                 controller: _scrollController,
-                padding: const EdgeInsets.fromLTRB(22, 20, 22, 22),
+                padding: const EdgeInsets.fromLTRB(22, 12, 22, 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -519,7 +519,7 @@ class _TripRegionPageState extends State<TripRegionPage>
                           _toggleCity(city);
                       },
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 12),
 
                     if (PlannerApi.instance.showAdminInformation)
                       const Padding(
@@ -534,7 +534,7 @@ class _TripRegionPageState extends State<TripRegionPage>
                         ),
                       ),
                     Text(
-                      '어느 도시로\n떠나시나요?',
+                      '어느 도시로 떠나시나요?',
                       style: Theme.of(context).textTheme.headlineMedium
                           ?.copyWith(fontWeight: FontWeight.w900, height: 1.25),
                     ),
@@ -549,7 +549,7 @@ class _TripRegionPageState extends State<TripRegionPage>
                       ),
                     ),
 
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 12),
 
                     // =================================================
                     // 9개 권역별 대표 도시 목록
@@ -627,32 +627,20 @@ class _CityFixedCard extends StatelessWidget {
   final ValueChanged<bool> onChanged;
   final VoidCallback onInfoTap;
   @override
-  Widget build(BuildContext context) => Material(
-    color: Colors.white,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(18),
-      side: const BorderSide(color: AppColors.border),
-    ),
-    child: Row(
-      children: [
-        Expanded(
-          child: CheckboxListTile(
-            value: value,
-            onChanged: (next) => onChanged(next ?? false),
-            controlAffinity: ListTileControlAffinity.leading,
-            title: const Text(
-              '도시 고정',
-              style: TextStyle(fontWeight: FontWeight.w800),
-            ),
-            subtitle: const Text('선택한 도시 안에서만 일정 생성'),
-          ),
-        ),
-        IconButton(
-          onPressed: onInfoTap,
-          tooltip: '도시 고정 안내',
-          icon: const Icon(Icons.info_outline_rounded),
-        ),
-      ],
+  Widget build(BuildContext context) => SizedBox(
+    width: double.infinity,
+    height: 42,
+    child: OutlinedButton.icon(
+      onPressed: () => onChanged(!value),
+      icon: Icon(value ? Icons.push_pin : Icons.push_pin_outlined, size: 18),
+      label: const Text('도시 고정'),
+      style: OutlinedButton.styleFrom(
+        foregroundColor: value ? AppColors.primary : AppColors.textSecondary,
+        backgroundColor: value
+            ? AppColors.primary.withValues(alpha: .08)
+            : Colors.white,
+        side: BorderSide(color: value ? AppColors.primary : AppColors.border),
+      ),
     ),
   );
 }

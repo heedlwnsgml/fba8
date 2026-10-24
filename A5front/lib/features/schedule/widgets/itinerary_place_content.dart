@@ -244,7 +244,34 @@ class ItineraryPlaceContent extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 6),
-                  Text(info['공항 내 이동']!, style: const TextStyle(height: 1.5)),
+                  for (final entry
+                      in info['공항 내 이동']!
+                          .split('\n')
+                          .where((s) => s.trim().isNotEmpty))
+                    Container(
+                      width: double.infinity,
+                      margin: const EdgeInsets.only(top: 8),
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: _InformationRow(
+                        label: entry.contains('→')
+                            ? '이동 경로'
+                            : entry.startsWith('도보')
+                            ? '도보 이동'
+                            : entry.endsWith('탑승')
+                            ? '탑승 노선'
+                            : '안내',
+                        value: entry,
+                        icon: entry.startsWith('도보')
+                            ? Icons.directions_walk
+                            : entry.endsWith('탑승')
+                            ? Icons.train_outlined
+                            : Icons.location_on_outlined,
+                      ),
+                    ),
                   if (airportAccessUrl != null)
                     TextButton.icon(
                       onPressed: () =>

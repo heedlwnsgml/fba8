@@ -40,6 +40,9 @@ public class LodgingCostService {
 
     // Provider lookups use a separate 24-hour SQLite cache; no unbounded in-memory hotel prices.
 
+    public void savePlanPrices(long planId,Result result) { if(webPrices!=null)webPrices.savePlanPrices(planId,result.lodgings); }
+    public List<LodgingCostDto> planPrices(long planId) { return webPrices==null?null:webPrices.planPrices(planId); }
+
     /** 결과 */
     public static final class Result {
         public final List<LodgingCostDto> lodgings = new ArrayList<>();
@@ -66,11 +69,14 @@ public class LodgingCostService {
         }
         int lookups = 0;
         int unknown = 0;
-        int webLookups=0;
+        var recordedPrices=new java.util.HashSet<String>();
+
         int sum = 0;
         boolean any = false;
         for (Accommodation stay : stays) {
+            if(Thread.currentThread().isInterrupted())throw new java.util.concurrent.CancellationException();
             LodgingCostDto dto = new LodgingCostDto();
+            dto.setPriceAsOfDate(LocalDate.now(java.time.ZoneId.of("Asia/Tokyo")).toString());
             int nights = (int) Math.max(0, ChronoUnit.DAYS.between(stay.getCheckIn(), stay.getCheckOut()));
             dto.setName(stay.getName());
             dto.setPlaceId(stay.getPlaceId());
@@ -107,12 +113,30 @@ public class LodgingCostService {
 
             if(dto.getTotalYen()==null && nights>0 && webPrices!=null && stay.getPlaceId()!=null) {
                 var offers=webPrices.cached(stay.getPlaceId());
-                if(!cachedOnly && offers.isEmpty() && webLookups<2){webLookups++;offers=webPrices.search(stay.getPlaceId(),stay.getName(),stay.getLatitude()+","+stay.getLongitude());}
+                if(!cachedOnly && offers.isEmpty())offers=webPrices.search(stay.getPlaceId(),stay.getName(),stay.getAddress());
                 if(!offers.isEmpty()) {
                     int minimum=((Number)offers.getFirst().get("yen")).intValue();
-                    dto.setPriceComparisons(offers);dto.setLowestNightPerRoomYen(minimum);dto.setSource("web-published");
-                    dto.setUrl((String)offers.getFirst().get("url"));dto.setBasis("웹에서 확인한 객실 1개·1박 공개 요금 중 최저가입니다. 실제 예약 요금은 달라질 수 있습니다.");
+                    dto.setPriceComparisons(List.of(offers.getFirst()));dto.setLowestNightPerRoomYen(minimum);dto.setSource("web-published");
+                    dto.setUrl((String)offers.getFirst().get("url"));dto.setBasis("조회 당일 확인한 1박 최저가입니다. 실제 예약 요금은 달라질 수 있습니다.");
                     setTotal(dto,Math.multiplyExact(minimum,nights),nights);
+                }
+            }
+
+            if(webPrices!=null && stay.getPlaceId()!=null && nights>0 && !"user".equals(dto.getSource())) {
+                String identity=stay.getPlaceId();
+                if(!cachedOnly && recordedPrices.add(identity)) {
+                    webPrices.registerHotel(identity,stay.getName());
+                    if(dto.getLowestNightPerRoomYen()!=null)webPrices.recordLivePrice(identity,dto.getLowestNightPerRoomYen(),dto.getUrl(),dto.getPriceAsOfDate());
+                    else webPrices.recordPriceFailure(identity);
+                }
+                if(dto.getTotalYen()==null) {
+                    var reserved=webPrices.reservedPrice(identity);
+                    if(!reserved.isEmpty()) {
+                        int yen=((Number)reserved.get("yen")).intValue();
+                        dto.setLowestNightPerRoomYen(yen);setTotal(dto,Math.multiplyExact(yen,nights),nights);
+                        dto.setSource("stored-minimum");dto.setUrl((String)reserved.get("url"));dto.setPriceAsOfDate((String)reserved.get("checkedOn"));
+                        dto.setBasis("저장된 숙소 1박 최저가");
+                    }
                 }
             }
 
@@ -156,7 +180,9 @@ public class LodgingCostService {
         RakutenHotels.Hotel hotel=match(stay,true);
         if(hotel!=null && hotel.minCharge!=null)return hotel.minCharge;
         var quotes=webPrices==null?List.<java.util.Map<String,Object>>of():webPrices.cached(place.getPlaceId());
-        return quotes.isEmpty()?null:((Number)quotes.getFirst().get("yen")).intValue();
+        if(!quotes.isEmpty())return ((Number)quotes.getFirst().get("yen")).intValue();
+        var reserved=webPrices==null?java.util.Map.<String,Object>of():webPrices.reservedPrice(place.getPlaceId());
+        return reserved.isEmpty()?null:((Number)reserved.get("yen")).intValue();
     }
 
     public java.util.Map<String,Object> cachedDisplayPrice(com.travel.planner.entity.Place place){

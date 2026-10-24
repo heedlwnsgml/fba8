@@ -12,3 +12,20 @@
 **/chrome-device/
 **/*.sqlite-wal
 **/*.sqlite-shm
+
+# Private deployment credentials and runtime state
+**/application-secret*.yml
+**/application-secret*.yaml
+**/application-docker.properties
+**/.env*
+!**/*.example
+!**/*.sample
+**/.docker/
+**/deployment-private/
+**/private/
+**/secrets/
+**/id_rsa*
+**/id_ed25519*
+**/config.json
+**/local.properties
+**/google-services.json

@@ -172,8 +172,10 @@ public class PlanGenerationService {
 
         // 숙박비는 라쿠텐에 묻느라 시간이 걸리므로(호출 사이 1초) 일정 엔진·AI 와 동시에 돌린다
         int adults = request.getAdults() == null ? 1 : request.getAdults();
-        java.util.concurrent.CompletableFuture<LodgingCostService.Result> lodgingCost = java.util.concurrent.CompletableFuture.supplyAsync(
+        var lodgingCost = new java.util.concurrent.FutureTask<LodgingCostService.Result>(
                 () -> !lodgingCostEnabled || lodgingCostService == null ? new LodgingCostService.Result() : lodgingCostService.estimate(accommodationEntities.stream().map(PlanGenerationService::copyStay).toList(), PlanService.baseDate(request), PlanService.isUndated(request), adults));
+        Thread.ofVirtual().name("lodging-prices").start(lodgingCost);
+        try {
 
         // ------------------------------------------------------------------
         // Step 5. 방문일 예보 (예보 범위 밖이면 날씨 가감 없음)
@@ -251,12 +253,17 @@ public class PlanGenerationService {
         passAdvisorService.apply(response);
         LodgingCostService.Result lodging;
         try {
-            // 숙소 한 곳에 라쿠텐 1~2번(1초 간격). 장기 투어는 숙소가 많으므로 그만큼 더 기다린다 (최대 2분)
-            lodging = lodgingCost.get(Math.min(120, 30 + 3L * accommodationEntities.size()), java.util.concurrent.TimeUnit.SECONDS);
+            while(true) {
+                PlanGenerationJobs.checkCancellation();
+                try { lodging=lodgingCost.get(1,java.util.concurrent.TimeUnit.SECONDS);break; }
+                catch(java.util.concurrent.TimeoutException pending) { /* Cancellation remains responsive while all hotels are checked. */ }
+            }
+        } catch (java.util.concurrent.CancellationException e) {
+            lodgingCost.cancel(true);throw e;
+        } catch (InterruptedException e) {
+            lodgingCost.cancel(true);Thread.currentThread().interrupt();throw new java.util.concurrent.CancellationException();
         } catch (Exception e) {
-            System.out.println("[숙박비] 시간 안에 숙박비를 다 찾지 못했습니다: " + e.getClass().getSimpleName());
             lodgingCost.cancel(true);
-            if (e instanceof InterruptedException) Thread.currentThread().interrupt();
             lodging = !lodgingCostEnabled || lodgingCostService==null ? new LodgingCostService.Result() : lodgingCostService.estimateCached(accommodationEntities.stream().map(PlanGenerationService::copyStay).toList(),PlanService.baseDate(request),PlanService.isUndated(request),adults);
         }
         if(lodgingCostEnabled) LodgingCostService.apply(response, lodging, adults);
@@ -273,6 +280,7 @@ public class PlanGenerationService {
         PlanGenerationJobs.beforeCommit();
         Plan saved = planPersistenceService.saveNewPlan(user, request, tripPlan.getDays(), accommodationEntities, response.getReason());
         response.setPlanId(saved.getId());
+        if(lodgingCostEnabled && lodgingCostService!=null)lodgingCostService.savePlanPrices(saved.getId(),lodging);
         java.util.Map<Integer,java.util.List<com.travel.planner.entity.Itinerary>> savedDays=saved.getItineraries().stream()
             .collect(java.util.stream.Collectors.groupingBy(com.travel.planner.entity.Itinerary::getDayNumber));
         java.util.Map<Integer,Integer> ordinal=new java.util.HashMap<>();
@@ -283,6 +291,7 @@ public class PlanGenerationService {
             if(list!=null && index<list.size()) item.setItineraryId(list.get(index).getId());
         }
         return response;
+        } finally { lodgingCost.cancel(true); }
     }
 
     private static Accommodation copyStay(Accommodation stay) {

@@ -8,6 +8,7 @@ import lombok.Setter;
 @Setter
 public class LodgingCostDto {
     private java.util.List<java.util.Map<String,Object>> priceComparisons;
+    private String priceAsOfDate; // 조회 당일 기준일, 날짜 미정 일정도 동일
     private String placeId;
     private String name;              // 숙소 이름
     private int checkInDay;           // 체크인 일차 (1부터)

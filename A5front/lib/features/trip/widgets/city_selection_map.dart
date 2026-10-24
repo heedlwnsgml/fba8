@@ -90,7 +90,7 @@ class _CitySelectionMapState extends State<CitySelectionMap> {
           ),
         ),
         SizedBox(
-          height: 290,
+          height: 232,
           child: Stack(
             children: [
               FlutterMap(

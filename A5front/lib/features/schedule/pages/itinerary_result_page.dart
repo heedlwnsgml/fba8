@@ -311,6 +311,11 @@ class _ItineraryResultPageState extends State<ItineraryResultPage> {
       final index = days.indexWhere((d) => d.dayNumber == day);
       if (index >= 0) _handleDayChanged(index);
     }
+    if (mounted)
+      setState(() {
+        _selectedItemIndex = null;
+        _selectionRevision++;
+      });
   }
 
   double get _mapHeight =>
@@ -1055,10 +1060,7 @@ class _ItineraryResultPageState extends State<ItineraryResultPage> {
           shown(itineraryDailyCostText(day)),
       ],
       comment: shown(_response?['reason']?.toString() ?? ''),
-      notes: [
-        if (_api.money.currency == 'KRW') MoneyDisplay.roundingNotice,
-        ..._guidance.values.expand((v) => v),
-      ],
+      notes: [..._guidance.values.expand((v) => v)],
       days: [
         for (final day in days)
           ItineraryPdfDay(
@@ -1639,7 +1641,8 @@ class _ItineraryResultPageState extends State<ItineraryResultPage> {
                                       style: const TextStyle(height: 1.5),
                                     ),
                                   ),
-                                  if (_guidance.isNotEmpty)
+                                  if (_api.showAdminInformation &&
+                                      _guidance.isNotEmpty)
                                     ExpansionTile(
                                       tilePadding: EdgeInsets.zero,
                                       expandedCrossAxisAlignment:

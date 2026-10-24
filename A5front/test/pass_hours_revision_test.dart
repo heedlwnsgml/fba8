@@ -17,6 +17,10 @@ class _RateApi extends PlannerApi {
 }
 
 void main() {
+  test('일반 승차권과 패스 이름은 각각 한 번만 표시한다', () {
+    final regular = itineraryCompactPassDay({'day': 2, 'optimalFareYen': 400, 'regularFareYen': 400, 'passes': <dynamic>[]});
+    expect('일반 승차권'.allMatches(regular).length, 1);
+  });
   testWidgets('숙소 예산은 원화가 기본이며 환율을 받은 뒤 엔으로 환산한다', (tester) async {
     final d = TripDraft.instance;
     d.resetInputs();
@@ -97,7 +101,7 @@ void main() {
     expect(find.textContaining('3일차 -'), findsNothing);
     await tester.tap(find.text('나머지 일자 비교'));
     await tester.pumpAndSettle();
-    expect(find.textContaining('2일차 - 400엔'), findsOneWidget);
+    expect(find.textContaining('2일차 - 일반 승차권 400엔'), findsOneWidget);
     expect(find.textContaining('3일차 - 700엔'), findsOneWidget);
   });
   testWidgets('대기에만 약을 붙이고 총 이동시간과 승차시간은 유지한다', (tester) async {

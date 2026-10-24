@@ -432,9 +432,11 @@ Future<Uint8List> buildDonghwiSchedulePdf({
             child: _text(chunk, size: 9),
           ),
       ],
-      if (notes.isNotEmpty) ...[
+      if (notes.any((line) => !RegExp(r'원화|100원|환율').hasMatch(line))) ...[
         pdfSectionTitle('알아 둘 점'),
-        for (final line in notes)
+        for (final line in notes.where(
+          (line) => !RegExp(r'원화|100원|환율').hasMatch(line),
+        ))
           pw.Padding(
             padding: const pw.EdgeInsets.only(bottom: 4),
             child: _text('• $line', size: 8.5, color: _gray),

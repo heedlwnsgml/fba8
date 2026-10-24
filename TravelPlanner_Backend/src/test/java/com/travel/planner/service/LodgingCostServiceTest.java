@@ -245,4 +245,41 @@ class LodgingCostServiceTest {
         a.setPlaceId(placeId);
         return a;
     }
+
+    @Test void undatedWebFallbackCoversMoreThanTwoHotelsAndUsesTodayInsteadOfPlaceholderDate() {
+        var api=new FakeRakuten();api.near="{\"hotels\":[]}";
+        var web=org.mockito.Mockito.mock(HotelWebPriceService.class);
+        org.mockito.Mockito.when(web.cached(org.mockito.ArgumentMatchers.anyString())).thenReturn(List.of());
+        org.mockito.Mockito.when(web.search(org.mockito.ArgumentMatchers.anyString(),org.mockito.ArgumentMatchers.anyString(),org.mockito.ArgumentMatchers.isNull()))
+            .thenReturn(List.of(java.util.Map.of("yen",9000,"url","https://hotel.example")));
+        var service=new LodgingCostService(api);
+        org.springframework.test.util.ReflectionTestUtils.setField(service,"webPrices",web);
+        var hotels=new ArrayList<Accommodation>();
+        for(int i=0;i<4;i++)hotels.add(stay("Hotel "+i,Plan.UNDATED_BASE.plusDays(i),Plan.UNDATED_BASE.plusDays(i+1),35.0,139.0,"hotel"+i));
+        var result=service.estimate(hotels,Plan.UNDATED_BASE,true,2);
+        assertTrue(result.complete);assertEquals(36000,result.totalYen);
+        for(var dto:result.lodgings) {
+            assertEquals(LocalDate.now(java.time.ZoneId.of("Asia/Tokyo")).toString(),dto.getPriceAsOfDate());
+            assertNull(dto.getCheckIn());assertEquals(9000,dto.getLowestNightPerRoomYen());
+        }
+        org.mockito.Mockito.verify(web,org.mockito.Mockito.times(4)).search(org.mockito.ArgumentMatchers.anyString(),org.mockito.ArgumentMatchers.anyString(),org.mockito.ArgumentMatchers.isNull());
+    }
+
+    @Test void storedVerifiedPriceIsUsedImmediatelyAndLiveQuoteAlwaysWins(@org.junit.jupiter.api.io.TempDir java.nio.file.Path dir) {
+        var api=new FakeRakuten();api.near="{\"hotels\":[]}";
+        var web=new HotelWebPriceService(dir.resolve("prices.sqlite"),java.time.Clock.systemUTC());
+        var service=new LodgingCostService(api);org.springframework.test.util.ReflectionTestUtils.setField(service,"webPrices",web);
+        web.recordLivePrice("reserve-hotel",9000,"https://hotel.example","2026-10-25");
+        for(int i=0;i<4;i++)web.recordPriceFailure("reserve-hotel");
+        var before=service.estimateCached(List.of(stay("Hotel",BASE,BASE.plusDays(2),34.97165,138.38905,"reserve-hotel")),BASE,false,2);
+        assertEquals(18000,before.totalYen,"저장 요금은 조회 실패 때 즉시 사용한다");
+        assertTrue(web.hotelsNeedingPrices().isEmpty(),"단순 일정 조회는 실패 횟수를 올리지 않는다");
+        web.recordPriceFailure("reserve-hotel");
+        var fallback=service.estimateCached(List.of(stay("Hotel",BASE,BASE.plusDays(2),34.97165,138.38905,"reserve-hotel")),BASE,false,2);
+        assertEquals(18000,fallback.totalYen);assertEquals("stored-minimum",fallback.lodgings.getFirst().getSource());
+        api.near=NEAR;
+        var fresh=service.estimate(List.of(stay("Hotel",BASE,BASE.plusDays(2),34.97165,138.38905,"reserve-hotel")),BASE,false,2);
+        assertEquals(19600,fresh.totalYen);assertEquals("rakuten-estimate",fresh.lodgings.getFirst().getSource());
+        assertEquals(9800,web.reservedPrice("reserve-hotel").get("yen"));
+    }
 }

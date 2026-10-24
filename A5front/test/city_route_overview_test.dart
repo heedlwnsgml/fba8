@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ai_travel_planner/features/schedule/widgets/itinerary_route_map.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:ai_travel_planner/features/schedule/widgets/city_route_overview.dart';
 import 'package:ai_travel_planner/features/schedule/pages/itinerary_result_page.dart';
@@ -94,6 +95,7 @@ void main() {
       await t.tap(find.text('일정 보기'));
       await t.pumpAndSettle();
       expect(find.byKey(const ValueKey('city-route-overview')), findsNothing);
+      expect(t.widget<ItineraryRouteMap>(find.byType(ItineraryRouteMap)).selectionRevision, greaterThan(0));
       expect(find.byKey(const ValueKey('map-pin-button-2')), findsNothing);
       await t.tap(find.byKey(const ValueKey('toggle-fixed-map')));
       await t.pumpAndSettle();

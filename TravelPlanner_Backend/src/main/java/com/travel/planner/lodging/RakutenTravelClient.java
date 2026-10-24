@@ -54,6 +54,8 @@ public class RakutenTravelClient implements RakutenTravelApi {
     }
 
     private long lastCall;
+    private long retryAt;
+    private String cacheEndpoint(String url) { return url+"#"+LocalDate.now(java.time.ZoneId.of("Asia/Tokyo")); }
 
     @Override
     public boolean configured() {
@@ -73,7 +75,7 @@ public class RakutenTravelClient implements RakutenTravelApi {
     }
 
     @Override public String cachedSimpleSearch(double latitude,double longitude,double radiusKm) {
-        return hotelCache.get(simpleUrl,simpleQuery(latitude,longitude,radiusKm));
+        return hotelCache.get(cacheEndpoint(simpleUrl),simpleQuery(latitude,longitude,radiusKm));
     }
 
     @Override
@@ -115,8 +117,9 @@ public class RakutenTravelClient implements RakutenTravelApi {
 
     private synchronized String call(String url, Map<String, Object> query, String what) {
         if (!configured()) return null;
-        String cached = hotelCache.get(url, query);
+        String cached = hotelCache.get(cacheEndpoint(url), query);
         if (cached != null) return cached;
+        if(System.currentTimeMillis()<retryAt || Thread.currentThread().isInterrupted())return null;
         waitTurn();
         try {
             HttpRequest request = HttpRequest.newBuilder(uri(url, query))
@@ -129,9 +132,10 @@ public class RakutenTravelClient implements RakutenTravelApi {
             HttpResponse<String> response = http.send(request, HttpResponse.BodyHandlers.ofString());
             int status = response.statusCode();
             if (status == 200) {
-                hotelCache.put(url, query, response.body());
+                hotelCache.put(cacheEndpoint(url), query, response.body());
                 return response.body();
             }
+            if(java.util.Set.of(401,403,429).contains(status))retryAt=System.currentTimeMillis()+60_000;
             if (status == 404) return "{\"hotels\":[]}";    // 찾은 것이 없음 (빈방 없음 포함)
             String error = RakutenHotels.error(response.body());
             System.out.println("[숙박비] 라쿠텐 " + what + " 실패: HTTP " + status + (error != null ? " " + error : ""));

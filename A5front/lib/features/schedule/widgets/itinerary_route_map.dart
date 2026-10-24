@@ -110,8 +110,8 @@ class _ItineraryRouteMapState extends State<ItineraryRouteMap> {
             index >= 0 &&
             index < _stops.length) {
           _controller.move(_stops[index].position, 14);
-        } else if (stopsChanged) {
-          _fit();
+        } else if (stopsChanged || selectionChanged) {
+          _focusOnce();
         }
       });
     }
@@ -137,6 +137,15 @@ class _ItineraryRouteMapState extends State<ItineraryRouteMap> {
         ),
       );
     }
+  }
+
+  void _focusOnce() {
+    _fit();
+    final camera = _controller.camera;
+    _controller.move(camera.center, (camera.zoom + .01).clamp(3.0, 19.0));
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted && _ready) _fit();
+    });
   }
 
   String movementDetails(RouteMapStop stop) {
@@ -268,7 +277,10 @@ class _ItineraryRouteMapState extends State<ItineraryRouteMap> {
             maxZoom: 19,
             onMapReady: () {
               _ready = true;
-              _fit();
+              // Fit once after layout; moving during onMapReady can leave the tile viewport stale.
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                if (mounted && _ready) _focusOnce();
+              });
             },
           ),
           children: [

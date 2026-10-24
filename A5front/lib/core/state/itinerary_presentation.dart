@@ -1045,6 +1045,10 @@ String itineraryCompactPassDay(Map day) {
       .toSet()
       .join(' · ');
   final fare = day['optimalFareYen'], regular = day['regularFareYen'];
+  if (names.isEmpty) {
+    final ticket = regular is num ? regular : fare;
+    return '${day['day']}일차 - 일반 승차권 ${ticket is num ? '${ticket.toInt()}엔' : '요금 미확인'}';
+  }
   return '${day['day']}일차 - ${fare is num ? '${fare.toInt()}엔' : '요금 미확인'} (일반 승차권 ${regular is num ? '${regular.toInt()}엔' : '요금 미확인'})\n${names.isEmpty ? '일반 승차권' : names}';
 }
 

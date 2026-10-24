@@ -280,17 +280,14 @@ class _TripAccommodationPageState extends State<TripAccommodationPage>
                     const SizedBox(height: 12),
 
                     Text(
-                      '숙소는 선택 사항입니다. 시작 시간은 숙소 출발, 종료 시간은 숙소 도착 시각입니다. 정해진 숙소가 없다면 추천받을 수 있어요.',
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      '시작 시간은 숙소 출발, 종료 시간은 숙소 도착 시각입니다. 숙소를 지정하지 않은 날은 자동으로 추천합니다.',
+                      style: const TextStyle(
+                        fontSize: 14,
                         color: AppColors.textSecondary,
-                        height: 1.45,
+                        height: 1.4,
                       ),
                     ),
 
-                    const SizedBox(height: 28),
-
-                    // =================================================
-                    const Text('숙소를 지정하지 않은 날은 모두 숙소를 추천해 드립니다.'),
                     const SizedBox(height: 16),
                     // 등록된 숙소가 없는 경우
                     // =================================================

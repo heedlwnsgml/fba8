@@ -1,5 +1,6 @@
 import '../../../core/widgets/app_dialog_actions.dart';
 import '../widgets/exchange_rate_editor.dart';
+import '../widgets/missing_hotel_prices_card.dart';
 import '../widgets/long_trip_settings_card.dart';
 import '../widgets/hotel_currency_preference_card.dart';
 import 'package:flutter/material.dart';
@@ -544,6 +545,10 @@ class _MyPageState extends State<MyPage> with WidgetsBindingObserver {
                       ),
                     ),
                   ),
+                  if (api.isAdmin && api.showAdminInformation) ...[
+                    const SizedBox(height: 20),
+                    MissingHotelPricesCard(api: api),
+                  ],
                 ],
               ),
             );
