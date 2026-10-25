@@ -272,7 +272,14 @@ class _ItineraryRouteMapState extends State<ItineraryRouteMap> {
               flags: _interactive ? InteractiveFlag.all : InteractiveFlag.none,
             ),
             initialCenter: points.first,
-            initialZoom: 12,
+            initialZoom: 14,
+            initialCameraFit: points.toSet().length > 1
+                ? CameraFit.coordinates(
+                    coordinates: points,
+                    padding: const EdgeInsets.all(42),
+                    maxZoom: 14,
+                  )
+                : null,
             minZoom: 3,
             maxZoom: 19,
             onMapReady: () {

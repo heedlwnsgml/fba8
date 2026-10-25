@@ -493,94 +493,104 @@ class _TripRegionPageState extends State<TripRegionPage>
             const TripStepHeader(currentStep: 2),
 
             Expanded(
-              child: SingleChildScrollView(
-                controller: _scrollController,
-                padding: const EdgeInsets.fromLTRB(22, 12, 22, 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const TripStepIndicator(currentStep: 2),
-
-                    const SizedBox(height: 16),
-                    CitySelectionMap(
-                      cities: [...presetCities, ...customCities],
-                      selected: {...selectedCities, ...customCities},
-                      showIslandLabels:
-                          PlannerApi.instance.showAdminInformation,
-                      anchorCity: itineraryAnchorCity(
-                        TripDraft.instance.title,
-                        presetCities,
-                        TripDraft.instance.cities,
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  final mapHeight = (constraints.maxHeight * .30).clamp(
+                    140.0,
+                    200.0,
+                  );
+                  return Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 8, 20, 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const TripStepIndicator(currentStep: 2),
+                            const SizedBox(height: 12),
+                            Text(
+                              '어느 도시로 떠나시나요?',
+                              style: Theme.of(context).textTheme.titleLarge
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.w900,
+                                    height: 1.25,
+                                  ),
+                            ),
+                            const SizedBox(height: 6),
+                            const Text(
+                              '여행할 권역을 열어 도시를 선택하세요. 목록에 없는 도시는 직접 입력할 수 있어요.',
+                              style: TextStyle(
+                                fontSize: 13,
+                                height: 1.4,
+                                color: AppColors.textSecondary,
+                              ),
+                            ),
+                            if (PlannerApi.instance.showAdminInformation)
+                              const Padding(
+                                padding: EdgeInsets.only(top: 4),
+                                child: Text(
+                                  islandTravelNotice,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    height: 1.4,
+                                    color: AppColors.textSecondary,
+                                  ),
+                                ),
+                              ),
+                            const SizedBox(height: 10),
+                            CitySelectionMap(
+                              cities: [...presetCities, ...customCities],
+                              selected: {...selectedCities, ...customCities},
+                              showIslandLabels:
+                                  PlannerApi.instance.showAdminInformation,
+                              anchorCity: _anchorCity,
+                              mapHeight: mapHeight,
+                              showHeader: false,
+                              onToggle: (city) {
+                                if (customCities.contains(city)) {
+                                  _removeCity(city);
+                                } else {
+                                  _toggleCity(city);
+                                }
+                              },
+                            ),
+                          ],
+                        ),
                       ),
-                      onToggle: (city) {
-                        if (customCities.contains(city))
-                          _removeCity(city);
-                        else
-                          _toggleCity(city);
-                      },
-                    ),
-                    const SizedBox(height: 12),
-
-                    if (PlannerApi.instance.showAdminInformation)
-                      const Padding(
-                        padding: EdgeInsets.only(bottom: 14),
-                        child: Text(
-                          islandTravelNotice,
-                          style: TextStyle(
-                            fontSize: 12,
-                            height: 1.5,
-                            color: AppColors.textSecondary,
+                      Expanded(
+                        child: SingleChildScrollView(
+                          controller: _scrollController,
+                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 12),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ...orderedGroups.map(
+                                (group) => Padding(
+                                  padding: const EdgeInsets.only(bottom: 10),
+                                  child: _RegionExpansionCard(
+                                    key: ValueKey(group.name),
+                                    controller: _regionControllers.putIfAbsent(
+                                      group.name,
+                                      ExpansibleController.new,
+                                    ),
+                                    group: group,
+                                    selectedCities: selectedCities,
+                                    onToggleCity: _toggleCity,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              _CustomCityInputCard(
+                                controller: customCityController,
+                                onAdd: _addCustomCity,
+                              ),
+                            ],
                           ),
                         ),
                       ),
-                    Text(
-                      '어느 도시로 떠나시나요?',
-                      style: Theme.of(context).textTheme.headlineMedium
-                          ?.copyWith(fontWeight: FontWeight.w900, height: 1.25),
-                    ),
-
-                    const SizedBox(height: 12),
-
-                    Text(
-                      '여행하고 싶은 권역을 열어 대표 도시를 선택하거나 목록에 없는 소도시를 직접 입력해주세요.',
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: AppColors.textSecondary,
-                        height: 1.45,
-                      ),
-                    ),
-
-                    const SizedBox(height: 12),
-
-                    // =================================================
-                    // 9개 권역별 대표 도시 목록
-                    // =================================================
-                    ...orderedGroups.map(
-                      (group) => Padding(
-                        padding: const EdgeInsets.only(bottom: 12),
-                        child: _RegionExpansionCard(
-                          key: ValueKey(group.name),
-                          controller: _regionControllers.putIfAbsent(
-                            group.name,
-                            ExpansibleController.new,
-                          ),
-                          group: group,
-                          selectedCities: selectedCities,
-                          onToggleCity: _toggleCity,
-                        ),
-                      ),
-                    ),
-
-                    const SizedBox(height: 12),
-
-                    // =================================================
-                    // 목록에 없는 소도시 직접 입력
-                    // =================================================
-                    _CustomCityInputCard(
-                      controller: customCityController,
-                      onAdd: _addCustomCity,
-                    ),
-                  ],
-                ),
+                    ],
+                  );
+                },
               ),
             ),
 

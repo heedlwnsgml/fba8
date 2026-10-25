@@ -12,6 +12,8 @@ class CitySelectionMap extends StatefulWidget {
     required this.selected,
     required this.onToggle,
     this.anchorCity,
+    this.mapHeight = 232,
+    this.showHeader = true,
     this.loadTiles = true,
     this.showIslandLabels = false,
   });
@@ -20,6 +22,8 @@ class CitySelectionMap extends StatefulWidget {
   final ValueChanged<String> onToggle;
   final String? anchorCity;
   final bool loadTiles;
+  final double mapHeight;
+  final bool showHeader;
   final bool showIslandLabels;
   @override
   State<CitySelectionMap> createState() => _CitySelectionMapState();
@@ -75,22 +79,24 @@ class _CitySelectionMapState extends State<CitySelectionMap> {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const Padding(
-          padding: EdgeInsets.fromLTRB(16, 16, 16, 8),
-          child: Text(
-            '지도로 여행 도시 선택',
-            style: TextStyle(fontSize: 17, fontWeight: FontWeight.w800),
+        if (widget.showHeader)
+          const Padding(
+            padding: EdgeInsets.fromLTRB(16, 16, 16, 8),
+            child: Text(
+              '지도로 여행 도시 선택',
+              style: TextStyle(fontSize: 17, fontWeight: FontWeight.w800),
+            ),
           ),
-        ),
-        const Padding(
-          padding: EdgeInsets.fromLTRB(16, 0, 16, 12),
-          child: Text(
-            '핀을 누르거나 아래 도시 목록에서 선택하세요.',
-            style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
+        if (widget.showHeader)
+          const Padding(
+            padding: EdgeInsets.fromLTRB(16, 0, 16, 12),
+            child: Text(
+              '핀을 누르거나 아래 도시 목록에서 선택하세요.',
+              style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
+            ),
           ),
-        ),
         SizedBox(
-          height: 232,
+          height: widget.mapHeight,
           child: Stack(
             children: [
               FlutterMap(
