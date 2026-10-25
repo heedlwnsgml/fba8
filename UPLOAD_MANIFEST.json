@@ -27543,8 +27543,8 @@
     },
     {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/entity/Plan.java",
-      "bytes": 5193,
-      "sha256": "146f2462f03e028213aad40d101d6aecee98fb5314a5c5e910f4892ccc0e8c8f"
+      "bytes": 5551,
+      "sha256": "f3c232b2445b2c951730ce8d9ad1d47f1e902789517232a91b266657b176027a"
     },
     {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/entity/Region.java",
@@ -27658,8 +27658,8 @@
     },
     {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/repository/PlanRepository.java",
-      "bytes": 1357,
-      "sha256": "f79ef5cc1575bb7e5ca84372a2aab84f73a6e027dfbf27764a7ab3db0d818d4f"
+      "bytes": 1656,
+      "sha256": "9a86335fd458fe27d7a32fd3a9bdeb9334e7cbafa7f4e9896b0e9d1fd30b839b"
     },
     {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/repository/TrafficRepository.java",
@@ -27878,8 +27878,8 @@
     },
     {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/service/PdfExportService.java",
-      "bytes": 8616,
-      "sha256": "558948882d2af2a74e36d6fa13784da04196eaf75faf8aa0fce19e3727426efe"
+      "bytes": 32624,
+      "sha256": "8dc5631115fa6f50ff78d9f0b116fca978466fe68b64081b7735baf2d2ab66ba"
     },
     {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/service/PlaceDescriptionService.java",
@@ -27933,8 +27933,8 @@
     },
     {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/service/PlanService.java",
-      "bytes": 149872,
-      "sha256": "e656a11405cf40cfd2caf5343373f061499df18cb2bbca64c4b1f91521003dad"
+      "bytes": 149871,
+      "sha256": "c1730fa6fc44c1c9483f79386f7ec90a012b8464683781dd372bab518cf859df"
     },
     {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/service/PlanSummarizer.java",
@@ -28232,6 +28232,16 @@
       "sha256": "48a28e97b34fc8e5b157657633670cd1b7de126cfc414da65ce9c3d5bc8be733"
     },
     {
+      "path": "TravelPlanner_Backend/src/main/resources/fonts/NotoSansJP-Fallback-LICENSE.txt",
+      "bytes": 4666,
+      "sha256": "e0277378fd7919a69c0ea375a66e120ee4951a1c1757a67801f98979b8a16273"
+    },
+    {
+      "path": "TravelPlanner_Backend/src/main/resources/fonts/NotoSansJP-Fallback.otf",
+      "bytes": 637296,
+      "sha256": "d5311fc660b0eec4e8e2fbcff4403cd7dd38d268d374da44b42aa7fcf32b38b8"
+    },
+    {
       "path": "TravelPlanner_Backend/src/main/resources/sea/islands.json",
       "bytes": 36857,
       "sha256": "1d1ef6c9ab6316558f52a7c0b7d99013083a1bab8b79930c74ee485ebcd036f3"
@@ -28455,6 +28465,11 @@
       "path": "TravelPlanner_Backend/src/test/java/com/travel/planner/service/PassAdviceTest.java",
       "bytes": 12788,
       "sha256": "9993f204cbdf1df23376203c504f4a631e9f004cb7c7eb92e558a92d718c8c28"
+    },
+    {
+      "path": "TravelPlanner_Backend/src/test/java/com/travel/planner/service/PdfExportTest.java",
+      "bytes": 6175,
+      "sha256": "2bfd0eeab25c933b5dae55cc2c6db7e0bdadc98db1faf71e05c51fbacb9c2762"
     },
     {
       "path": "TravelPlanner_Backend/src/test/java/com/travel/planner/service/PlaceDescriptionServiceTest.java",
