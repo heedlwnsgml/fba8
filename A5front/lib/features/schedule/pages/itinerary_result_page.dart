@@ -12,6 +12,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import '../widgets/itinerary_place_content.dart';
+import '../widgets/place_photo_thumbnail.dart';
 import '../widgets/pass_day_comparison.dart';
 import 'package:public_file_saver/public_file_saver.dart';
 
@@ -489,6 +490,7 @@ class _ItineraryResultPageState extends State<ItineraryResultPage> {
                       (e['transportFromPrevious'] as Map?)?['mode'] == '도보',
                   airportAccessUrl: e['_airportAccessUrl'] as Uri?,
                   itineraryId: ((e['itineraryId'] ?? e['id']) as num?)?.toInt(),
+                  placeId: e['placeId']?.toString(),
                   time: e['time']?.toString() ?? '',
                   title: e['placeName']?.toString() ?? '',
                   description: _placeDescription(Map<String, dynamic>.from(e)),
@@ -2043,71 +2045,12 @@ class _TimelineItem extends StatelessWidget {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (item.mapNumber != null) ...[
-              Container(
-                width: 32,
-                height: 32,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: AppColors.primary,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Text(
-                  '${item.mapNumber}',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-              const SizedBox(width: 10),
-            ],
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    item.category,
-                    style: const TextStyle(
-                      color: AppColors.textSecondary,
-                      fontSize: 12,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    item.title,
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w800,
-                      height: 1.4,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(width: 8),
-            Column(
-              children: [
-                Text(
-                  item.time,
-                  style: const TextStyle(
-                    color: AppColors.primary,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                if (item.category != '공항' && !item.title.contains('공항'))
-                  IconButton(
-                    onPressed: onMoreTap,
-                    tooltip: '일정 메뉴',
-                    visualDensity: VisualDensity.compact,
-                    icon: const Icon(Icons.more_vert_rounded, size: 20),
-                  ),
-              ],
-            ),
-          ],
+        // 장소 사진이 있으면 왼쪽에 작은 사진 + 번호는 종류 옆에 작게, 없으면 원래 모양
+        PlacePhotoBuilder(
+          placeId: PlacePhotoBuilder.canShow(item.placeId) ? item.placeId : null,
+          title: item.title,
+          builder: (context, photo) =>
+              photo == null ? _plainHeader(context) : _photoHeader(context, photo),
         ),
         const SizedBox(height: 18),
         ItineraryPlaceContent(
@@ -2120,6 +2063,134 @@ class _TimelineItem extends StatelessWidget {
         ),
       ],
     ),
+  );
+
+  Widget _plainHeader(BuildContext context) => Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (item.mapNumber != null) ...[
+          Container(
+            width: 32,
+            height: 32,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: AppColors.primary,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Text(
+              '${item.mapNumber}',
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+          const SizedBox(width: 10),
+        ],
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                item.category,
+                style: const TextStyle(
+                  color: AppColors.textSecondary,
+                  fontSize: 12,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                item.title,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.w800,
+                  height: 1.4,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(width: 8),
+        _timeAndMenu(),
+      ],
+    );
+
+  Widget _timeAndMenu() => Column(
+    children: [
+      Text(
+        item.time,
+        style: const TextStyle(
+          color: AppColors.primary,
+          fontSize: 13,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
+      if (item.category != '공항' && !item.title.contains('공항'))
+        IconButton(
+          onPressed: onMoreTap,
+          tooltip: '일정 메뉴',
+          visualDensity: VisualDensity.compact,
+          icon: const Icon(Icons.more_vert_rounded, size: 20),
+        ),
+    ],
+  );
+
+  Widget _photoHeader(BuildContext context, Widget photo) => Row(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      photo,
+      const SizedBox(width: 12),
+      Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                if (item.mapNumber != null) ...[
+                  Container(
+                    width: 22,
+                    height: 22,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: AppColors.primary,
+                      borderRadius: BorderRadius.circular(7),
+                    ),
+                    child: Text(
+                      '${item.mapNumber}',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 6),
+                ],
+                Flexible(
+                  child: Text(
+                    item.category,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      color: AppColors.textSecondary,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 4),
+            Text(
+              item.title,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.w800,
+                height: 1.4,
+              ),
+            ),
+          ],
+        ),
+      ),
+      const SizedBox(width: 8),
+      _timeAndMenu(),
+    ],
   );
 }
 
@@ -2376,6 +2447,7 @@ class _ItineraryItem {
   final String? explanation;
   final String transportDescription;
   final String category;
+  final String? placeId;
   final bool isEmpty = false;
   int? mapNumber;
 
@@ -2398,6 +2470,7 @@ class _ItineraryItem {
     this.explanation,
     this.transportDescription = "",
     required this.category,
+    this.placeId,
     this.latitude,
     this.longitude,
   });

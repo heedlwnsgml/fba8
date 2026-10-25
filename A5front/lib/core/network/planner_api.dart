@@ -252,6 +252,34 @@ class PlannerApi extends ChangeNotifier {
     } catch (_) {}
   }
 
+  /// 일정 카드의 장소 대표 사진 (구글 지도 사진의 첫 장).
+  /// 같은 장소·크기는 앱이 켜져 있는 동안 서버에 한 번만 묻는다 (사진 조회는 유료라서).
+  /// 사진이 없거나 실패하면 {'available': false}.
+  final Map<String, Future<Map<String, dynamic>>> _placePhotos = {};
+  Future<Map<String, dynamic>> getPlacePhoto(
+    String placeId, {
+    bool large = false,
+  }) {
+    if (!isLoggedIn) return Future.value(const {'available': false});
+    final size = large ? 'large' : 'small';
+    final key = '$placeId|$size';
+    return _placePhotos.putIfAbsent(key, () async {
+      try {
+        return _asMap(
+          await _request(
+            'GET',
+            '/api/v1/places/${Uri.encodeComponent(placeId)}/photo',
+            query: {'size': size},
+            authenticated: true,
+          ),
+        );
+      } catch (_) {
+        _placePhotos.remove(key); // 실패는 기억하지 않는다: 다음에 열 때 다시 시도
+        return const {'available': false};
+      }
+    });
+  }
+
   Future<Map<String, dynamic>> getLongTripSettings() async => _asMap(
     await _request(
       'GET',

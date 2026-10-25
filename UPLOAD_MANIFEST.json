@@ -23073,8 +23073,8 @@
     },
     {
       "path": "A5front/lib/core/network/planner_api.dart",
-      "bytes": 31840,
-      "sha256": "92a886020abc239355f3e03926e4c6c725220782dbd1fd64f0beebaa4c85a34a"
+      "bytes": 32926,
+      "sha256": "80387a2284878ac8f17070f8d70b4b69bad31991909d9c094b84674ffd6cb391"
     },
     {
       "path": "A5front/lib/core/network/planner_base_url.dart",
@@ -23268,8 +23268,8 @@
     },
     {
       "path": "A5front/lib/features/schedule/pages/itinerary_result_page.dart",
-      "bytes": 94337,
-      "sha256": "1908a4e9473a8a280ce848f4ea3b657ecf35814f1d1a9a5fca93d296fba9fa9e"
+      "bytes": 96495,
+      "sha256": "2e9b85363cb427b46c6e186fb0c105543f5738da726468136f5687ed572cf5f9"
     },
     {
       "path": "A5front/lib/features/schedule/pages/saved_plans_page.dart",
@@ -23328,8 +23328,8 @@
     },
     {
       "path": "A5front/lib/features/schedule/widgets/itinerary_route_map.dart",
-      "bytes": 20672,
-      "sha256": "04e6c3698f15f905919489abcab854d335aaed13a4437a7e8c390d049e9ea6ab"
+      "bytes": 20949,
+      "sha256": "c0a17fcf1807c10d9f32d02b1f078086df0a97ee37dd93702377e9dd02cef1e5"
     },
     {
       "path": "A5front/lib/features/schedule/widgets/live_directions_details.dart",
@@ -23340,6 +23340,11 @@
       "path": "A5front/lib/features/schedule/widgets/pass_day_comparison.dart",
       "bytes": 2938,
       "sha256": "9c556af3417c7e03b03d7284678b77628655fc24ed584d21d10222d9f18d95e3"
+    },
+    {
+      "path": "A5front/lib/features/schedule/widgets/place_photo_thumbnail.dart",
+      "bytes": 10595,
+      "sha256": "4da7914533297cda2da33445851d294f143f38d1e6995a04019df0badf64d9d7"
     },
     {
       "path": "A5front/lib/features/schedule/widgets/replacement_preferences_dialog.dart",
@@ -23393,8 +23398,8 @@
     },
     {
       "path": "A5front/lib/features/trip/pages/trip_region_page.dart",
-      "bytes": 33098,
-      "sha256": "6513197a2e59efe022d9272304693f1e2cb7977c7e1d3f9bfe5bd586c0d09220"
+      "bytes": 34093,
+      "sha256": "9d7da5570814028868854bd5c0047ffaed39c9a870d9cf6c369af0cc12340619"
     },
     {
       "path": "A5front/lib/features/trip/pages/trip_schedule_settings_page.dart",
@@ -23413,8 +23418,8 @@
     },
     {
       "path": "A5front/lib/features/trip/widgets/city_selection_map.dart",
-      "bytes": 9295,
-      "sha256": "189e452fbafffd796a1f27e88b8211444ccd0003d4d6f3612693752f644b9701"
+      "bytes": 9509,
+      "sha256": "2a8170bdf88550cac1ccbfc63309f6694486652f2454e0e2994d62c48133f98f"
     },
     {
       "path": "A5front/lib/features/trip/widgets/lodging_budget_fields.dart",
@@ -23695,6 +23700,11 @@
       "path": "A5front/test/revision_visual_check_test.dart",
       "bytes": 4205,
       "sha256": "c42e91c7e670bc9dfcc20a484e7fc9c6d827597ace0210c02a244edbd543739a"
+    },
+    {
+      "path": "A5front/test/s24_city_route_layout_test.dart",
+      "bytes": 3052,
+      "sha256": "9e7c4cb347aca94556bf60785fea9c0d55dbb2d2d8383c10270a7a1e87100e3b"
     },
     {
       "path": "A5front/test/schedule_ui_revision_test.dart",
@@ -27372,6 +27382,11 @@
       "sha256": "6005aafdff6ed1b94cfa3b546e0929393a0398e194cbc4afecae58100604a147"
     },
     {
+      "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/controller/PlacePhotoController.java",
+      "bytes": 1662,
+      "sha256": "0a3f7afad7e037fe294e6a95dd0953021431885c144b62c8bb3f56dd1fc654c5"
+    },
+    {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/controller/PlanController.java",
       "bytes": 5610,
       "sha256": "9eab278840d196ab315b6a7897b3c1f695bc937835e654228e51623b90eb2497"
@@ -27890,6 +27905,11 @@
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/service/PlaceNameService.java",
       "bytes": 7007,
       "sha256": "9d593e7c2c8159b761178d58ab7fc844bd9f4e1b432df607600818e1268943c1"
+    },
+    {
+      "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/service/PlacePhotoService.java",
+      "bytes": 8321,
+      "sha256": "da10dfb27e45e3e4676f171a941d643dc415749815eef44b4877899853ee3997"
     },
     {
       "path": "TravelPlanner_Backend/src/main/java/com/travel/planner/service/PlanGenerationException.java",
@@ -28485,6 +28505,16 @@
       "path": "TravelPlanner_Backend/src/test/java/com/travel/planner/service/PlaceNameServiceTest.java",
       "bytes": 8631,
       "sha256": "868d30e0eccd37bdde7d821743737cd652a701e507e3d470fcf05f25cea8e359"
+    },
+    {
+      "path": "TravelPlanner_Backend/src/test/java/com/travel/planner/service/PlacePhotoServiceTest.java",
+      "bytes": 7150,
+      "sha256": "6f4743a8366096fa27f3c07baccc111fd42b4142f59902b07fbf8b0f8d27a9c3"
+    },
+    {
+      "path": "TravelPlanner_Backend/src/test/java/com/travel/planner/service/PlacePhotoWiringTest.java",
+      "bytes": 623,
+      "sha256": "37712153b2ea30bf2470ad242746f818cfd6b54577a0d07dda751843c0bbf5f6"
     },
     {
       "path": "TravelPlanner_Backend/src/test/java/com/travel/planner/service/PlanItemAdjustmentServiceTest.java",
