@@ -19533,8 +19533,8 @@
     },
     {
       "path": "A5front/build/web/flutter_bootstrap.js",
-      "bytes": 13093,
-      "sha256": "38a1f92082fd764ed8155c4fe5798936e6aab2d843a7108f09fbd677720c15e4"
+      "bytes": 13094,
+      "sha256": "53946dc4ad841c7048ca14498966aa5a11fa397634022c955ccd82aeb8bf3586"
     },
     {
       "path": "A5front/build/web/flutter_service_worker.js",
@@ -19568,8 +19568,8 @@
     },
     {
       "path": "A5front/build/web/main.dart.js",
-      "bytes": 5324813,
-      "sha256": "dbb60b6fc7785253b420381cff353186856ef603981ec01f38f3778e3f61144d"
+      "bytes": 5353646,
+      "sha256": "1f39633a7f18fbe9433ca667c84e3352c594e2a60d86abc60aec409c10310fa6"
     },
     {
       "path": "A5front/build/web/manifest.json",
@@ -28814,7 +28814,7 @@
     {
       "path": "deploy/images.lock.env",
       "bytes": 345,
-      "sha256": "dc8f4066121fb4e81bc2ffb10be31555beb2ffffc5aa73b1eded793a85a6d14c"
+      "sha256": "5e840046f28f3a4b4535427283805bbe50e6f8c3704be4104e1a93ded8c73a31"
     },
     {
       "path": "deploy/kubernetes/README-ACTUAL.md",
@@ -28954,7 +28954,7 @@
     {
       "path": "deployer-image.lock.env",
       "bytes": 126,
-      "sha256": "138b668526793ccc782fd424933a2615c66b6df30d634ab043f58df6f6083865"
+      "sha256": "2fb0014ed7bd747f45a6769f075f269f67d1547ebf89eb095f21aeda1041d8f5"
     },
     {
       "path": "docs/PROJECT_MARKDOWN.zip",
@@ -28964,12 +28964,12 @@
     {
       "path": "images.lock.env",
       "bytes": 345,
-      "sha256": "dc8f4066121fb4e81bc2ffb10be31555beb2ffffc5aa73b1eded793a85a6d14c"
+      "sha256": "5e840046f28f3a4b4535427283805bbe50e6f8c3704be4104e1a93ded8c73a31"
     },
     {
       "path": "release.env",
       "bytes": 482,
-      "sha256": "076d689b9965137b26ae972c8fa5ed126aea64c80ddeb7dad1a005a5b9d59d9c"
+      "sha256": "c04a7ac15753ea646bf03765b3fbf7378bbc78fcccad32688e1214b216b57206"
     },
     {
       "path": "백엔드_알고리즘_기반과_앱별_변경_20261009.pdf",
