@@ -130,6 +130,11 @@ public class Plan {
     @Column
     private Boolean excludeCafe;        // 카페 추천 받지 않기
 
+    // 어른 인원. 주 DB 스키마를 바꾸지 않도록 저장하지 않는다(@Transient). 일정을 만든 그 요청 안에서만 값이 있고,
+    // 저장된 일정을 다시 불러오면 null 이다. PDF 는 null 이면 숙박비를 인원수로 나누지 않고 일행 합계로 보여 준다.
+    @Transient
+    private Integer adults;
+
     @OneToMany(mappedBy = "plan", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("dayNumber ASC, sequence ASC")
     private List<Itinerary> itineraries = new ArrayList<>();

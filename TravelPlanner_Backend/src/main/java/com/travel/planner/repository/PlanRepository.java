@@ -25,4 +25,8 @@ public interface PlanRepository extends JpaRepository<Plan, Long> {
             + "WHERE p.startDate >= :from AND p.startDate <= :to")
     List<Plan> findDetailByStartDateBetween(@Param("from") LocalDate from, @Param("to") LocalDate to);
 
+    // PDF: 그 일정의 숙소 (트랜잭션 밖에서도 읽을 수 있게 따로 불러온다)
+    @Query("SELECT a FROM Accommodation a WHERE a.plan.id = :id ORDER BY a.checkIn")
+    java.util.List<com.travel.planner.entity.Accommodation> findAccommodationsByPlanId(@Param("id") Long id);
+
 }

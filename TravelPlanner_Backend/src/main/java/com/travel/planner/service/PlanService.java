@@ -60,7 +60,7 @@ public class PlanService {
     /** 갈 곳이 없을 때 자유 시간을 넣고 기다려 줄 수 있는 최대 시간 */
     static final int MAX_DEFERRED_WAIT_MIN = 150;
     /** 숙소 복귀는 일과 종료 시각을 이만큼까지 넘겨도 허용 */
-    static final int RETURN_GRACE_MIN = 45;
+    static final int RETURN_GRACE_MIN = 0;
     static final int MEAL_PLACEHOLDER_MIN = 60;
     static final int MUST_EAT_MAX_TRAVEL_MIN = 30;
 
