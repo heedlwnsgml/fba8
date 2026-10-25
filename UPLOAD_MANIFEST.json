@@ -28784,7 +28784,7 @@
     {
       "path": "deploy/images.lock.env",
       "bytes": 345,
-      "sha256": "ab4da0a7fbb20b0667cbd1451526fefb8732a1144f10bff195c56d08b3fef915"
+      "sha256": "c92ac398cdacc7acd21c7493f3ace37b551f506797af46d2052aef6b2897066a"
     },
     {
       "path": "deploy/kubernetes/README-ACTUAL.md",
@@ -28924,7 +28924,7 @@
     {
       "path": "deployer-image.lock.env",
       "bytes": 126,
-      "sha256": "5a653adaa65df5a4ad77ded15135f5485447a2dae89d8ae8629e0cd292ad23dd"
+      "sha256": "a88047c1de8816c02a686022f2ac0ed52ed68d74470b2577560b20a148824a44"
     },
     {
       "path": "docs/PROJECT_MARKDOWN.zip",
@@ -28934,12 +28934,12 @@
     {
       "path": "images.lock.env",
       "bytes": 345,
-      "sha256": "ab4da0a7fbb20b0667cbd1451526fefb8732a1144f10bff195c56d08b3fef915"
+      "sha256": "c92ac398cdacc7acd21c7493f3ace37b551f506797af46d2052aef6b2897066a"
     },
     {
       "path": "release.env",
       "bytes": 482,
-      "sha256": "f9076d0eea8214a03e6d157d109eba0bbd9827aaf434fe05f1d4a60254f5bcea"
+      "sha256": "770729165ec029884cdbd8d79e21aba7cbeab49336112c873233e860ceb79e87"
     },
     {
       "path": "백엔드_알고리즘_기반과_앱별_변경_20261009.pdf",
