@@ -19523,8 +19523,8 @@
     },
     {
       "path": "A5front/build/web/flutter_bootstrap.js",
-      "bytes": 13093,
-      "sha256": "38a1f92082fd764ed8155c4fe5798936e6aab2d843a7108f09fbd677720c15e4"
+      "bytes": 13094,
+      "sha256": "53946dc4ad841c7048ca14498966aa5a11fa397634022c955ccd82aeb8bf3586"
     },
     {
       "path": "A5front/build/web/flutter_service_worker.js",
@@ -19558,8 +19558,8 @@
     },
     {
       "path": "A5front/build/web/main.dart.js",
-      "bytes": 5324813,
-      "sha256": "dbb60b6fc7785253b420381cff353186856ef603981ec01f38f3778e3f61144d"
+      "bytes": 5353646,
+      "sha256": "1f39633a7f18fbe9433ca667c84e3352c594e2a60d86abc60aec409c10310fa6"
     },
     {
       "path": "A5front/build/web/manifest.json",
